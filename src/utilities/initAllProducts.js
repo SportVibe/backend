@@ -26,7 +26,7 @@ const allProducts = [
     category: "hombre",
     subCategory: "calzado",
     stock: 10,
-    sizes: ["l"],
+    sizes: [41],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a02d4f03dc7945159ef2c04f49841aca_9366/Zapatillas_Adizero_Prime_X_2.0_STRUNG_Blanco_HP9709_HM1.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/99c4b1b2114c47d590403f69073cb7fc_9366/Zapatillas_Adizero_Prime_X_2.0_STRUNG_Blanco_HP9709_HM1.jpg",

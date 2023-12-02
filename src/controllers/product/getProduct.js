@@ -17,7 +17,7 @@ const getProduct = async (req, res) => {
       previousPage = null;
     }
 
-    const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de como nulo
+    const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de nulo
 
     // filtros
     const { subCategory, category, minPrice, maxPrice, size, search } = req.query;
@@ -40,7 +40,7 @@ const getProduct = async (req, res) => {
 
     //cantidad de productos en la db
     const countProducts = await Product.count({
-      where: { ...filterCriteria, available: true },
+      where: { ...filterCriteria, available: true }, //-------> preguntar a los chicos si quieren el count de toda la db o de lo filtrado actualmente!!!!!!!!!!!!!!!!!!!!!
     });
 
     //busca todos los productos de la db
@@ -53,13 +53,23 @@ const getProduct = async (req, res) => {
       return res.status(404).json({ mensaje: "No se encontraron productos." });
     }
 
+    const modifiedProducts = products.map((product) => {
+      // Crear un nuevo objeto para cada producto
+      const modifiedProduct = { ...product.toJSON() };
+
+      // Modificar el array de Images para contener solo las URLs
+      modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
+
+      return modifiedProduct;
+    });
+
     return res.status(200).json({
       count: countProducts,
       currentPage,
       limit,
       previousPage,
       nextPage,
-      data: products,
+      data: modifiedProducts,
     });
   } catch (error) {
     console.error(error);
