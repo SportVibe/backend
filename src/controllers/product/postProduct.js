@@ -1,10 +1,10 @@
-const { Product, Image, Size } = require("../../db");
+const { Product, Image, Size, Stock } = require("../../db");
 
 async function postProduct(req, res) {
   // console.log(req.body);
   try {
     const { title, description, category, subCategory, sizes, price, discount, stock, images } = req.body;
-    if (title && description && price && stock && category && sizes.length && images.length) {
+    if (title && description && price && category && sizes.length && images.length) {
       const isThisAlreadyCreated = await Product.findOne({
         where: {
           title: title.toUpperCase(),
@@ -13,7 +13,6 @@ async function postProduct(req, res) {
           subCategory: subCategory?.toUpperCase(),
           price,
           discount,
-          stock,
         },
       });
       if (!isThisAlreadyCreated) {
@@ -25,11 +24,23 @@ async function postProduct(req, res) {
           subCategory: subCategory?.toUpperCase(),
           price,
           discount,
-          stock,
         });
         // Asociamos las tallas necesarias al nuevo producto creado.
-        const getSizesWeNeed = await Size.findAll({ where: { name: sizes } });
-        await currentProduct.addSizes(getSizesWeNeed);
+        // const getSizesWeNeed = await Size.findAll({ where: { name: sizes } });
+        // await currentProduct.addSizes(getSizesWeNeed);
+
+        // Crear tallas y stocks asociados
+        for (const sizeInfo of sizes) {
+          const nuevaTalla = await Size.create({
+            name: sizeInfo.size,
+          });
+
+          await Stock.create({
+            product_id: currentProduct.id,
+            size_id: nuevaTalla.id,
+            quantity: sizeInfo.stock,
+          });
+        }
 
         // Luego buscamos la tabla Image, solo las imágenes que mandó el front en el array "images", y vemos si ya existen.
         const isImagesCreated = await Image.findAll({ where: { url: images } });
