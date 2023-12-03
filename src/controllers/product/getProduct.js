@@ -6,6 +6,7 @@ const getProduct = async (req, res) => {
     //paginado -----> habría que llevar la lógica del paginado a utilities
     const currentPage = req.query.page ? parseInt(req.query.page) : 1;
     const limit = req.query.limit ? parseInt(req.query.limit) : 12;
+    const offset = (currentPage - 1) * limit;
 
     const baseUrl = "http://localhost:3005/Inventario";
 
@@ -40,12 +41,17 @@ const getProduct = async (req, res) => {
 
     //cantidad de productos en la db
     const countProducts = await Product.count({
-      where: { ...filterCriteria, available: true }, //-------> preguntar a los chicos si quieren el count de toda la db o de lo filtrado actualmente!!!!!!!!!!!!!!!!!!!!!
+      where: { available: true },
+    });
+    const countFilterCriteria = await Product.count({
+      where: { ...filterCriteria, available: true },
     });
 
     //busca todos los productos de la db
     const products = await Product.findAll({
       where: { ...filterCriteria, available: true },
+      limit,
+      offset,
       include: { model: Image, attributes: ["url"], through: { attributes: [] } },
     });
 
@@ -64,7 +70,8 @@ const getProduct = async (req, res) => {
     });
 
     return res.status(200).json({
-      count: countProducts,
+      totalCount: countProducts,
+      totalFilteredCount: countFilterCriteria,
       currentPage,
       limit,
       previousPage,
