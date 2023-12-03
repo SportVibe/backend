@@ -14,6 +14,7 @@ async function postProduct(req, res) {
           price,
           discount,
           stock,
+          //lalalalala
         },
       });
       if (!isThisAlreadyCreated) {
