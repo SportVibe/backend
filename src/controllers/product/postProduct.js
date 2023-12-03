@@ -3,7 +3,7 @@ const { Product, Image, Size, Stock } = require("../../db");
 async function postProduct(req, res) {
   // console.log(req.body);
   try {
-    const { title, description, category, subCategory, sizes, price, discount, stock, images } = req.body;
+    const { title, description, category, subCategory, sizes, price, discount, images } = req.body;
     if (title && description && price && category && sizes.length && images.length) {
       const isThisAlreadyCreated = await Product.findOne({
         where: {
@@ -13,8 +13,6 @@ async function postProduct(req, res) {
           subCategory: subCategory?.toUpperCase(),
           price,
           discount,
-          stock,
-          //lalalalala
         },
       });
       if (!isThisAlreadyCreated) {
