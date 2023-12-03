@@ -13,6 +13,8 @@ async function postProduct(req, res) {
           subCategory: subCategory?.toUpperCase(),
           price,
           discount,
+          stock,
+          //lalalalala
         },
       });
       if (!isThisAlreadyCreated) {
