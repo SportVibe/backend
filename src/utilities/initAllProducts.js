@@ -7,7 +7,8 @@ const allProducts = [
     price: 34,
     discount: 0,
     // available: true,
-    category: "hombre",
+    gender: "hombre",
+    category: "camisetas",
     subCategory: "camisetas de futbol",
     stock: 10,
     sizes: [
@@ -36,8 +37,9 @@ const allProducts = [
     price: 245,
     discount: 0,
     // available: true,
-    category: "hombre",
-    subCategory: "calzado",
+    gender: "hombre",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
     sizes: [
       {
@@ -66,8 +68,9 @@ const allProducts = [
     price: 31,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "accesorios",
+    gender: "mujer",
+    category: "accesorios",
+    subCategory: "bolso",
     stock: 10,
     sizes: [
       {
@@ -94,8 +97,9 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
     sizes: [
       {
@@ -124,6 +128,7 @@ const allProducts = [
     price: 37,
     discount: 0,
     // available: true,
+    gender: "unisex",
     category: "accesorios",
     subCategory: "pelotas",
     stock: 10,
@@ -152,8 +157,9 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
     sizes: [
       {
@@ -182,8 +188,9 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
     sizes: [
       {
@@ -212,20 +219,22 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
     sizes: [
       {
-        size: "S",
+        size: "38",
         stock: 10,
       },
       {
-        size: "M",
+        size: "37",
         stock: 15,
       },
       {
-        size: "L",
+        size: "39",
         stock: 20,
       },
     ],
