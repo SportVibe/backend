@@ -55,7 +55,13 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
-      include: [{ model: Stock }, { model: Image, attributes: ["url"], through: { attributes: [] } }],
+      include: [
+        {
+          model: Stock,
+          include: [{ model: Size, attributes: ["name"] }],
+        },
+        { model: Image, attributes: ["url"], through: { attributes: [] } },
+      ],
     });
 
     if (!products || products.length === 0) {
@@ -66,9 +72,16 @@ const getProduct = async (req, res) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
 
-      // Modificar el array
+      // Modificar el array de imágenes
       modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
-      // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
+
+      // Modificar el array de tallas y cantidades (stock)
+      modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
+        [stock.Size.name]: stock.quantity,
+      }));
+
+      // Eliminar la propiedad 'Size' si no es necesaria en este punto
+      delete modifiedProduct.Size;
 
       return modifiedProduct;
     });
