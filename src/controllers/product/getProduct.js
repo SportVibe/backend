@@ -21,8 +21,9 @@ const getProduct = async (req, res) => {
     const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de nulo
 
     // filtros
-    const { subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
+    const { gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.body;
     const filterCriteria = {};
+    filterCriteria.gender = gender || { [Op.not]: null };
     filterCriteria.subCategory = subCategory || { [Op.not]: null };
     filterCriteria.category = category || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
