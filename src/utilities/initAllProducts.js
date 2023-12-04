@@ -259,7 +259,7 @@ async function initializeProducts() {
           },
         }),
       };
-      // console.log(productData);
+      
 
       await postProduct(req, res);
     }
