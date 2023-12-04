@@ -21,8 +21,9 @@ const getProduct = async (req, res) => {
     const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de nulo
 
     // filtros
-    const { subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
+    const { gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.body;
     const filterCriteria = {};
+    filterCriteria.gender = gender || { [Op.not]: null };
     filterCriteria.subCategory = subCategory || { [Op.not]: null };
     filterCriteria.category = category || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
@@ -55,7 +56,13 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
-      include: [{ model: Stock }, { model: Image, attributes: ["url"], through: { attributes: [] } }],
+      include: [
+        {
+          model: Stock,
+          include: [{ model: Size, attributes: ["name"] }],
+        },
+        { model: Image, attributes: ["url"], through: { attributes: [] } },
+      ],
     });
 
     if (!products || products.length === 0) {
@@ -66,9 +73,16 @@ const getProduct = async (req, res) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
 
-      // Modificar el array
+      // Modificar el array de imágenes
       modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
-      // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
+
+      // Modificar el array de tallas y cantidades (stock)
+      modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
+        [stock.Size.name]: stock.quantity,
+      }));
+
+      // Eliminar la propiedad 'Size' si no es necesaria en este punto
+      delete modifiedProduct.Size;
 
       return modifiedProduct;
     });

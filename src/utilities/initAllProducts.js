@@ -7,10 +7,24 @@ const allProducts = [
     price: 34,
     discount: 0,
     // available: true,
-    category: "hombre",
+    gender: "hombre",
+    category: "camisetas",
     subCategory: "camisetas de futbol",
     stock: 10,
-    sizes: ["S"],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/60657f9926824f42a4beafd2017beadd_9366/Chomba_de_Entrenamiento_River_Plate_Condivo_22_Verde_HC1039_01_laydown.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5dce803bbf624d429b1cafd2017bee03_9366/Chomba_de_Entrenamiento_River_Plate_Condivo_22_Verde_HC1039_02_laydown_hover.jpg",
@@ -23,10 +37,24 @@ const allProducts = [
     price: 245,
     discount: 0,
     // available: true,
-    category: "hombre",
-    subCategory: "calzado",
+    gender: "hombre",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
-    sizes: [41],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a02d4f03dc7945159ef2c04f49841aca_9366/Zapatillas_Adizero_Prime_X_2.0_STRUNG_Blanco_HP9709_HM1.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/99c4b1b2114c47d590403f69073cb7fc_9366/Zapatillas_Adizero_Prime_X_2.0_STRUNG_Blanco_HP9709_HM1.jpg",
@@ -40,10 +68,24 @@ const allProducts = [
     price: 31,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "accesorios",
+    gender: "mujer",
+    category: "accesorios",
+    subCategory: "bolso",
     stock: 10,
-    sizes: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/b2fb8a61000c4574a8d9aef50102aa75_9366/Mini_Bolso_Airliner_Blanco_IC2151_01_standard.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/60f22e07e1eb43a19814aef50102b237_9366/Mini_Bolso_Airliner_Blanco_IC2151_02_standard.jpg",
@@ -55,10 +97,24 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
-    sizes: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
@@ -72,10 +128,24 @@ const allProducts = [
     price: 37,
     discount: 0,
     // available: true,
+    gender: "unisex",
     category: "accesorios",
     subCategory: "pelotas",
     stock: 10,
-    sizes: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://nikearprod.vtexassets.com/arquivos/ids/156493-1200-1200?v=638086292695870000&width=1200&height=1200&aspect=true",
       "https://nikearprod.vtexassets.com/arquivos/ids/160495-1200-1200?v=638086355359800000&width=1200&height=1200&aspect=true",
@@ -87,10 +157,24 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
-    sizes: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
@@ -104,10 +188,24 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
-    sizes: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
@@ -121,10 +219,25 @@ const allProducts = [
     price: 76,
     discount: 0,
     // available: true,
-    category: "mujer",
-    subCategory: "calzado",
+    gender: "mujer",
+
+    category: "calzado",
+    subCategory: "zapatillas",
     stock: 10,
-    sizes: [""],
+    sizes: [
+      {
+        size: "38",
+        stock: 10,
+      },
+      {
+        size: "37",
+        stock: 15,
+      },
+      {
+        size: "39",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
