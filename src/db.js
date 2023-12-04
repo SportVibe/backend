@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
 const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(`postgres://postgres:admin@localhost/ecommerce`, {
+const sequelize = new Sequelize(`postgres://postgres:123456@localhost/ecommerce`, {
   dialectModule: require("pg"),
   logging: false,
   native: false,

@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 3005;
 initializeSizes(); // inicializa la tabla de sizes.
 initializeProducts();
 sequelize
-  .sync({ force: true })
+
+  .sync({ alter: true })
+
   .then(() => {
     app.listen(PORT, () => {
       console.log(`server listening on port ${PORT}`);
