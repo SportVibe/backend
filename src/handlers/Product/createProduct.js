@@ -14,13 +14,13 @@ const createProduct = async ({ title, description, category, subCategory, sizes,
 
     // Crear tallas y stocks asociados
     for (const sizeInfo of sizes) {
-      const nuevaTalla = await Size.create({
-        name: sizeInfo.size,
+      const [size, created] = await Size.findOrCreate({
+        where: { name: sizeInfo.size },
       });
 
       await Stock.create({
         product_id: currentProduct.id,
-        size_id: nuevaTalla.id,
+        size_id: size.id,
         quantity: sizeInfo.stock,
       });
     }
