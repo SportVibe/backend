@@ -6,11 +6,11 @@ const allProducts = [
     description: "UNA CHOMBA CÓMODA PARA HINCHAS DE RIVER PLATE HECHA PARCIALMENTE CON MATERIAL RECICLADO",
     price: 34,
     discount: 0,
-    // available: true,
+    marca: "",
     gender: "hombre",
     category: "camisetas",
     subCategory: "camisetas de futbol",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -36,11 +36,11 @@ const allProducts = [
     description: "LA NUEVA CAMISETA DE RIVER PLATE MANTIENE EL CLÁSICO PALADAR DEL HINCHA RIVERPLATENSE.",
     price: 52,
     discount: 0,
-    // available: true,
+    marca: "",
     gender: "hombre",
     category: "camisetas",
     subCategory: "camisetas de futbol",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -66,11 +66,11 @@ const allProducts = [
     description: "CELEBRÁ LA VICTORIA CON ESTA CAMISETA HECHA CON UNA MEZCLA DE MATERIALES RECICLADOS Y RENOVABLES.",
     price: 89,
     discount: 0,
-    // available: true,
+    marca: "",
     gender: "hombre",
     category: "camisetas",
     subCategory: "camisetas de futbol",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -95,11 +95,11 @@ const allProducts = [
     description: "ZAPATILLAS DE COMPETICIÓN CARGADAS DE ELEMENTOS ORIENTADOS AL RENDIMIENTO.",
     price: 245,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "hombre",
     category: "calzado",
     subCategory: "zapatillas",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -126,11 +126,11 @@ const allProducts = [
     description: "UN MINI BOLSO AIRLINER DE LUJO QUE ES EL COMPAÑERO PERFECTO PARA EXPLORAR LA CIUDAD.",
     price: 31,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "mujer",
     category: "accesorios",
     subCategory: "bolso",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -155,11 +155,11 @@ const allProducts = [
     description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
     price: 76,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "mujer",
     category: "calzado",
     subCategory: "zapatillas",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -186,11 +186,11 @@ const allProducts = [
     description: "Pelota de Futbol Unisex",
     price: 37,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "unisex",
     category: "accesorios",
     subCategory: "pelotas",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -215,11 +215,11 @@ const allProducts = [
     description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
     price: 76,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "mujer",
     category: "calzado",
     subCategory: "zapatillas",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -246,11 +246,11 @@ const allProducts = [
     description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
     price: 76,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "mujer",
     category: "calzado",
     subCategory: "zapatillas",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "38",
@@ -277,12 +277,11 @@ const allProducts = [
     description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
     price: 76,
     discount: 0,
-    // available: true,
+    marca:"",
     gender: "mujer",
-
     category: "calzado",
     subCategory: "zapatillas",
-    // stock: 10,
+    color: ["VERDE", "BLANCO"],
     sizes: [
       {
         size: "38",
@@ -308,11 +307,12 @@ const allProducts = [
     title: "REMERA CORTA TIRO COLORBLOCK",
     description: "UNA REMERA CORTA HECHA CON MATERIALES RECICLADOS.",
     price: "46",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: ["VERDE", "BLANCO"],
+    color: ["VERDE", "BLANCO"],
     stocks: [],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2ebf8f673ccf498cb3bb6e580c430d90_9366/Remera_Corta_Tiro_Colorblock_Verde_IM4997_21_model.jpg",
@@ -325,11 +325,12 @@ const allProducts = [
     title: "CAMPERA TIRO TEJIDA",
     description: "UNA CAMPERA EN COLORES VIVOS HECHA DE MATERIALES RECICLADOS.",
     price: "71",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CAMPERAS",
-    colour: ["azul", "celeste", "lila"],
+    color: ["azul", "celeste", "lila"],
     sizes: [
       {
         size: "S",
@@ -355,11 +356,12 @@ const allProducts = [
     title: "TRAJE DE NATACIÓN ADICOLOR 3 TIRAS",
     description: "UN TRAJE DE NATACIÓN CLÁSICO HECHO PARCIALMENTE CON MATERIALES RECICLADOS.",
     price: "67",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "NATACIÓN",
     subCategory: "TRAJES",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -385,11 +387,12 @@ const allProducts = [
     title: "TRAJE DE NATACIÓN POSITIVISEA 3 TIRAS",
     description: "UN TRAJE DE NATACIÓN DEPORTIVO HECHO PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "35",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "NATACIÓN",
     subCategory: "TRAJES",
-    colour: ["BLANCO", "AMARILLO", "ROSA"],
+    color: ["BLANCO", "AMARILLO", "ROSA"],
     sizes: [
       {
         size: "S",
@@ -415,11 +418,12 @@ const allProducts = [
     title: "CALZAS CORTAS ADIDAS X FARM RIO TIRO ALTO",
     description: "CALZAS CORTAS DE ENTRENAMIENTO ADIDAS X FARM RIO HECHAS PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "45",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
-    colour: "",
+    color: "",
     sizes: [
       {
         size: "S",
@@ -445,11 +449,12 @@ const allProducts = [
     title: "CONJUNTO TEAMSPORT",
     description: "UN CONJUNTO MODERNO HECHO DE MATERIALES RECICLADOS.",
     price: "85",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CONJUNTOS",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -475,11 +480,12 @@ const allProducts = [
     title: "PANTALÓN DEPORTIVO ADIDAS X FARM RIO",
     description: "UN PANTALÓN DEPORTIVO LLENO DE ESTILO VERANIEGO HECHO CON MATERIALES RECICLADOS.",
     price: "73",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "PANTALONES",
-    colour: [""],
+    color: [""],
     sizes: [
       {
         size: "S",
@@ -505,11 +511,12 @@ const allProducts = [
     title: "ROMPEVIENTOS DE RUNNING CON CAPUCHA OWN THE RUN",
     description: "UN ROMPEVIENTOS DE RUNNING PLEGABLE PARA TUS SALIDAS A CORRER DIARIAS.",
     price: "70",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CAMPERAS",
-    colour: "NEGRO",
+    color: "NEGRO",
     sizes: [
       {
         size: "S",
@@ -535,11 +542,12 @@ const allProducts = [
     title: "CAMISETA TITULAR RIVER PLATE 23/24 (MUJER)",
     description: "LA NUEVA CAMISETA DE RIVER PLATE MANTIENE EL CLÁSICO PALADAR DEL HINCHA RIVERPLATENSE.",
     price: "46",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
-    colour: "BLANCO",
+    color: "BLANCO",
     sizes: [
       {
         size: "S",
@@ -564,11 +572,12 @@ const allProducts = [
     title: "POLLERA ADIDAS X FARM RIO",
     description: "UNA POLLERA SUAVE CON UNA ONDA TROPICAL HECHA CON MATERIALES RECICLADOS.",
     price: "51",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "POLLERAS",
-    colour: "",
+    color: "",
     sizes: [
       {
         size: "S",
@@ -594,11 +603,12 @@ const allProducts = [
     title: "SHORTS ADICOLOR ESSENTIALS FELPA FRANCESA",
     description: "SHORTS SUAVES Y CÓMODOS CON UN ESTILO DISTINTIVO",
     price: "35",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "SHORTS",
-    colour: "NEGRO",
+    color: "NEGRO",
     sizes: [
       {
         size: "S",
@@ -624,11 +634,12 @@ const allProducts = [
     title: "CONJUNTO ESSENTIALS 3 TIRAS",
     description: "UN CONJUNTO DE DOS PIEZAS CON MUCHOS BOLSILLOS",
     price: "73",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CONJUNTOS",
-    colour: "ROJO",
+    color: "ROJO",
     sizes: [
       {
         size: "S",
@@ -654,11 +665,12 @@ const allProducts = [
     title: "CONJUNTO LINEAR",
     description: "UN CONJUNTO CÓMODO HECHA CON MATERIALES RECICLADOS.",
     price: "90",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CONJUNTOS",
-    colour: "NEGRO",
+    color: "NEGRO",
     sizes: [
       {
         size: "S",
@@ -684,11 +696,12 @@ const allProducts = [
     title: "CALZAS CORTAS DE ENTRENAMIENTO TAILORED HIIT 45 SEGUNDOS TIRO ALTO",
     description: "CALZAS ADIDAS PARA ENTRENAMIENTOS INTENSOS, HECHAS PARCIALMENTE CON MATERIALES RECICLADOS.",
     price: "75",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
-    colour: "VERDE",
+    color: "VERDE",
     sizes: [
       {
         size: "S",
@@ -714,11 +727,12 @@ const allProducts = [
     title: "CALZAS LARGAS FAST IMPACT X-CITY REFLECT AT NIGHT",
     description: "La colección X-City Reflect At Night se ha diseñado para tu próxima carrera.",
     price: "110",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
-    colour: "NEGRO",
+    color: "NEGRO",
     sizes: [
       {
         size: "S",
@@ -744,11 +758,12 @@ const allProducts = [
     title: "ZAPATILLAS ADIDAS GRAND COURT CLOUDFOAM COMFORT",
     description: "ZAPATILLAS CLÁSICAS ATEMPORALES HECHAS PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "68",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "CALZADO",
     subCategory: "ZAPATILLAS",
-    colour: "OLIVO SOMBRÍO",
+    color: "OLIVO SOMBRÍO",
     sizes: [
       {
         size: "S",
@@ -774,11 +789,12 @@ const allProducts = [
     title: "ZAPATILLAS NMD_V3",
     description: "ZAPATILLAS VERSÁTILES HECHAS PARCIALMENTE CON PARLEY OCEAN PLASTIC.",
     price: "67",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "CALZADO",
     subCategory: "ZAPATILLAS",
-    colour: "AZUL",
+    color: "AZUL",
     sizes: [
       {
         size: "40",
@@ -804,11 +820,12 @@ const allProducts = [
     title: "ZAPATILLAS ADIDAS COURT FUNK",
     description: "ZAPATILLAS PARA USO DIARIO CON UN LOOK CLÁSICO, HECHAS EN PARTE CON MATERIALES RECICLADOS",
     price: "81",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "MUJER",
     category: "CALZADO",
     subCategory: "ZAPATILLAS",
-    colour: "BLANCO",
+    color: "BLANCO",
     sizes: [
       {
         size: "40",
@@ -834,11 +851,12 @@ const allProducts = [
     title: "SANDALIAS ADILETTE COMFORT",
     description: "SANDALIAS DEPORTIVAS CLÁSICAS MUY LIVIANAS",
     price: "50",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "CALZADO",
     subCategory: "SANDALIAS",
-    colour: ["NEGRO", "BLANCO"],
+    color: ["NEGRO", "BLANCO"],
     sizes: [
       {
         size: "40",
@@ -865,11 +883,12 @@ const allProducts = [
     description:
       "DESCUBRÍ EL SIGNIFICADO DE LA VELOCIDAD CON ESTOS BOTINES HECHOS PARCIALMENTE CON MATERIALES RECICLADOS.",
     price: "80",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "CALZADO",
     subCategory: "BOTINES",
-    colour: ["NARANJA"],
+    color: ["NARANJA"],
     sizes: [
       {
         size: "40",
@@ -896,11 +915,12 @@ const allProducts = [
     description:
       "LA NUEVA CAMISETA OFICIAL IRRADIA LA PASIÓN BOQUENSE Y LA CONEXIÓN CON EL BARRIO. BOCA ES PUEBLO Y CARNAVAL",
     price: "52",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
-    colour: ["AZUL", "AMARILLO"],
+    color: ["AZUL", "AMARILLO"],
     sizes: [
       {
         size: "S",
@@ -926,11 +946,12 @@ const allProducts = [
     description:
       "MOSTRÁ TU APOYO CON ESTA CAMISETA MESSI 10 INTER MIAMI CF CREADA PARA LOS AFICIONADOS Y HECHA CON MATERIALES RECICLADOS.",
     price: "60",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -957,11 +978,12 @@ const allProducts = [
     description:
       "M Doodle F T es un nuevo producto para Hombre de adidas. Te invitamos a ver las imágenes para apreciar más detalles desde diferentes ángulos. ",
     price: "30",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: "BLANCO",
+    color: "BLANCO",
     sizes: [
       {
         size: "S",
@@ -987,11 +1009,12 @@ const allProducts = [
     description:
       "M Doodle F T es un nuevo producto para Hombre de adidas. Te invitamos a ver las imágenes para apreciar más detalles desde diferentes ángulos. ",
     price: "30",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: "NEGRO",
+    color: "NEGRO",
     sizes: [
       {
         size: "S",
@@ -1016,11 +1039,12 @@ const allProducts = [
     title: "CAMPERA DEPORTIVA ADICOLOR CLASSICS PRIMEBLUE SST",
     description: "UNA DE LAS DOS PIEZAS DEL CLÁSICO CONJUNTO CON TODA LA COMODIDAD",
     price: "102",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMPERAS",
-    colour: ["GRIS"],
+    color: ["GRIS"],
     sizes: [
       {
         size: "S",
@@ -1043,11 +1067,12 @@ const allProducts = [
     title: "REMERA AEROREADY DESIGNED 2 MOVE FEELREADY",
     description: "UNA REMERA CON ESPALDA ALARGADA PARA UNA MAYOR COBERTURA MIENTRAS ENTRENÁS",
     price: "30",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -1070,11 +1095,12 @@ const allProducts = [
     title: "SHORTS FORTORE 23",
     description: "SHORTS INSPIRADOS EN LOS AÑOS 90, IDEALES PARA EQUIPOS AMATEUR, HECHOS CON MATERIALES RECICLADOS",
     price: "25",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "SHORTS",
-    colour: ["AZUL"],
+    color: ["AZUL"],
     sizes: [
       {
         size: "S",
@@ -1100,11 +1126,12 @@ const allProducts = [
     title: "PANTALÓN TEJIDO",
     description: "UN PANTALÓN DEPORTIVO CLÁSICO CON CINTURA CON CORDÓN PARA UN AJUSTE CÓMODO Y HOLGADO.",
     price: "80",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "PANTALONES",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -1131,11 +1158,12 @@ const allProducts = [
     description:
       "UNA CAMISETA CON TECNOLOGÍA DE ABSORCIÓN CON EL ADN DEL FÚTBOL DE LOS 80, HECHA PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "30",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
-    colour: ["AZUL"],
+    color: ["AZUL"],
     sizes: [
       {
         size: "S",
@@ -1161,11 +1189,12 @@ const allProducts = [
     title: "CAMISETA FORTORE 23",
     description: "UNA CAMISETA INSPIRADA EN LOS 90, IDEAL PARA EQUIPOS AMATEUR, HECHA CON MATERIALES RECICLADOS",
     price: "32",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
-    colour: ["BLANCO"],
+    color: ["BLANCO"],
     sizes: [
       {
         size: "S",
@@ -1191,11 +1220,12 @@ const allProducts = [
     title: "PANTALÓN AEROREADY DESIGNED 2 MOVE SPORT",
     description: "PANTALÓN DEPORTIVO CON BOLSILLOS LATERALES",
     price: "41",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "PANTALONES",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -1221,11 +1251,12 @@ const allProducts = [
     title: "REMERA BZRP",
     description: "UNA REMERA CON ESTILO PARA VIVIR EL BZRP LIVE TOUR",
     price: "38",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: ["BLANCO"],
+    color: ["BLANCO"],
     sizes: [
       {
         size: "S",
@@ -1251,11 +1282,12 @@ const allProducts = [
     title: "REMERA MESSI N&N",
     description: "UNA REMERA QUE CELEBRA AL MEJOR FUTBOLISTA DE TODOS LOS TIEMPOS",
     price: "32",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: ["BLANCO"],
+    color: ["BLANCO"],
     sizes: [
       {
         size: "S",
@@ -1279,11 +1311,12 @@ const allProducts = [
     title: "REMERA GRAPHIC FOIL",
     description: "UNA REMERA CON LÍNEAS DEFINIDAS Y UN TOQUE DE BRILLO",
     price: "30",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    colour: ["GRIS"],
+    color: ["GRIS"],
     sizes: [
       {
         size: "S",
@@ -1309,11 +1342,12 @@ const allProducts = [
     title: "PELOTA AL HILM PRO",
     description: "LA PELOTA SIN COSTURAS QUE SERÁ PROTAGONISTA EN LA FINAL DE QATAR.",
     price: "110",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "PELOTAS",
-    colour: [""],
+    color: [""],
     sizes: [
       {
         size: "",
@@ -1329,11 +1363,12 @@ const allProducts = [
     title: "PELOTA ARGENTUM 22 PRO",
     description: "UNA PELOTA DE PRIMERA CALIDAD PARA PARTIDOS, INSPIRADA EN UN ÍCONO ARGENTINO",
     price: "105",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "PELOTAS",
-    colour: ["BLANCO"],
+    color: ["BLANCO"],
     sizes: [
       {
         size: "",
@@ -1350,11 +1385,12 @@ const allProducts = [
     description:
       "PERFECTA PARA TU DÍA A DÍA Escapate de fin de semana o acude al gimnasio. Esta resistente mochila para entrenamiento presenta un diseño espacioso con bolsillos que se adapta a tu ajetreado ritmo de vida.",
     price: "16",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "BOLSOS",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "",
@@ -1370,11 +1406,12 @@ const allProducts = [
     title: "MEDIAS ACOLCHADAS DIP-DYED 3 TIRAS LARGO CLÁSICO 3 PARES",
     description: "UN PAQUETE DE TRES PARES DE MEDIAS ACOLCHADAS HECHAS CON MATERIAL RECICLADO",
     price: "18",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
-    colour: "",
+    color: "",
     sizes: [
       {
         size: "",
@@ -1389,11 +1426,12 @@ const allProducts = [
     title: "GORRO PESCADOR ADICOLOR CLASSIC WINTER",
     description: "UN GORRO PESCADOR SUAVE EN FELPA CÓMODA HECHO PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "28",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "GORRAS",
-    colour: ["NEGRO"],
+    color: ["NEGRO"],
     sizes: [
       {
         size: "",
@@ -1411,11 +1449,12 @@ const allProducts = [
     title: "MINI PELOTA STARLANCER",
     description: "UNA MINI PELOTA DE FÚTBOL PARA JUGAR EN TODO MOMENTO Y LUGAR",
     price: "20",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "PELOTAS",
-    colour: ["BLANCO"],
+    color: ["BLANCO"],
     sizes: [
       {
         size: "",
@@ -1431,11 +1470,12 @@ const allProducts = [
     title: "GORRA SHMOO (UNISEX)",
     description: "UNA GORRA CLÁSICA CON EL FAMOSO SHMOO DE MARK GONZALES",
     price: "8",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "GORRAS",
-    colour: ["AMARILLO"],
+    color: ["AMARILLO"],
     sizes: [
       {
         size: "",
@@ -1451,11 +1491,12 @@ const allProducts = [
     title: "GORRA ESPAÑA INCLUSIÓN",
     description: "UNA GORRA DE VISERA CURVA PARA LOS HINCHAS DE ESPAÑA, HECHA PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "23",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "GORRAS",
-    colour: ["AZUL"],
+    color: ["AZUL"],
     sizes: [
       {
         size: "",
@@ -1473,11 +1514,12 @@ const allProducts = [
     title: "MEDIAS ADI 23",
     description: "MEDIAS DE FÚTBOL CON HORMA ESPECÍFICA A CADA PIE, HECHAS PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "8",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
-    colour: ["BORDO"],
+    color: ["BORDO"],
     sizes: [
       {
         size: "",
@@ -1494,11 +1536,12 @@ const allProducts = [
     title: "MEDIAS ADIDAS RUNNING X SUPERNOVA PERFORMANCE MEDIA PANTORRILLA",
     description: "MEDIAS DE RUNNING VENTILADAS, HECHAS PARCIALMENTE CON PARLEY OCEAN PLASTIC",
     price: "7",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
-    colour: ["ROSA"],
+    color: ["ROSA"],
     sizes: [
       {
         size: "",
@@ -1516,11 +1559,12 @@ const allProducts = [
     title: "MEDIAS ADI 21",
     description: "MEDIAS PARA EL CAMPO DE FÚTBOL",
     price: "8",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
-    colour: ["ROJO"],
+    color: ["ROJO"],
     sizes: [
       {
         size: "",
@@ -1535,11 +1579,12 @@ const allProducts = [
     title: "CANILLERAS MESSI CLUB",
     description: "CANILLERAS LIVIANAS PARA LOS 10 PERFECTOS",
     price: "3",
-    discount: "0",
+    discount: "0
+    marca:"",",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "CANILLERAS",
-    colour: ["AZUL"],
+    color: ["AZUL"],
     sizes: [
       {
         size: "",
