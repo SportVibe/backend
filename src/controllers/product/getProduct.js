@@ -74,7 +74,7 @@ const getProduct = async (req, res) => {
     });
 
     //se destructura limite de paginas, pagina actual,  siguiente y anterior pagina
-    const { limitPage, currentPage, nextPage, previousPage } = await Paginado(page, limit, countProducts);
+    const { limitPage, currentPage, nextPage, previousPage } = Paginado(page, limit, countProducts);
 
     return res.status(200).json({
       totalCount: countProducts,
