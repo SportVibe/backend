@@ -6,11 +6,11 @@ const allProducts = [
     description: "UNA CHOMBA CÓMODA PARA HINCHAS DE RIVER PLATE HECHA PARCIALMENTE CON MATERIAL RECICLADO",
     price: 34,
     discount: 0,
-    marca: "",
+    mark: "ADIDAS",
     gender: "hombre",
     category: "camisetas",
     subCategory: "camisetas de futbol",
-    color: ["VERDE", "BLANCO"],
+    color: ["ROJO", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -36,11 +36,11 @@ const allProducts = [
     description: "LA NUEVA CAMISETA DE RIVER PLATE MANTIENE EL CLÁSICO PALADAR DEL HINCHA RIVERPLATENSE.",
     price: 52,
     discount: 0,
-    marca: "",
+    mark: "ADIDAS",
     gender: "hombre",
     category: "camisetas",
     subCategory: "camisetas de futbol",
-    color: ["VERDE", "BLANCO"],
+    color: ["ROJO", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -66,11 +66,11 @@ const allProducts = [
     description: "CELEBRÁ LA VICTORIA CON ESTA CAMISETA HECHA CON UNA MEZCLA DE MATERIALES RECICLADOS Y RENOVABLES.",
     price: 89,
     discount: 0,
-    marca: "",
+    mark: "ADIDAS",
     gender: "hombre",
     category: "camisetas",
     subCategory: "camisetas de futbol",
-    color: ["VERDE", "BLANCO"],
+    color: ["CELESTE", "BLANCO"],
     sizes: [
       {
         size: "S",
@@ -95,22 +95,22 @@ const allProducts = [
     description: "ZAPATILLAS DE COMPETICIÓN CARGADAS DE ELEMENTOS ORIENTADOS AL RENDIMIENTO.",
     price: 245,
     discount: 0,
-    marca:"",
+    mark: "ADIDAS",
     gender: "hombre",
     category: "calzado",
     subCategory: "zapatillas",
-    color: ["VERDE", "BLANCO"],
+    color: ["BLANCO"],
     sizes: [
       {
-        size: "S",
+        size: "39",
         stock: 10,
       },
       {
-        size: "M",
+        size: "40",
         stock: 15,
       },
       {
-        size: "L",
+        size: "41",
         stock: 20,
       },
     ],
@@ -126,23 +126,15 @@ const allProducts = [
     description: "UN MINI BOLSO AIRLINER DE LUJO QUE ES EL COMPAÑERO PERFECTO PARA EXPLORAR LA CIUDAD.",
     price: 31,
     discount: 0,
-    marca:"",
+    mark: "ADIDAS",
     gender: "mujer",
     category: "accesorios",
     subCategory: "bolso",
-    color: ["VERDE", "BLANCO"],
+    color: ["GRIS"],
     sizes: [
       {
-        size: "S",
+        size: "U",
         stock: 10,
-      },
-      {
-        size: "M",
-        stock: 15,
-      },
-      {
-        size: "L",
-        stock: 20,
       },
     ],
     images: [
@@ -150,59 +142,21 @@ const allProducts = [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/60f22e07e1eb43a19814aef50102b237_9366/Mini_Bolso_Airliner_Blanco_IC2151_02_standard.jpg",
     ],
   },
-  {
-    title: "ZAPATILLAS RUNNING SWITCH RUN",
-    description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
-    price: 76,
-    discount: 0,
-    marca:"",
-    gender: "mujer",
-    category: "calzado",
-    subCategory: "zapatillas",
-    color: ["VERDE", "BLANCO"],
-    sizes: [
-      {
-        size: "S",
-        stock: 10,
-      },
-      {
-        size: "M",
-        stock: 15,
-      },
-      {
-        size: "L",
-        stock: 20,
-      },
-    ],
-    images: [
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/8e5613cb0e784bc38da8d493525d6fd0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM4.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/d77bf575dc314ddf9408ab3f1f8d4165_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM5.jpg",
-    ],
-  },
+
   {
     title: "Liverpool FC Strike",
     description: "Pelota de Futbol Unisex",
     price: 37,
     discount: 0,
-    marca:"",
+    mark: "ADIDAS",
     gender: "unisex",
     category: "accesorios",
     subCategory: "pelotas",
-    color: ["VERDE", "BLANCO"],
+    color: ["ROJO"],
     sizes: [
       {
-        size: "S",
+        size: "U",
         stock: 10,
-      },
-      {
-        size: "M",
-        stock: 15,
-      },
-      {
-        size: "L",
-        stock: 20,
       },
     ],
     images: [
@@ -210,43 +164,13 @@ const allProducts = [
       "https://nikearprod.vtexassets.com/arquivos/ids/160495-1200-1200?v=638086355359800000&width=1200&height=1200&aspect=true",
     ],
   },
+
   {
     title: "ZAPATILLAS RUNNING SWITCH RUN",
     description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
     price: 76,
     discount: 0,
-    marca:"",
-    gender: "mujer",
-    category: "calzado",
-    subCategory: "zapatillas",
-    color: ["VERDE", "BLANCO"],
-    sizes: [
-      {
-        size: "S",
-        stock: 10,
-      },
-      {
-        size: "M",
-        stock: 15,
-      },
-      {
-        size: "L",
-        stock: 20,
-      },
-    ],
-    images: [
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/8e5613cb0e784bc38da8d493525d6fd0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM4.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/d77bf575dc314ddf9408ab3f1f8d4165_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM5.jpg",
-    ],
-  },
-  {
-    title: "ZAPATILLAS RUNNING SWITCH RUN",
-    description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
-    price: 76,
-    discount: 0,
-    marca:"",
+    mark: "ADIDAS",
     gender: "mujer",
     category: "calzado",
     subCategory: "zapatillas",
@@ -272,48 +196,31 @@ const allProducts = [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/d77bf575dc314ddf9408ab3f1f8d4165_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM5.jpg",
     ],
   },
-  {
-    title: "ZAPATILLAS RUNNING SWITCH RUN",
-    description: "ZAPATILLAS DE RUNNING LIVIANAS CON EXTERIOR DE MALLA Y AMARRE CON CORDONES.",
-    price: 76,
-    discount: 0,
-    marca:"",
-    gender: "mujer",
-    category: "calzado",
-    subCategory: "zapatillas",
-    color: ["VERDE", "BLANCO"],
-    sizes: [
-      {
-        size: "38",
-        stock: 10,
-      },
-      {
-        size: "37",
-        stock: 15,
-      },
-      {
-        size: "39",
-        stock: 20,
-      },
-    ],
-    images: [
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/5c6d4962fd0948ef8dd6f7a9398000e0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM1.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a7f3667002ce424b860d8be2d73b9292_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM3_hover.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/8e5613cb0e784bc38da8d493525d6fd0_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM4.jpg",
-      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/d77bf575dc314ddf9408ab3f1f8d4165_9366/Zapatillas_Running_Switch_Run_Blanco_IF5734_HM5.jpg",
-    ],
-  },
+
   {
     title: "REMERA CORTA TIRO COLORBLOCK",
     description: "UNA REMERA CORTA HECHA CON MATERIALES RECICLADOS.",
     price: "46",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "REMERAS",
     color: ["VERDE", "BLANCO"],
-    stocks: [],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
     images: [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2ebf8f673ccf498cb3bb6e580c430d90_9366/Remera_Corta_Tiro_Colorblock_Verde_IM4997_21_model.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/43535fb4394e4eb2acb3222c4ed4c913_9366/Remera_Corta_Tiro_Colorblock_Verde_IM4997_23_hover_model.jpg",
@@ -325,8 +232,8 @@ const allProducts = [
     title: "CAMPERA TIRO TEJIDA",
     description: "UNA CAMPERA EN COLORES VIVOS HECHA DE MATERIALES RECICLADOS.",
     price: "71",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CAMPERAS",
@@ -356,8 +263,8 @@ const allProducts = [
     title: "TRAJE DE NATACIÓN ADICOLOR 3 TIRAS",
     description: "UN TRAJE DE NATACIÓN CLÁSICO HECHO PARCIALMENTE CON MATERIALES RECICLADOS.",
     price: "67",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "NATACIÓN",
     subCategory: "TRAJES",
@@ -387,8 +294,8 @@ const allProducts = [
     title: "TRAJE DE NATACIÓN POSITIVISEA 3 TIRAS",
     description: "UN TRAJE DE NATACIÓN DEPORTIVO HECHO PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "35",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "NATACIÓN",
     subCategory: "TRAJES",
@@ -418,8 +325,8 @@ const allProducts = [
     title: "CALZAS CORTAS ADIDAS X FARM RIO TIRO ALTO",
     description: "CALZAS CORTAS DE ENTRENAMIENTO ADIDAS X FARM RIO HECHAS PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "45",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
@@ -449,8 +356,8 @@ const allProducts = [
     title: "CONJUNTO TEAMSPORT",
     description: "UN CONJUNTO MODERNO HECHO DE MATERIALES RECICLADOS.",
     price: "85",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CONJUNTOS",
@@ -480,12 +387,12 @@ const allProducts = [
     title: "PANTALÓN DEPORTIVO ADIDAS X FARM RIO",
     description: "UN PANTALÓN DEPORTIVO LLENO DE ESTILO VERANIEGO HECHO CON MATERIALES RECICLADOS.",
     price: "73",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "PANTALONES",
-    color: [""],
+    color: ["MULTICOLOR"],
     sizes: [
       {
         size: "S",
@@ -511,12 +418,12 @@ const allProducts = [
     title: "ROMPEVIENTOS DE RUNNING CON CAPUCHA OWN THE RUN",
     description: "UN ROMPEVIENTOS DE RUNNING PLEGABLE PARA TUS SALIDAS A CORRER DIARIAS.",
     price: "70",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CAMPERAS",
-    color: "NEGRO",
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -542,12 +449,12 @@ const allProducts = [
     title: "CAMISETA TITULAR RIVER PLATE 23/24 (MUJER)",
     description: "LA NUEVA CAMISETA DE RIVER PLATE MANTIENE EL CLÁSICO PALADAR DEL HINCHA RIVERPLATENSE.",
     price: "46",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
-    color: "BLANCO",
+    color: ["BLANCO"],
     sizes: [
       {
         size: "S",
@@ -572,12 +479,12 @@ const allProducts = [
     title: "POLLERA ADIDAS X FARM RIO",
     description: "UNA POLLERA SUAVE CON UNA ONDA TROPICAL HECHA CON MATERIALES RECICLADOS.",
     price: "51",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "POLLERAS",
-    color: "",
+    color: ["MULTICOLOR"],
     sizes: [
       {
         size: "S",
@@ -603,12 +510,12 @@ const allProducts = [
     title: "SHORTS ADICOLOR ESSENTIALS FELPA FRANCESA",
     description: "SHORTS SUAVES Y CÓMODOS CON UN ESTILO DISTINTIVO",
     price: "35",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "SHORTS",
-    color: "NEGRO",
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -634,12 +541,12 @@ const allProducts = [
     title: "CONJUNTO ESSENTIALS 3 TIRAS",
     description: "UN CONJUNTO DE DOS PIEZAS CON MUCHOS BOLSILLOS",
     price: "73",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CONJUNTOS",
-    color: "ROJO",
+    color: ["ROJO"],
     sizes: [
       {
         size: "S",
@@ -665,12 +572,12 @@ const allProducts = [
     title: "CONJUNTO LINEAR",
     description: "UN CONJUNTO CÓMODO HECHA CON MATERIALES RECICLADOS.",
     price: "90",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CONJUNTOS",
-    color: "NEGRO",
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -696,12 +603,12 @@ const allProducts = [
     title: "CALZAS CORTAS DE ENTRENAMIENTO TAILORED HIIT 45 SEGUNDOS TIRO ALTO",
     description: "CALZAS ADIDAS PARA ENTRENAMIENTOS INTENSOS, HECHAS PARCIALMENTE CON MATERIALES RECICLADOS.",
     price: "75",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
-    color: "VERDE",
+    color: ["VERDE"],
     sizes: [
       {
         size: "S",
@@ -727,12 +634,12 @@ const allProducts = [
     title: "CALZAS LARGAS FAST IMPACT X-CITY REFLECT AT NIGHT",
     description: "La colección X-City Reflect At Night se ha diseñado para tu próxima carrera.",
     price: "110",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
-    color: "NEGRO",
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -758,23 +665,23 @@ const allProducts = [
     title: "ZAPATILLAS ADIDAS GRAND COURT CLOUDFOAM COMFORT",
     description: "ZAPATILLAS CLÁSICAS ATEMPORALES HECHAS PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "68",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "CALZADO",
     subCategory: "ZAPATILLAS",
-    color: "OLIVO SOMBRÍO",
+    color: ["OLIVO SOMBRÍO"],
     sizes: [
       {
-        size: "S",
+        size: "35",
         stock: 10,
       },
       {
-        size: "M",
+        size: "37",
         stock: 15,
       },
       {
-        size: "L",
+        size: "39",
         stock: 20,
       },
     ],
@@ -789,12 +696,12 @@ const allProducts = [
     title: "ZAPATILLAS NMD_V3",
     description: "ZAPATILLAS VERSÁTILES HECHAS PARCIALMENTE CON PARLEY OCEAN PLASTIC.",
     price: "67",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "CALZADO",
     subCategory: "ZAPATILLAS",
-    color: "AZUL",
+    color: ["AZUL"],
     sizes: [
       {
         size: "40",
@@ -820,12 +727,12 @@ const allProducts = [
     title: "ZAPATILLAS ADIDAS COURT FUNK",
     description: "ZAPATILLAS PARA USO DIARIO CON UN LOOK CLÁSICO, HECHAS EN PARTE CON MATERIALES RECICLADOS",
     price: "81",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "MUJER",
     category: "CALZADO",
     subCategory: "ZAPATILLAS",
-    color: "BLANCO",
+    color: ["BLANCO"],
     sizes: [
       {
         size: "40",
@@ -851,8 +758,8 @@ const allProducts = [
     title: "SANDALIAS ADILETTE COMFORT",
     description: "SANDALIAS DEPORTIVAS CLÁSICAS MUY LIVIANAS",
     price: "50",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "CALZADO",
     subCategory: "SANDALIAS",
@@ -883,8 +790,8 @@ const allProducts = [
     description:
       "DESCUBRÍ EL SIGNIFICADO DE LA VELOCIDAD CON ESTOS BOTINES HECHOS PARCIALMENTE CON MATERIALES RECICLADOS.",
     price: "80",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "CALZADO",
     subCategory: "BOTINES",
@@ -915,8 +822,8 @@ const allProducts = [
     description:
       "LA NUEVA CAMISETA OFICIAL IRRADIA LA PASIÓN BOQUENSE Y LA CONEXIÓN CON EL BARRIO. BOCA ES PUEBLO Y CARNAVAL",
     price: "52",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
@@ -946,8 +853,8 @@ const allProducts = [
     description:
       "MOSTRÁ TU APOYO CON ESTA CAMISETA MESSI 10 INTER MIAMI CF CREADA PARA LOS AFICIONADOS Y HECHA CON MATERIALES RECICLADOS.",
     price: "60",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
@@ -978,12 +885,12 @@ const allProducts = [
     description:
       "M Doodle F T es un nuevo producto para Hombre de adidas. Te invitamos a ver las imágenes para apreciar más detalles desde diferentes ángulos. ",
     price: "30",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    color: "BLANCO",
+    color: ["BLANCO"],
     sizes: [
       {
         size: "S",
@@ -1009,12 +916,12 @@ const allProducts = [
     description:
       "M Doodle F T es un nuevo producto para Hombre de adidas. Te invitamos a ver las imágenes para apreciar más detalles desde diferentes ángulos. ",
     price: "30",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
-    color: "NEGRO",
+    color: ["NEGRO"],
     sizes: [
       {
         size: "S",
@@ -1039,8 +946,8 @@ const allProducts = [
     title: "CAMPERA DEPORTIVA ADICOLOR CLASSICS PRIMEBLUE SST",
     description: "UNA DE LAS DOS PIEZAS DEL CLÁSICO CONJUNTO CON TODA LA COMODIDAD",
     price: "102",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMPERAS",
@@ -1067,8 +974,8 @@ const allProducts = [
     title: "REMERA AEROREADY DESIGNED 2 MOVE FEELREADY",
     description: "UNA REMERA CON ESPALDA ALARGADA PARA UNA MAYOR COBERTURA MIENTRAS ENTRENÁS",
     price: "30",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
@@ -1095,8 +1002,8 @@ const allProducts = [
     title: "SHORTS FORTORE 23",
     description: "SHORTS INSPIRADOS EN LOS AÑOS 90, IDEALES PARA EQUIPOS AMATEUR, HECHOS CON MATERIALES RECICLADOS",
     price: "25",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "SHORTS",
@@ -1126,8 +1033,8 @@ const allProducts = [
     title: "PANTALÓN TEJIDO",
     description: "UN PANTALÓN DEPORTIVO CLÁSICO CON CINTURA CON CORDÓN PARA UN AJUSTE CÓMODO Y HOLGADO.",
     price: "80",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "PANTALONES",
@@ -1158,8 +1065,8 @@ const allProducts = [
     description:
       "UNA CAMISETA CON TECNOLOGÍA DE ABSORCIÓN CON EL ADN DEL FÚTBOL DE LOS 80, HECHA PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "30",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
@@ -1189,8 +1096,8 @@ const allProducts = [
     title: "CAMISETA FORTORE 23",
     description: "UNA CAMISETA INSPIRADA EN LOS 90, IDEAL PARA EQUIPOS AMATEUR, HECHA CON MATERIALES RECICLADOS",
     price: "32",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "CAMISETAS DE FUTBOL",
@@ -1220,8 +1127,8 @@ const allProducts = [
     title: "PANTALÓN AEROREADY DESIGNED 2 MOVE SPORT",
     description: "PANTALÓN DEPORTIVO CON BOLSILLOS LATERALES",
     price: "41",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "PANTALONES",
@@ -1251,8 +1158,8 @@ const allProducts = [
     title: "REMERA BZRP",
     description: "UNA REMERA CON ESTILO PARA VIVIR EL BZRP LIVE TOUR",
     price: "38",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
@@ -1282,8 +1189,8 @@ const allProducts = [
     title: "REMERA MESSI N&N",
     description: "UNA REMERA QUE CELEBRA AL MEJOR FUTBOLISTA DE TODOS LOS TIEMPOS",
     price: "32",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
@@ -1311,8 +1218,8 @@ const allProducts = [
     title: "REMERA GRAPHIC FOIL",
     description: "UNA REMERA CON LÍNEAS DEFINIDAS Y UN TOQUE DE BRILLO",
     price: "30",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "HOMBRE",
     category: "ROPA",
     subCategory: "REMERAS",
@@ -1342,15 +1249,15 @@ const allProducts = [
     title: "PELOTA AL HILM PRO",
     description: "LA PELOTA SIN COSTURAS QUE SERÁ PROTAGONISTA EN LA FINAL DE QATAR.",
     price: "110",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "PELOTAS",
-    color: [""],
+    color: ["BLANCO", "ROJO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1363,15 +1270,15 @@ const allProducts = [
     title: "PELOTA ARGENTUM 22 PRO",
     description: "UNA PELOTA DE PRIMERA CALIDAD PARA PARTIDOS, INSPIRADA EN UN ÍCONO ARGENTINO",
     price: "105",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "PELOTAS",
     color: ["BLANCO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1385,15 +1292,15 @@ const allProducts = [
     description:
       "PERFECTA PARA TU DÍA A DÍA Escapate de fin de semana o acude al gimnasio. Esta resistente mochila para entrenamiento presenta un diseño espacioso con bolsillos que se adapta a tu ajetreado ritmo de vida.",
     price: "16",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "BOLSOS",
     color: ["NEGRO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1406,15 +1313,15 @@ const allProducts = [
     title: "MEDIAS ACOLCHADAS DIP-DYED 3 TIRAS LARGO CLÁSICO 3 PARES",
     description: "UN PAQUETE DE TRES PARES DE MEDIAS ACOLCHADAS HECHAS CON MATERIAL RECICLADO",
     price: "18",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
-    color: "",
+    color: ["AMARILLO", "CELESTE", "ROSA"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1426,15 +1333,15 @@ const allProducts = [
     title: "GORRO PESCADOR ADICOLOR CLASSIC WINTER",
     description: "UN GORRO PESCADOR SUAVE EN FELPA CÓMODA HECHO PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "28",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "GORRAS",
     color: ["NEGRO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1449,15 +1356,15 @@ const allProducts = [
     title: "MINI PELOTA STARLANCER",
     description: "UNA MINI PELOTA DE FÚTBOL PARA JUGAR EN TODO MOMENTO Y LUGAR",
     price: "20",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "PELOTAS",
     color: ["BLANCO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1470,15 +1377,15 @@ const allProducts = [
     title: "GORRA SHMOO (UNISEX)",
     description: "UNA GORRA CLÁSICA CON EL FAMOSO SHMOO DE MARK GONZALES",
     price: "8",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "GORRAS",
     color: ["AMARILLO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1491,15 +1398,15 @@ const allProducts = [
     title: "GORRA ESPAÑA INCLUSIÓN",
     description: "UNA GORRA DE VISERA CURVA PARA LOS HINCHAS DE ESPAÑA, HECHA PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "23",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "GORRAS",
     color: ["AZUL"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1514,15 +1421,15 @@ const allProducts = [
     title: "MEDIAS ADI 23",
     description: "MEDIAS DE FÚTBOL CON HORMA ESPECÍFICA A CADA PIE, HECHAS PARCIALMENTE CON MATERIALES RECICLADOS",
     price: "8",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
     color: ["BORDO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1536,15 +1443,15 @@ const allProducts = [
     title: "MEDIAS ADIDAS RUNNING X SUPERNOVA PERFORMANCE MEDIA PANTORRILLA",
     description: "MEDIAS DE RUNNING VENTILADAS, HECHAS PARCIALMENTE CON PARLEY OCEAN PLASTIC",
     price: "7",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
     color: ["ROSA"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1559,15 +1466,15 @@ const allProducts = [
     title: "MEDIAS ADI 21",
     description: "MEDIAS PARA EL CAMPO DE FÚTBOL",
     price: "8",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "MEDIAS",
     color: ["ROJO"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1579,15 +1486,15 @@ const allProducts = [
     title: "CANILLERAS MESSI CLUB",
     description: "CANILLERAS LIVIANAS PARA LOS 10 PERFECTOS",
     price: "3",
-    discount: "0
-    marca:"",",
+    discount: 0,
+    mark: "ADIDAS",
     gender: "UNISEX",
     category: "ACCESORIOS",
     subCategory: "CANILLERAS",
     color: ["AZUL"],
     sizes: [
       {
-        size: "",
+        size: "U",
         stock: 10,
       },
     ],
@@ -1595,6 +1502,602 @@ const allProducts = [
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/23b860f8e1334a119baaad81011b7bdc_9366/Canilleras_Messi_Club_Rosa_H50876_01_standard.jpg",
       "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/8e67425e29a743e08446ad81011b8156_9366/Canilleras_Messi_Club_Rosa_H50876_41_detail_hover.jpg",
     ],
+  },
+  {
+    title: "BUZO CON CAPUCHA LE COQ SPORTIF TECH AZUL",
+    description: "Buzo con capucha Algodón/Poliéster Buen ajuste, agradable y suave de llevar, aspecto efecto piqué",
+    price: "55",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "HOMBRE",
+    category: "ROPA",
+    subCategory: "BUZOS",
+    color: ["AZUL"],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__thumbnail-27.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__803fed39-d1d4-4b76-a3a0-1bc276e06870-400x400.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__a6f45a1d-92e6-41fd-82a5-9717282cb009-400x400.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__thumbnail-26-400x400.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__thumbnail-17.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__thumbnail-18-400x400.jpg",
+    ],
+  },
+  {
+    title: "MUSCULOSA LE COQ SPORTIF PERFORMANCE N°1 HOMBRE AZUL",
+    description: "Musculosa de entrenamiento para hombre",
+    price: "26",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "HOMBRE",
+    category: "ROPA",
+    subCategory: "MUSCULOSA",
+    color: ["AZUL"],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__b16a2436-769a-45b2-a1fe-a700cb748403.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__d4b8398e-1053-4299-b04e-498e38d34aa8.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__thumbnail-3-400x400.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__247fd17a-6f30-493e-93bf-35cdd2e5bc37-400x400.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__87ebf5fc-3427-44f6-857e-f10e686be9d6-400x400.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__2afc1776-e7d6-4eff-b0b3-f1f64c7d9d37-400x400.jpg",
+    ],
+  },
+  {
+    title: "MUSCULOSA LE COQ SPORTIF PERFORMANCE N°1 HOMBRE ROJA",
+    description: "Musculosa de entrenamiento para hombre",
+    price: "26",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "HOMBRE",
+    category: "ROPA",
+    subCategory: "MUSCULOSAS",
+    color: ["ROJO"],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/63f36673374fa-2110908_1-1024x1024.webp",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/63f36685e9cc4-2110908_3-1024x1024.webp",
+    ],
+  },
+  {
+    title: "REMERA LE COQ SPORTIF PERFORMANCE HOMBRE N°1 AZUL ELÉCTRICO",
+    description: "Camiseta de entrenamiento de manga corta de Hombre",
+    price: "27",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "HOMBRE",
+    category: "ROPA",
+    subCategory: "REMERAS",
+    color: ["AZUL"],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__e6fb0865-4eac-4836-93fb-62d49b2c927d.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__e7b5ff39-4d3b-48b9-82b6-afc194d5e00e.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__672ade81-fecd-4c56-909a-544dd1b674a2.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__610ad652-952f-449d-bd4a-3c0fa570247e.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__d1cc3bd2-bf26-49dc-86f1-240fbd6337ab.jpg",
+      "https://lecoqsportif.com.ar/wp-content/uploads/2023/10/MiConv.com__5116e2b6-2004-4aeb-87df-835fbe437dd6.jpg",
+    ],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
+  },
+  {
+    title: "",
+    description: "",
+    price: "",
+    discount: 0,
+    mark: "LECOQSPORTIF",
+    gender: "",
+    category: "",
+    subCategory: "",
+    color: [""],
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [],
   },
 ];
 
