@@ -32,6 +32,65 @@ const allProducts = [
     ],
   },
   {
+    title: "CAMISETA TITULAR RIVER PLATE 23/24",
+    description: "LA NUEVA CAMISETA DE RIVER PLATE MANTIENE EL CLÁSICO PALADAR DEL HINCHA RIVERPLATENSE.",
+    price: 52,
+    discount: 0,
+    // available: true,
+    gender: "hombre",
+    category: "camisetas",
+    subCategory: "camisetas de futbol",
+    // stock: 10,
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/401778e50ef4449d9656d40e9346b8af_9366/Camiseta_Titular_River_Plate_23-24_Blanco_HT3679_01_laydown.jpg",
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2a415812f2fc4f75baab1b63640e0e55_9366/Camiseta_Titular_River_Plate_23-24_Blanco_HT3679_02_laydown_hover.jpg",
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/b9a36927213c4739b1b61cabf35e0024_9366/Camiseta_Titular_River_Plate_23-24_Blanco_HT3679_41_detail.jpg",
+    ],
+  },
+  {
+    title: "CAMISETA TITULAR OFICIAL ARGENTINA 3 ESTRELLAS 2022",
+    description: "CELEBRÁ LA VICTORIA CON ESTA CAMISETA HECHA CON UNA MEZCLA DE MATERIALES RECICLADOS Y RENOVABLES.",
+    price: 89,
+    discount: 0,
+    // available: true,
+    gender: "hombre",
+    category: "camisetas",
+    subCategory: "camisetas de futbol",
+    // stock: 10,
+    sizes: [
+      {
+        size: "S",
+        stock: 10,
+      },
+      {
+        size: "M",
+        stock: 15,
+      },
+      {
+        size: "L",
+        stock: 20,
+      },
+    ],
+    images: [
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/e71e00b27c824e2eab737a04afd5acaf_9366/Camiseta_Titular_Oficial_Argentina_3_estrellas_2022_Blanco_GC4397_01_laydown.jpg",
+      "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/08897180a1a7405b9cb62d26ebe9b2a5_9366/Camiseta_Titular_Oficial_Argentina_3_estrellas_2022_Blanco_GC4397_02_laydown_hover.jpg",
+    ],
+  },
+  {
     title: "ZAPATILLAS ADIZERO PRIME X 2.0 STRUNG",
     description: "ZAPATILLAS DE COMPETICIÓN CARGADAS DE ELEMENTOS ORIENTADOS AL RENDIMIENTO.",
     price: 245,
