@@ -1,7 +1,8 @@
 const Paginado = (page, limit, products) => {
+  //paginado -----> habría que llevar la lógica del paginado a utilities
   const currentPage = page ? parseInt(page) : 1;
-
   const limitPage = limit ? parseInt(limit) : 12;
+  const offset = (currentPage - 1) * limitPage;
 
   const baseUrl = "http://localhost:3005/Inventario";
 
@@ -27,6 +28,7 @@ const Paginado = (page, limit, products) => {
     nextPage,
     limitPage,
     currentPage,
+    offset,
   };
 
   return resultado;

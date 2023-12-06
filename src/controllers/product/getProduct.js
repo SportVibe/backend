@@ -6,6 +6,14 @@ const getProduct = async (req, res) => {
   try {
     const { page, limit, gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
 
+    //cantidad de productos en la db
+    const countProducts = await Product.count({
+      where: { available: true },
+    });
+
+    //se destructura limite de paginas, pagina actual,  siguiente y anterior pagina
+    const { limitPage, currentPage, nextPage, previousPage, offset } = Paginado(page, limit, countProducts);
+
     // filtros
 
     const filterCriteria = {};
@@ -13,7 +21,7 @@ const getProduct = async (req, res) => {
     filterCriteria.subCategory = subCategory || { [Op.not]: null };
     filterCriteria.category = category || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
-    filterCriteria.Sizes = Sizes || { [Op.not]: null };
+    //filterCriteria.Sizes = Sizes || { [Op.not]: null };
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
       filterCriteria.price = {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
@@ -26,11 +34,6 @@ const getProduct = async (req, res) => {
         [Op.iLike]: `%${search}%`,
       };
     }
-
-    //cantidad de productos en la db
-    const countProducts = await Product.count({
-      where: { available: true },
-    });
 
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
@@ -72,9 +75,6 @@ const getProduct = async (req, res) => {
 
       return modifiedProduct;
     });
-
-    //se destructura limite de paginas, pagina actual,  siguiente y anterior pagina
-    const { limitPage, currentPage, nextPage, previousPage } = Paginado(page, limit, countProducts);
 
     return res.status(200).json({
       totalCount: countProducts,
