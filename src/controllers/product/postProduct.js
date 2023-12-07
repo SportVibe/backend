@@ -3,15 +3,14 @@ const createProduct = require("../../handlers/Product/createProduct");
 
 const postProduct = async (req, res) => {
   try {
+    const { title, description, mark, category, subCategory, sizes, gender, price, discount, images } = req.body;
 
-    const { title, description, category, subCategory, sizes, gender, price, discount, images } = req.body;
-
-
-    if (title && description && price && category && sizes.length && images.length) {
+    if (title && description && mark && price && category && sizes.length && images.length) {
       const isThisAlreadyCreated = await Product.findOne({
         where: {
           title: title.toUpperCase(),
           description: description.toUpperCase(),
+          mark: mark.toUpperCase(),
           category: category.toUpperCase(),
           subCategory: subCategory?.toUpperCase(),
           gender: gender.toUpperCase(),
@@ -27,6 +26,7 @@ const postProduct = async (req, res) => {
           description,
           category,
           subCategory,
+          mark,
           sizes,
           price,
           discount,

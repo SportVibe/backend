@@ -1,10 +1,22 @@
 const { Product, Image, Size, Stock } = require("../../db");
 
-const createProduct = async ({ title, description, category, subCategory, sizes, gender, price, discount, images }) => {
+const createProduct = async ({
+  title,
+  description,
+  category,
+  mark,
+  subCategory,
+  sizes,
+  gender,
+  price,
+  discount,
+  images,
+}) => {
   if (title && description && price && category && sizes.length && images.length) {
     const currentProduct = await Product.create({
       title: title.toUpperCase(),
       description: description.toUpperCase(),
+      mark: mark.toUpperCase(),
       category: category.toUpperCase(),
       subCategory: subCategory?.toUpperCase(),
       gender: gender.toUpperCase(),
