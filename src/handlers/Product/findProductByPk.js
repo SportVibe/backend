@@ -1,4 +1,4 @@
-const { Product, Image, Stock, Size } = require("../../db");
+const { Product, Image, Stock, Size, Color } = require("../../db");
 
 const findProductByPk = async (req, res) => {
   const { id } = req.params;
@@ -9,6 +9,7 @@ const findProductByPk = async (req, res) => {
         include: [{ model: Size, attributes: ["name"] }],
       },
       { model: Image, attributes: ["url"], through: { attributes: [] } },
+      { model: Color, attributes: ["name"], through: { attributes: [] } },
     ],
   });
 
@@ -21,6 +22,11 @@ const findProductByPk = async (req, res) => {
 
   // Modificar el array de imágenes
   modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
+
+  // Verificar si existe la propiedad Color antes de mapear
+  if (modifiedProduct.Colors) {
+    modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
+  }
 
   // Modificar el array de tallas y cantidades (stock)
   modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
