@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+
 const postProduct = require("../controllers/Product/postProduct");
 const getProductByPk = require("../controllers/Product/deleteProductByPk");
 const getProduct = require("../controllers/Product/getProduct");
