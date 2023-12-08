@@ -93,6 +93,24 @@ Product.belongsToMany(User, { through: "Purchase" });
 Size.belongsToMany(Product, { through: "Product_size" });
 Product.belongsToMany(Size, { through: "Product_size" });
 
+const { Category, Subcategory, Color, Gender } = sequelize.models;
+
+// RELACIONES CON Category, Subcategory, Color y Gender:
+
+// Relación entre Category y Subcategory (uno a muchos)
+Category.hasMany(Subcategory);
+Subcategory.belongsTo(Category);
+
+// Relación entre Product y Color (muchos a muchos)
+Product.belongsToMany(Color, { through: "ProductColor" });
+Color.belongsToMany(Product, { through: "ProductColor" });
+
+// Relación entre Product y Gender (muchos a muchos)
+Product.belongsToMany(Gender, { through: "ProductGender" });
+Gender.belongsToMany(Product, { through: "ProductGender" });
+
+
+
 module.exports = {
   sequelize,
   ...sequelize.models,
