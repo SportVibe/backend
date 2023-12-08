@@ -1,18 +1,17 @@
 const { Op } = require("sequelize");
-const { Product, Image, Stock, Size, Comment } = require("../../db");
+const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
 
 const getProduct = async (req, res) => {
   try {
     const { page, limit, gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
 
-
     //cantidad de productos en la db
     const countProducts = await Product.count({
       where: { available: true },
     });
 
-    //se destructura limite de paginas, pagina actual,  siguiente y anterior pagina
+    //se desestructura limite de paginas, pagina actual,  siguiente y anterior pagina
     const { limitPage, currentPage, nextPage, previousPage, offset } = Paginado(page, limit, countProducts);
 
     // filtros
@@ -52,6 +51,7 @@ const getProduct = async (req, res) => {
           include: [{ model: Size, attributes: ["name"] }],
         },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
+        { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
     });
 
@@ -65,6 +65,11 @@ const getProduct = async (req, res) => {
 
       // Modificar el array de imágenes
       modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
+
+      // Verificar si existe la propiedad Color antes de mapear
+      if (modifiedProduct.Colors) {
+        modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
+      }
 
       // Modificar el array de tallas y cantidades (stock)
       modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
@@ -88,7 +93,7 @@ const getProduct = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ mensaje: "Hubo un error al recuperar los productos." });
+    return res.status(500).json({ error: error.message });
   }
 };
 
