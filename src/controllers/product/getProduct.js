@@ -8,7 +8,7 @@ const getProduct = async (req, res) => {
     const limit = req.query.limit ? parseInt(req.query.limit) : 12;
     const offset = (currentPage - 1) * limit;
 
-    const baseUrl = "http://localhost:3005/Inventario";
+    const baseUrl = "http://localhost:3005/product";
 
     let previousPage = "";
 
@@ -21,7 +21,7 @@ const getProduct = async (req, res) => {
     const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de nulo
 
     // filtros
-    const { gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.body;
+    const { gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
     const filterCriteria = {};
     filterCriteria.gender = gender || { [Op.not]: null };
     filterCriteria.subCategory = subCategory || { [Op.not]: null };
