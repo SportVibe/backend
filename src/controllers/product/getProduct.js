@@ -6,6 +6,7 @@ const getProduct = async (req, res) => {
   try {
     const { page, limit, gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
 
+
     //cantidad de productos en la db
     const countProducts = await Product.count({
       where: { available: true },
@@ -91,6 +92,4 @@ const getProduct = async (req, res) => {
   }
 };
 
-module.exports = {
-  getProduct,
-};
+module.exports = getProduct;

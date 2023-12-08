@@ -25,6 +25,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      mark: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       gender: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -37,10 +41,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      // stock: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      // },
       available: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
