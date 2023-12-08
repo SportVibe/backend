@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 const postProduct = require("../controllers/Product/postProduct");
-const getProductByPk = require("../controllers/Product/deleteProductByPk");
+const getProductByPk = require("../controllers/product/getProductByPk");
 const getProduct = require("../controllers/Product/getProduct");
 const searchProduct = require("../controllers/product/searchProduct");
 
