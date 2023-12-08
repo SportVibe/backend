@@ -8,4 +8,4 @@ const deleteProductByPk = async (req, res) => {
   }
 };
 
-module.exports = { deleteProductByPk };
+module.exports = deleteProductByPk;

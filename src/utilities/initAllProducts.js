@@ -1,4 +1,4 @@
-const postProduct = require("../controllers/product/postProduct");
+const postProduct = require("../controllers/Product/postProduct");
 
 const allProducts = [
   {
@@ -2121,6 +2121,4 @@ async function initializeProducts() {
     console.error("Error al inicializar los Productos:", error.message);
   }
 }
-module.exports = {
-  initializeProducts,
-};
+module.exports = { initializeProducts };
