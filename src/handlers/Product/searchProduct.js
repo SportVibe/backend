@@ -5,7 +5,6 @@ const search = async (req, res) => {
   try {
     const { product } = req.params;
 
-    // Utilizamos el operador Op.iLike para realizar una búsqueda de "case-insensitive"
     const products = await Product.findAll({
       where: {
         title: {
@@ -30,7 +29,7 @@ const search = async (req, res) => {
       return res.status(404).json({ error: "No se encontraron productos" });
     }
 
-    // Modificar la estructura de los productos según tus necesidades
+    // Modificar la estructura de los productos
     const modifiedProducts = products.map((product) => {
       const modifiedProduct = { ...product.toJSON() };
 
