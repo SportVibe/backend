@@ -102,6 +102,4 @@ const getProduct = async (req, res) => {
   }
 };
 
-module.exports = {
-  getProduct,
-};
+module.exports = getProduct;

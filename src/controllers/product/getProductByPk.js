@@ -9,4 +9,4 @@ const getProductByPk = async (req, res) => {
   }
 };
 
-module.exports = { getProductByPk };
+module.exports = getProductByPk;
