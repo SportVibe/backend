@@ -1,33 +1,27 @@
 const { Op } = require("sequelize");
-const { Product, Image, Stock, Size, Comment } = require("../../db");
+const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
+const Paginado = require("../../utilities/Paginado");
 
 const getProduct = async (req, res) => {
   try {
-    //paginado -----> habría que llevar la lógica del paginado a utilities
-    const currentPage = req.query.page ? parseInt(req.query.page) : 1;
-    const limit = req.query.limit ? parseInt(req.query.limit) : 12;
-    const offset = (currentPage - 1) * limit;
+    const { page, limit, gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
 
-    const baseUrl = "http://localhost:3005/product";
+    //cantidad de productos en la db
+    const countProducts = await Product.count({
+      where: { available: true },
+    });
 
-    let previousPage = "";
-
-    if (currentPage !== 1) {
-      previousPage = `${baseUrl}?page=${Math.max(1, currentPage - 1)}&limit=${limit}`;
-    } else {
-      previousPage = null;
-    }
-
-    const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de nulo
+    //se desestructura limite de paginas, pagina actual,  siguiente y anterior pagina
+    const { limitPage, currentPage, nextPage, previousPage, offset } = Paginado(page, limit, countProducts);
 
     // filtros
-    const { gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
+
     const filterCriteria = {};
     filterCriteria.gender = gender || { [Op.not]: null };
     filterCriteria.subCategory = subCategory || { [Op.not]: null };
     filterCriteria.category = category || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
-    // filterCriteria.Sizes = Sizes || { [Op.not]: null };
+    //filterCriteria.Sizes = Sizes || { [Op.not]: null };
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
       filterCriteria.price = {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
@@ -40,11 +34,6 @@ const getProduct = async (req, res) => {
         [Op.iLike]: `%${search}%`,
       };
     }
-
-    //cantidad de productos en la db
-    const countProducts = await Product.count({
-      where: { available: true },
-    });
 
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
@@ -62,6 +51,7 @@ const getProduct = async (req, res) => {
           include: [{ model: Size, attributes: ["name"] }],
         },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
+        { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
     });
 
@@ -75,6 +65,11 @@ const getProduct = async (req, res) => {
 
       // Modificar el array de imágenes
       modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
+
+      // Verificar si existe la propiedad Color antes de mapear
+      if (modifiedProduct.Colors) {
+        modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
+      }
 
       // Modificar el array de tallas y cantidades (stock)
       modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
@@ -91,17 +86,15 @@ const getProduct = async (req, res) => {
       totalCount: countProducts,
       totalFilteredCount: countFilterCriteria,
       currentPage,
-      limit,
+      limitPage,
       previousPage,
       nextPage,
       data: modifiedProducts,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ mensaje: "Hubo un error al recuperar los productos." });
+    return res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = {
-  getProduct,
-};
+module.exports = getProduct;

@@ -1,10 +1,11 @@
-const { Product, Image, Size, Stock } = require("../../db");
+const { Product, Image, Size, Stock, Color } = require("../../db");
 
 const createProduct = async ({
   title,
   description,
   category,
   mark,
+  color,
   subCategory,
   sizes,
   gender,
@@ -35,6 +36,17 @@ const createProduct = async ({
         size_id: size.id,
         quantity: sizeInfo.stock,
       });
+    }
+
+    // Procesar los colores
+    for (const colorName of color) {
+      // Buscar si el color ya existe en la tabla Color
+      const [existingColor, colorCreated] = await Color.findOrCreate({
+        where: { name: colorName.toUpperCase() },
+      });
+
+      // Asociar el color al producto
+      await currentProduct.addColor(existingColor);
     }
 
     // Luego buscamos la tabla Image, solo las imágenes que mandó el front en el array "images", y vemos si ya existen.
