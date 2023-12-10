@@ -11,26 +11,41 @@ const putProductbyID = async (req, res) => {
       return res.status(404).json({ message: "El producto no existe" });
     }
 
-    const { title, description, mark, category, subCategory, sizes, gender, price, discount, images } = req.body;
+    const {
+      title,
+      description,
+      brand,
+      category,
+      subCategory,
+      sizes,
+      color,
+      gender,
+      price,
+      discount,
+      images,
+      available,
+    } = req.body;
 
     const response = await updateProduct({
-      productId,
+      id,
       title,
       description,
       category,
       subCategory,
-      mark,
+      brand,
       sizes,
       price,
+      color,
       discount,
       images,
       gender,
+      available,
     });
-
-    return res.status(200).json(response);
+    console.log(response);
+    return res.status(200).json({ message: response });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ mensaje: "Hubo un error al actualizar el producto." });
+    res.status(500).json({ message: "Hubo un error al actualizar el producto." });
   }
 };
 module.exports = putProductbyID;

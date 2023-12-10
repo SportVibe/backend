@@ -4,7 +4,7 @@ const createProduct = async ({
   title,
   description,
   category,
-  mark,
+  brand,
   color,
   subCategory,
   sizes,
@@ -17,7 +17,7 @@ const createProduct = async ({
     const currentProduct = await Product.create({
       title: title.toUpperCase(),
       description: description.toUpperCase(),
-      mark: mark.toUpperCase(),
+      brand: brand.toUpperCase(),
       category: category.toUpperCase(),
       subCategory: subCategory?.toUpperCase(),
       gender: gender.toUpperCase(),

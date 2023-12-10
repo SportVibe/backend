@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      mark: {
+      brand: {
         type: DataTypes.STRING,
         allowNull: true,
       },
