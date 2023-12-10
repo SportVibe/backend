@@ -1,11 +1,20 @@
 const { Op } = require("sequelize");
 const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
+const priceOrder = require("../../handlers/Product/priceOrder");
 
 const getProduct = async (req, res) => {
   try {
-    const { page, limit, gender, subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
-
+    const { page, limit, gender, subCategory, category, minPrice, maxPrice, price, Sizes, id, search } = req.query;
+    let orderCriteria = [];
+    // ordenamiento por price
+    if (price) {
+      if (price === "asc") {
+        orderCriteria = [["price", "ASC"]];
+      } else if (price === "desc") {
+        orderCriteria = [["price", "DESC"]];
+      }
+    }
     //cantidad de productos en la db
     const countProducts = await Product.count({
       where: { available: true },
@@ -28,13 +37,6 @@ const getProduct = async (req, res) => {
       };
     }
 
-    //search
-    if (search) {
-      filterCriteria.title = {
-        [Op.iLike]: `%${search}%`,
-      };
-    }
-
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
       where: { ...filterCriteria, available: true },
@@ -45,6 +47,7 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
+      order: orderCriteria, //-----> criterio del ordenamiento
       include: [
         {
           model: Stock,
