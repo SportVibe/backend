@@ -4,7 +4,6 @@ const { Product, Size, Stock, Image, Color } = require("../../db");
 const search = async (req, res) => {
   try {
     const { product } = req.params;
-
     const products = await Product.findAll({
       where: {
         title: {

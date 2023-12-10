@@ -1,11 +1,10 @@
 const { Op } = require("sequelize");
 const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
-const priceOrder = require("../../handlers/Product/priceOrder");
 
 const getProduct = async (req, res) => {
   try {
-    const { page, limit, gender, subCategory, category, minPrice, maxPrice, price, Sizes, id, search } = req.query;
+    const { page, limit, gender, subCategory, category, minPrice, maxPrice, price, Sizes, id } = req.query;
     let orderCriteria = [];
     // ordenamiento por price
     if (price) {
