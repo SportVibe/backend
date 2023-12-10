@@ -1,10 +1,12 @@
 const { Op } = require("sequelize");
 const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
+const filterProduct = require("../../handlers/Product/filterProduct");
+const searchProduct = require("../../handlers/Product/searchProduct");
 
 const getProduct = async (req, res) => {
   try {
-    const { page, limit, gender, subCategory, category, minPrice, maxPrice, price, Sizes, id } = req.query;
+    const { page, limit, gender, subCategory, category, minPrice, maxPrice, search, price, Sizes, id } = req.query;
     let orderCriteria = [];
     // ordenamiento por price
     if (price) {
@@ -25,16 +27,20 @@ const getProduct = async (req, res) => {
     // filtros
 
     const filterCriteria = {};
-    filterCriteria.gender = gender || { [Op.not]: null };
-    filterCriteria.subCategory = subCategory || { [Op.not]: null };
-    filterCriteria.category = category || { [Op.not]: null };
-    filterCriteria.id = id || { [Op.not]: null };
-    //filterCriteria.Sizes = Sizes || { [Op.not]: null };
-    if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
-      filterCriteria.price = {
-        [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
-      };
+    // filterCriteria.gender = gender || { [Op.not]: null };
+    // filterCriteria.subCategory = subCategory || { [Op.not]: null };
+    // filterCriteria.category = category || { [Op.not]: null };
+    // filterCriteria.id = id || { [Op.not]: null };
+    // //filterCriteria.Sizes = Sizes || { [Op.not]: null };
+    // if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
+    //   filterCriteria.price = {
+    //     [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
+    //   };
+    // }
+    if (search) {
+      filterCriteria.search = await searchProduct(search);
     }
+    filterCriteria.filtrados = filterProduct({ gender, subCategory, category, minPrice, maxPrice, price, Sizes, id });
 
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
