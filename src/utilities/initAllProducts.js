@@ -330,7 +330,7 @@ const allProducts = [
     gender: "MUJER",
     category: "ROPA",
     subCategory: "CALZAS",
-    color: "",
+    color: ["MULTICOLOR"],
     sizes: [
       {
         size: "S",
