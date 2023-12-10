@@ -6,10 +6,16 @@ const search = async (req, res) => {
     const { product } = req.params;
     const products = await Product.findAll({
       where: {
-        title: {
-          [Op.iLike]: `%${product}%`,
-        },
+        [Op.or]: [
+          { title: { [Op.iLike]: `%${product}%` } },
+          { description: { [Op.iLike]: `%${product}%` } },
+          { category: { [Op.iLike]: `%${product}%` } },
+          { subCategory: { [Op.iLike]: `%${product}%` } },
+          { brand: { [Op.iLike]: `%${product}%` } },
+          { gender: { [Op.iLike]: `%${product}%` } },
+        ],
       },
+
       include: [
         {
           model: Stock,
@@ -46,12 +52,9 @@ const search = async (req, res) => {
 
       delete modifiedProduct.Size;
 
-      return modifiedProduct;
+      return t;
     });
-
-    res.status(200).json({
-      data: modifiedProducts,
-    });
+    console.log(modifiedProduct);
   } catch (error) {
     console.error("Error en la búsqueda de producto:", error);
     res.status(500).json({ error: error.message });
