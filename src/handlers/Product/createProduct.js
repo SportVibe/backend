@@ -13,20 +13,17 @@ const createProduct = async ({
   discount,
   images,
 }) => {
-
-
   try {
     if (title && description && price && category && sizes.length && images.length) {
       const currentProduct = await Product.create({
         title: title.toUpperCase(),
         description: description.toUpperCase(),
-        mark: mark.toUpperCase(),
+        brand: brand.toUpperCase(),
         category: category.toUpperCase(),
         subCategory: subCategory?.toUpperCase(),
         gender: gender.toUpperCase(),
         price,
         discount,
-
       });
 
       // Crear tallas y stocks asociados
