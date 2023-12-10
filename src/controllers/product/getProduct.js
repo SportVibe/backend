@@ -1,8 +1,9 @@
 const { Op } = require("sequelize");
 const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
-const filterProduct = require("../../handlers/Product/filterProduct");
+
 const searchProduct = require("../../handlers/Product/searchProduct");
+const filterProduct = require("../../handlers/Product/FilterProduct");
 
 const getProduct = async (req, res) => {
   try {
@@ -26,7 +27,17 @@ const getProduct = async (req, res) => {
 
     // filtros
 
-    const filterCriteria = {};
+    const filterCriteria = await searchProduct({
+      gender,
+      subCategory,
+      category,
+      minPrice,
+      maxPrice,
+      search,
+      price,
+      Sizes,
+      id,
+    });
     // filterCriteria.gender = gender || { [Op.not]: null };
     // filterCriteria.subCategory = subCategory || { [Op.not]: null };
     // filterCriteria.category = category || { [Op.not]: null };
@@ -37,16 +48,24 @@ const getProduct = async (req, res) => {
     //     [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
     //   };
     // }
-    if (search) {
-      filterCriteria.search = await searchProduct(search);
-    }
-    filterCriteria.filtrados = filterProduct({ gender, subCategory, category, minPrice, maxPrice, price, Sizes, id });
+
+    /* filterProduct({
+      gender,
+      subCategory,
+      category,
+      minPrice,
+      maxPrice,
+      search,
+      price,
+      Sizes,
+      id,
+    }) */
 
     // cantidad de productos filtrados
-    const countFilterCriteria = await Product.count({
+    /* const countFilterCriteria = await Product.count({
       where: { ...filterCriteria, available: true },
     });
-
+ */
     //busca todos los productos de la db
     const products = await Product.findAll({
       where: { ...filterCriteria, available: true },
@@ -92,7 +111,7 @@ const getProduct = async (req, res) => {
 
     return res.status(200).json({
       totalCount: countProducts,
-      totalFilteredCount: countFilterCriteria,
+      /* totalFilteredCount: countFilterCriteria, */
       currentPage,
       limitPage,
       previousPage,

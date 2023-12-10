@@ -15,8 +15,7 @@ const filterProduct = async ({ gender, subCategory, category, minPrice, maxPrice
     }
     return filter;
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: error.message });
+    return "SOY YO NABO", error;
   }
 };
 

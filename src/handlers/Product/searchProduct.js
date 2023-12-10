@@ -1,20 +1,47 @@
 const { Op } = require("sequelize");
 const { Product, Size, Stock, Image, Color } = require("../../db");
 
-const search = async (search) => {
+const search = async ({ search, gender, subCategory, category, minPrice, maxPrice, price, Sizes, id }) => {
   try {
+    const filterCriteria = {};
+    const whereClause = [];
+
+    // search
+    if (search || gender || subCategory || category || id || maxPrice || minPrice) {
+      whereClause.push({
+        [Op.or]: [
+          { [Op.or]: [{ title: { [Op.iLike]: `%${search}%` } }, { title: { [Op.iLike]: `%${title}%` } }] },
+          {
+            [Op.or]: [
+              { description: { [Op.iLike]: `%${search}%` } },
+              { description: { [Op.iLike]: `%${description}%` } },
+            ],
+          },
+          { [Op.or]: [{ category: { [Op.iLike]: `%${search}%` } }, { category: { [Op.iLike]: `%${category}%` } }] },
+          {
+            [Op.or]: [
+              { subCategory: { [Op.iLike]: `%${search}%` } },
+              { subCategory: { [Op.iLike]: `%${subCategory}%` } },
+            ],
+          },
+          { [Op.or]: [{ brand: { [Op.iLike]: `%${search}%` } }, { brand: { [Op.iLike]: `%${brand}%` } }] },
+          { [Op.or]: [{ gender: { [Op.iLike]: `%${search}%` } }, { gender: { [Op.iLike]: `%${gender}%` } }] },
+          { [Op.or]: [{ price: { [Op.iLike]: `%${search}%` } }, { price: { [Op.iLike]: `%${price}%` } }] },
+        ],
+      });
+
+      if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
+        filterCriteria.price = {
+          [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
+        };
+      }
+    }
+
     const products = await Product.findAll({
       where: {
-        [Op.or]: [
-          { title: { [Op.iLike]: `%${search}%` } },
-          { description: { [Op.iLike]: `%${search}%` } },
-          { category: { [Op.iLike]: `%${search}%` } },
-          { subCategory: { [Op.iLike]: `%${search}%` } },
-          { brand: { [Op.iLike]: `%${search}%` } },
-          { gender: { [Op.iLike]: `%${search}%` } },
-        ],
+        [Op.and]: whereClause, // Combining multiple conditions with AND
+        ...filterCriteria, // Adding additional filter criteria
       },
-
       include: [
         {
           model: Stock,
@@ -29,15 +56,10 @@ const search = async (search) => {
         { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
     });
-
-    if (products.length === 0) {
-      return res.status(404).json({ error: "No se encontraron productos" });
-    }
-
     return products;
   } catch (error) {
     console.error("Error en la búsqueda de producto:", error);
-    res.status(500).json({ error: error.message });
+    return { error: error.message }; // Return the error message
   }
 };
 
