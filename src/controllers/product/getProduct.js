@@ -91,7 +91,7 @@ const getProduct = async (req, res) => {
       return res.status(404).json({ mensaje: "No se encontraron productos." });
     }
 
-    const modifiedProducts = products.map((product) => {
+    const modifiedProducts = products?.map((product) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
 
