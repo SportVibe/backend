@@ -1,5 +1,5 @@
 const { Product } = require("../../db");
-const updateProduct = require("../../handlers/Product/updateProduct");
+const updateProduct = require("../../handlers/product/updateProduct");
 
 const putProductbyID = async (req, res) => {
   try {
