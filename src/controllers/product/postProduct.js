@@ -1,16 +1,12 @@
-
 const { Product } = require("../../db");
-const createProduct = require("../../handlers/Product/createProduct");
-
+const createProduct = require("../../handlers/product/createProduct");
 
 const postProduct = async (req, res) => {
   try {
-
     const { title, description, brand, color, category, subCategory, sizes, gender, price, discount, images } =
       req.body;
 
     if (title && description && brand && price && category && sizes.length && images.length) {
-
       const isThisAlreadyCreated = await Product.findOne({
         where: {
           title: title.toUpperCase(),
@@ -39,7 +35,6 @@ const postProduct = async (req, res) => {
           images,
           gender,
         });
-
 
         return res.status(201).json(response);
       } else throw Error("El producto ya existe");

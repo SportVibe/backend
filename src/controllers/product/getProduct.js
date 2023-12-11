@@ -6,8 +6,7 @@ const Paginado = require("../../utilities/Paginado");
 const getProduct = async (req, res) => {
   try {
     const { gender, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
-    let {page, limit} = req.query;
-
+    let { page, limit } = req.query;
 
     // nos aseguramos de que el page y limit sean números
     if (isNaN(page) || !page) {
@@ -51,7 +50,6 @@ const getProduct = async (req, res) => {
     }
 
     if (!search || Array.isArray(search)) {
-      console.log('tukis');
       filterCriteria.subCategory = subCategory || { [Op.not]: null };
       filterCriteria.category = category || { [Op.not]: null };
     }
@@ -66,7 +64,6 @@ const getProduct = async (req, res) => {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
       };
     }
-
 
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
@@ -88,7 +85,6 @@ const getProduct = async (req, res) => {
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
-
     });
 
     if (!products || products.length === 0) {
@@ -98,7 +94,6 @@ const getProduct = async (req, res) => {
     const modifiedProducts = products.map((product) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
-
 
       // Modificar el array de imágenes
 
