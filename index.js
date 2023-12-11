@@ -7,7 +7,7 @@ const app = require("./src/app");
 const PORT = process.env.PORT || 3005;
 
 initializeSizes(); // inicializa la tabla de sizes.
-initializeProducts();
+// initializeProducts();
 sequelize
 
   .sync({ force: false })

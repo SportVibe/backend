@@ -1,5 +1,6 @@
 const { Product } = require("../../db");
 const createProduct = require("../../handlers/Product/createProduct");
+const { allProducts } = require("../../utilities/initAllProducts");
 
 const postProduct = async (req, res) => {
   try {
@@ -44,4 +45,26 @@ const postProduct = async (req, res) => {
   }
 };
 
+async function initializeProducts() {
+  try {
+    const resultados = [];
+    for (const productData of allProducts) {
+      const req = { body: productData };
+      const res = {
+        status: (code) => ({
+          json: (data) => {
+            resultados.push({ code, data });
+          },
+        }),
+      };
+
+      await postProduct(req, res);
+    }
+    console.log("Productos inicializados con éxito.");
+  } catch (error) {
+    console.error("Error al inicializar los Productos:", error.message);
+  }
+}
+
 module.exports = postProduct;
+initializeProducts();
