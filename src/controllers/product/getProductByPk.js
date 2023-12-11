@@ -1,4 +1,4 @@
-const { findProductByPk } = require("../../handlers/product/findProductByPk");
+const { findProductByPk } = require("../../handlers/Product/findProductByPk");
 
 const getProductByPk = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const { deleteProduct } = require("../../handlers/product/deleteProductByPk");
+const { deleteProduct } = require("../../handlers/Product/deleteProductByPk");
 
 const deleteProductByPk = async (req, res) => {
   try {

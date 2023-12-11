@@ -1,4 +1,4 @@
-const search = require("../../handlers/product/searchProduct");
+const search = require("../../handlers/Product/searchProduct");
 
 const searchProduct = async (req, res) => {
   try {
