@@ -1,8 +1,16 @@
+
+require("dotenv").config();
+
 const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
 const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(`postgres://postgres:admin@localhost/ecommerce`, {
+
+
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
+
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+
   dialectModule: require("pg"),
   logging: false,
   native: false,
@@ -88,6 +96,26 @@ Product.belongsToMany(User, { through: "Purchase" });
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });
 Product.belongsToMany(Size, { through: "Product_size" });
+
+
+const { Category, Subcategory, Color, Gender } = sequelize.models;
+
+// RELACIONES CON Category, Subcategory, Color y Gender:
+
+// Relación entre Category y Subcategory (uno a muchos)
+Category.hasMany(Subcategory);
+Subcategory.belongsTo(Category);
+
+// Relación entre Product y Color (muchos a muchos)
+Product.belongsToMany(Color, { through: "ProductColor" });
+Color.belongsToMany(Product, { through: "ProductColor" });
+
+// Relación entre Product y Gender (muchos a muchos)
+Product.belongsToMany(Gender, { through: "ProductGender" });
+Gender.belongsToMany(Product, { through: "ProductGender" });
+
+
+
 
 module.exports = {
   sequelize,

@@ -1,49 +1,72 @@
 const { Op } = require("sequelize");
-const { Product, Image, Stock, Size, Comment } = require("../../db");
+
+const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
+const Paginado = require("../../utilities/Paginado");
 
 const getProduct = async (req, res) => {
   try {
-    //paginado -----> habría que llevar la lógica del paginado a utilities
-    const currentPage = req.query.page ? parseInt(req.query.page) : 1;
-    const limit = req.query.limit ? parseInt(req.query.limit) : 12;
-    const offset = (currentPage - 1) * limit;
+    const { gender, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
+    let {page, limit} = req.query;
 
-    const baseUrl = "http://localhost:3005/Inventario";
 
-    let previousPage = "";
-
-    if (currentPage !== 1) {
-      previousPage = `${baseUrl}?page=${Math.max(1, currentPage - 1)}&limit=${limit}`;
-    } else {
-      previousPage = null;
+    // nos aseguramos de que el page y limit sean números
+    if (isNaN(page) || !page) {
+      page = 1;
+    }
+    if (isNaN(limit) || !limit) {
+      limit = 12;
     }
 
-    const nextPage = `${baseUrl}?page=${currentPage + 1}&limit=${limit}`; //-------> falta hacer la lógica para que cuando no haya next de nulo
+    let orderCriteria = [];
+    // ordenamientos, no puede ser mas de un ordenamiento a la vez
+    if (sort && typeSort && !Array.isArray(sort) && !Array.isArray(typeSort)) {
+      orderCriteria = [[`${sort.toLowerCase()}`, `${typeSort.toUpperCase()}`]];
+    }
+    //cantidad de productos en la db
+    const countProducts = await Product.count({
+      where: { available: true },
+    });
+
+    //se desestructura limite de paginas, pagina actual,  siguiente y anterior pagina
+    const { limitPage, currentPage, nextPage, previousPage, offset } = Paginado(page, limit, countProducts);
 
     // filtros
-    const { subCategory, category, minPrice, maxPrice, Sizes, id, search } = req.query;
+
     const filterCriteria = {};
-    filterCriteria.subCategory = subCategory || { [Op.not]: null };
-    filterCriteria.category = category || { [Op.not]: null };
+
+    // la prioridad es lo que se busca por el search bar
+    if (search && !Array.isArray(search)) {
+      filterCriteria[Op.or] = [
+        { title: { [Op.iLike]: `%${search}%` } },
+        { description: { [Op.iLike]: `%${search}%` } },
+        { brand: { [Op.iLike]: `%${search}%` } },
+        { gender: { [Op.iLike]: `%${search}%` } },
+        { category: { [Op.iLike]: `%${search}%` } },
+        { subCategory: { [Op.iLike]: `%${search}%` } },
+      ];
+
+      // si el usuario usa el search bar, se anulan los filtros por category y subCategory, porque es muy probable que hayan conflictos
+      filterCriteria.subCategory = { [Op.not]: null };
+      filterCriteria.category = { [Op.not]: null };
+    }
+
+    if (!search || Array.isArray(search)) {
+      console.log('tukis');
+      filterCriteria.subCategory = subCategory || { [Op.not]: null };
+      filterCriteria.category = category || { [Op.not]: null };
+    }
+
+    // si el usuario no usa el ni search ni los filtros, los filtros se anulan y se devuelven todos los productos de la BDD
+    filterCriteria.gender = gender || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
-    // filterCriteria.Sizes = Sizes || { [Op.not]: null };
+    //filterCriteria.Sizes = Sizes || { [Op.not]: null };
+
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
       filterCriteria.price = {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
       };
     }
 
-    //search
-    if (search) {
-      filterCriteria.title = {
-        [Op.iLike]: `%${search}%`,
-      };
-    }
-
-    //cantidad de productos en la db
-    const countProducts = await Product.count({
-      where: { available: true },
-    });
 
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
@@ -55,7 +78,17 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
-      include: [{ model: Stock }, { model: Image, attributes: ["url"], through: { attributes: [] } }],
+
+      order: orderCriteria, //-----> criterio del ordenamiento
+      include: [
+        {
+          model: Stock,
+          include: [{ model: Size, attributes: ["name"] }],
+        },
+        { model: Image, attributes: ["url"], through: { attributes: [] } },
+        { model: Color, attributes: ["name"], through: { attributes: [] } },
+      ],
+
     });
 
     if (!products || products.length === 0) {
@@ -66,9 +99,24 @@ const getProduct = async (req, res) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
 
-      // Modificar el array
+
+      // Modificar el array de imágenes
+
       modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
       // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
+
+      // Verificar si existe la propiedad Color antes de mapear
+      if (modifiedProduct.Colors) {
+        modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
+      }
+
+      // Modificar el array de tallas y cantidades (stock)
+      modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
+        [stock.Size.name]: stock.quantity,
+      }));
+
+      // Eliminar la propiedad 'Size' si no es necesaria en este punto
+      delete modifiedProduct.Size;
 
       return modifiedProduct;
     });
@@ -77,17 +125,15 @@ const getProduct = async (req, res) => {
       totalCount: countProducts,
       totalFilteredCount: countFilterCriteria,
       currentPage,
-      limit,
+      limitPage,
       previousPage,
       nextPage,
       data: modifiedProducts,
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ mensaje: "Hubo un error al recuperar los productos." });
+    return res.status(500).json({ error: error.message });
   }
 };
 
-module.exports = {
-  getProduct,
-};
+module.exports = getProduct;
