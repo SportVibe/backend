@@ -1,5 +1,5 @@
 const { Product } = require("../../db");
-const createProduct = require("../../handlers/product/createProduct");
+const createProduct = require("../../handlers/Product/createProduct");
 
 const postProduct = async (req, res) => {
   try {
