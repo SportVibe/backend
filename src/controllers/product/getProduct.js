@@ -87,17 +87,16 @@ const getProduct = async (req, res) => {
       ],
     });
 
-    if (!products || products.length === 0) {
+    if (!products) {
       return res.status(404).json({ mensaje: "No se encontraron productos." });
     }
 
-    const modifiedProducts = products?.map((product) => {
+    const modifiedProducts = products.map((product) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
-
       // Modificar el array de imágenes
 
-      modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
+      modifiedProduct.Images = modifiedProduct.Images?.map((image) => image.url);
       // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
 
       // Verificar si existe la propiedad Color antes de mapear
@@ -106,8 +105,8 @@ const getProduct = async (req, res) => {
       }
 
       // Modificar el array de tallas y cantidades (stock)
-      modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
-        [stock.Size.name]: stock.quantity,
+      modifiedProduct.Stocks = modifiedProduct.Stocks?.map((stock) => ({
+        [stock.Size?.name]: stock.quantity,
       }));
 
       // Eliminar la propiedad 'Size' si no es necesaria en este punto
