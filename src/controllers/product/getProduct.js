@@ -1,4 +1,5 @@
 const { Op } = require("sequelize");
+
 const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
 
@@ -6,6 +7,7 @@ const getProduct = async (req, res) => {
   try {
     const { gender, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
     let {page, limit} = req.query;
+
 
     // nos aseguramos de que el page y limit sean números
     if (isNaN(page) || !page) {
@@ -58,11 +60,13 @@ const getProduct = async (req, res) => {
     filterCriteria.gender = gender || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
     //filterCriteria.Sizes = Sizes || { [Op.not]: null };
+
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
       filterCriteria.price = {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
       };
     }
+
 
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
@@ -74,6 +78,7 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
+
       order: orderCriteria, //-----> criterio del ordenamiento
       include: [
         {
@@ -83,6 +88,7 @@ const getProduct = async (req, res) => {
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
+
     });
 
     if (!products || products.length === 0) {
@@ -93,8 +99,11 @@ const getProduct = async (req, res) => {
       // Crear un nuevo objeto para cada producto
       const modifiedProduct = { ...product.toJSON() };
 
+
       // Modificar el array de imágenes
+
       modifiedProduct.Images = modifiedProduct.Images.map((image) => image.url);
+      // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
 
       // Verificar si existe la propiedad Color antes de mapear
       if (modifiedProduct.Colors) {

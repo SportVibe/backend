@@ -41,6 +41,8 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+
+
       available: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
