@@ -4,15 +4,21 @@ const Paginado = require("../../utilities/Paginado");
 
 const getProduct = async (req, res) => {
   try {
-    const { page, limit, gender, subCategory, category, minPrice, maxPrice, price, Sizes, id } = req.query;
+    const { gender, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
+    let {page, limit} = req.query;
+
+    // nos aseguramos de que el page y limit sean números
+    if (isNaN(page) || !page) {
+      page = 1;
+    }
+    if (isNaN(limit) || !limit) {
+      limit = 12;
+    }
+
     let orderCriteria = [];
-    // ordenamiento por price
-    if (price) {
-      if (price === "asc") {
-        orderCriteria = [["price", "ASC"]];
-      } else if (price === "desc") {
-        orderCriteria = [["price", "DESC"]];
-      }
+    // ordenamientos, no puede ser mas de un ordenamiento a la vez
+    if (sort && typeSort && !Array.isArray(sort) && !Array.isArray(typeSort)) {
+      orderCriteria = [[`${sort.toLowerCase()}`, `${typeSort.toUpperCase()}`]];
     }
     //cantidad de productos en la db
     const countProducts = await Product.count({
@@ -25,9 +31,31 @@ const getProduct = async (req, res) => {
     // filtros
 
     const filterCriteria = {};
+
+    // la prioridad es lo que se busca por el search bar
+    if (search && !Array.isArray(search)) {
+      filterCriteria[Op.or] = [
+        { title: { [Op.iLike]: `%${search}%` } },
+        { description: { [Op.iLike]: `%${search}%` } },
+        { brand: { [Op.iLike]: `%${search}%` } },
+        { gender: { [Op.iLike]: `%${search}%` } },
+        { category: { [Op.iLike]: `%${search}%` } },
+        { subCategory: { [Op.iLike]: `%${search}%` } },
+      ];
+
+      // si el usuario usa el search bar, se anulan los filtros por category y subCategory, porque es muy probable que hayan conflictos
+      filterCriteria.subCategory = { [Op.not]: null };
+      filterCriteria.category = { [Op.not]: null };
+    }
+
+    if (!search || Array.isArray(search)) {
+      console.log('tukis');
+      filterCriteria.subCategory = subCategory || { [Op.not]: null };
+      filterCriteria.category = category || { [Op.not]: null };
+    }
+
+    // si el usuario no usa el ni search ni los filtros, los filtros se anulan y se devuelven todos los productos de la BDD
     filterCriteria.gender = gender || { [Op.not]: null };
-    filterCriteria.subCategory = subCategory || { [Op.not]: null };
-    filterCriteria.category = category || { [Op.not]: null };
     filterCriteria.id = id || { [Op.not]: null };
     //filterCriteria.Sizes = Sizes || { [Op.not]: null };
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
