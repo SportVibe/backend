@@ -6,7 +6,7 @@ const updateProduct = async ({
   description,
   category,
   subCategory,
-  mark,
+  brand,
   sizes,
   price,
   discount,
@@ -22,7 +22,7 @@ const updateProduct = async ({
     productEdit.description = description;
     productEdit.category = category;
     productEdit.subCategory = subCategory;
-    productEdit.mark = mark;
+    productEdit.brand = brand;
     productEdit.price = price;
     productEdit.discount = discount;
     productEdit.available = available;

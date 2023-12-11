@@ -2,10 +2,10 @@ const { Router } = require("express");
 const router = Router();
 const postProduct = require("../controllers/product/postProduct");
 const getProductByPk = require("../controllers/Product/getProductByPk");
-const getProduct = require("../controllers/product/getProduct");
+const getProduct = require("../controllers/Product/getProduct");
 const deleteProductByPk = require("../controllers/Product/deleteProductByPk");
 const putProductbyID = require("../controllers/Product/putProductbyID");
-const searchProduct = require("../controllers/product/searchProduct");
+const searchProduct = require("../controllers/Product/searchProduct");
 
 router.post("/product", postProduct);
 

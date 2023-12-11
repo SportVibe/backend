@@ -41,7 +41,7 @@ const putProductbyID = async (req, res) => {
       gender,
       available,
     });
-    console.log(response);
+
     return res.status(200).json({ message: response });
   } catch (error) {
     console.error(error);
