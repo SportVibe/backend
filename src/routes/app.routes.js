@@ -7,6 +7,7 @@ const deleteProductByPk = require("../controllers/product/deleteProductByPk");
 const putProductbyID = require("../controllers/product/putProductbyID");
 const searchProduct = require("../controllers/product/searchProduct");
 const postRegister = require("../controllers/User/postRegister");
+const postLogin = require("../controllers/User/postLogin");
 
 router.post("/product", postProduct);
 
@@ -21,5 +22,7 @@ router.delete("/deleteProduct/:id", deleteProductByPk);
 router.put("/product/:id", putProductbyID);
 
 router.post("/userRegister", postRegister);
+
+router.post("/login", postLogin);
 
 module.exports = router;
