@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const createUser = async (req, res) => {
   try {
-    const { firstName, lastName, phoneNumber, address, zipCode, email, password, image } = req.body;
+    const { firstName, lastName, phoneNumber, address, zipCode, email, password, image, city, country } = req.body;
     const existingUser = await User.findOne({
       where: { email: email },
     });
@@ -26,6 +26,8 @@ const createUser = async (req, res) => {
       lastName: lastName,
       phoneNumber: phoneNumber,
       address: address,
+      city: city,
+      country: country,
       zipCode: zipCode,
       email: email,
       password: hashedPassword,
