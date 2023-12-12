@@ -10,7 +10,7 @@ initializeSizes(); // inicializa la tabla de sizes.
 // initializeProducts();
 sequelize
 
-  .sync({ force: false })
+  .sync({ alter: true })
 
   .then(() => {
     app.listen(PORT, () => {
