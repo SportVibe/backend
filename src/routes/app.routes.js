@@ -8,6 +8,7 @@ const putProductbyID = require("../controllers/product/putProductbyID");
 const searchProduct = require("../controllers/product/searchProduct");
 const postRegister = require("../controllers/User/postRegister");
 const postLogin = require("../controllers/User/postLogin");
+const getUser = require("../controllers/User/getUser");
 
 router.post("/product", postProduct);
 
@@ -24,5 +25,8 @@ router.put("/product/:id", putProductbyID);
 router.post("/userRegister", postRegister);
 
 router.post("/login", postLogin);
+
+router.get('/:userId', getUser);
+
 
 module.exports = router;
