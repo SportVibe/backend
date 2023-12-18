@@ -69,7 +69,7 @@ const createProduct = async ({
       }
     }
   } catch (error) {
-    res.status(500).json("estoy en el error del create navaso!!!");
+    return res.status(500).json("estoy en el error del create navaso!!!");
   }
 };
 
