@@ -15,7 +15,7 @@ const getAllUsers = require("../controllers/User/getAllUser");
 
 // RUTAS de Productos
 
-router.post("/Product", postProduct);
+router.post("/product", postProduct);
 
 router.get("/product", getProduct);
 
