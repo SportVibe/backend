@@ -13,6 +13,7 @@ const createProduct = async ({
   discount,
   images,
 }) => {
+  console.log(title, "create product");
   try {
     if (title && description && price && category && sizes.length && images.length) {
       const currentProduct = await Product.create({
@@ -68,7 +69,7 @@ const createProduct = async ({
       }
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json("estoy en el error del create navaso!!!");
   }
 };
 
