@@ -10,7 +10,7 @@ const postRegister = require("../controllers/User/postRegister");
 const postLogin = require("../controllers/User/postLogin");
 const PostRegisterGoogle = require("../controllers/User/postRegisterGoogle");
 const getUser = require("../controllers/User/getUser");
-const getProductAdmin = require("../controllers/Product/getProductAdmin");
+const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
 
 // RUTAS de Productos
