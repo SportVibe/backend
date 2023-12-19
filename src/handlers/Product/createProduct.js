@@ -31,7 +31,7 @@ const createProduct = async ({
         where: { name: sizeInfo.size },
       });
       console.log({ currentProduct, size, sizeInfo });
-      await Stock.create({
+      await Stock.findOrCreate({
         product_id: currentProduct.id,
         size_id: size.id,
         quantity: sizeInfo.stock,
