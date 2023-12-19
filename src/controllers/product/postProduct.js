@@ -3,7 +3,6 @@ const createProduct = require("../../handlers/Product/createProduct");
 const { allProducts } = require("../../utilities/initAllProducts");
 
 const postProduct = async (req, res) => {
-  console.log({ res });
   try {
     const { title, description, brand, color, category, subCategory, sizes, gender, price, discount, images } =
       req.body;

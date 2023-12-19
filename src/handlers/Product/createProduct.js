@@ -32,7 +32,7 @@ const createProduct = async ({
       const [size, created] = await Size.findOrCreate({
         where: { name: sizeInfo.size },
       });
-
+      console.log({ currentProduct, size, sizeInfo });
       await Stock.create({
         product_id: currentProduct.id,
         size_id: size.id,
