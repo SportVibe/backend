@@ -7,6 +7,7 @@ const deleteProductByPk = require("../controllers/product/deleteProductByPk");
 const putProductbyID = require("../controllers/product/putProductbyID");
 const searchProduct = require("../controllers/product/searchProduct");
 const postRegister = require("../controllers/User/postRegister");
+
 const postLogin = require("../controllers/User/postLogin");
 const PostRegisterGoogle = require("../controllers/User/postRegisterGoogle");
 const getUser = require("../controllers/User/getUser");
