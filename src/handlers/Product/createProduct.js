@@ -13,8 +13,6 @@ const createProduct = async ({
   discount,
   images,
 }) => {
-  console.log(title, "create product");
-
   if (title && description && price && category && sizes.length && images.length) {
     const currentProduct = await Product.create({
       title: title.toUpperCase(),

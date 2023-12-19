@@ -41,7 +41,6 @@ const postProduct = async (req, res) => {
       } else throw Error("El producto ya existe");
     } else throw Error("Faltan datos");
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
