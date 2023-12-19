@@ -3,7 +3,7 @@ const createProduct = require("../../handlers/Product/createProduct");
 const { allProducts } = require("../../utilities/initAllProducts");
 
 const postProduct = async (req, res) => {
-  console.log(req.body);
+  console.log(res);
   try {
     const { title, description, brand, color, category, subCategory, sizes, gender, price, discount, images } =
       req.body;
@@ -38,11 +38,11 @@ const postProduct = async (req, res) => {
           gender,
         });
 
-        return res.status(201).json(response);
+        return res.status(201).json(response, "ESTOY EN EL RES DE POST PRODUCT");
       } else throw Error("El producto ya existe");
     } else throw Error("Faltan datos");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message }, "ESTOY EN EL CATCH DEL POST PRODUCT");
   }
 };
 

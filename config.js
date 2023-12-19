@@ -16,7 +16,6 @@ const DB_HOST = process.env.DB_HOST || "localhost";
 const DB_NAME = process.env.DB_NAME || "ecommerce";
 const DB_PORT = process.env.DB_PORT || 5432;
 const DB_URL = `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
-// postgresql://postgres:1onHbNnV58Yml3lKnyBc@containers-us-west-57.railway.app:7346/railway
 
 module.exports = {
   SECRETKEY,
