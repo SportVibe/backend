@@ -19,7 +19,7 @@ const createProduct = async ({
       description: description.toUpperCase(),
       brand: brand.toUpperCase(),
       category: category.toUpperCase(),
-      subCategory: subCategory?.toUpperCase(),
+      subCategory: subCategory.toUpperCase(),
       gender: gender.toUpperCase(),
       price,
       discount,
@@ -30,7 +30,6 @@ const createProduct = async ({
       const [size, created] = await Size.findOrCreate({
         where: { name: sizeInfo.size },
       });
-      console.log({ currentProduct, size, sizeInfo });
       await Stock.create({
         product_id: currentProduct.id,
         size_id: size.id,
