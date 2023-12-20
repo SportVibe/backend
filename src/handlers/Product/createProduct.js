@@ -31,7 +31,7 @@ const createProduct = async ({
         where: { name: sizeInfo.size },
       });
       console.log({ currentProduct, size, sizeInfo });
-      await Stock.Create({
+      await Stock.create({
         product_id: currentProduct.id,
         size_id: size.id,
         quantity: sizeInfo.stock,
