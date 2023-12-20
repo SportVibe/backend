@@ -26,7 +26,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Product, Order, Transaction, Image, Size, Stock } = sequelize.models;
+const { User, Product, Order, Transaction, Image, Size, Stock, Purchase} = sequelize.models;
 // RELACIÓN DE LAS TABLAS:
 
 // creará una columna 'order_id' en la tabla Transaction con el id de una orden.
@@ -107,6 +107,18 @@ Color.belongsToMany(Product, { through: "ProductColor" });
 // Relación entre Product y Gender (muchos a muchos)
 Product.belongsToMany(Gender, { through: "ProductGender" });
 Gender.belongsToMany(Product, { through: "ProductGender" });
+
+// Relación entre Purchase (carrito) y Product
+Purchase.belongsToMany(Product, { through: 'PurchaseProduct' });
+Product.belongsToMany(Purchase, { through: 'PurchaseProduct' });
+
+/* //Relacion enre Order y Product
+Order.belongsToMany(Product, { through: 'OrderProduct' });
+Product.belongsToMany(Order, { through: 'OrderProduct' }); */
+
+/* //Relación entre purchace y Order
+Purchase.belongsToMany(Order, { through: 'PurchaseOrder' });
+Order.belongsToMany(Purchase, { through: 'PurchaseOrder' }); */
 
 module.exports = {
   sequelize,
