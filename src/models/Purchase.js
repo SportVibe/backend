@@ -2,13 +2,13 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     const Purchase = sequelize.define('Purchase', {
+        // Campos para representar los productos en el carrito
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
-        // Campos para representar los productos en el carrito
-        productName: {
+        title: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
@@ -37,6 +37,14 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         subCategory: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        available: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true,
+        },
+        sport: {
             type: DataTypes.STRING,
             allowNull: true,
         },
