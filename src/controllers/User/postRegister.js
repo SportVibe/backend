@@ -6,7 +6,7 @@ const postRegister = async (req, res) => {
 
     res.status(201).json({ message: `Usuario ${newUser.firstName} registrado exitosamente` });
   } catch (error) {
-    console.error("Error en el registro:", error);
+    res.status(500).json({error: `Error en el registro:, ${error.message}`});
   }
 };
 

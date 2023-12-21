@@ -33,10 +33,11 @@ const PostRegisterGoogle = async (req, res) => {
     } else {
       // Crear un nuevo usuario
       const newUser = await User.create({
-        firstName: req.body.firstName,
+        firstName: req.body.firstName && req.body.firstName.toUpperCase(),
         email: req.body.email,
         rol: req.body.rol || "client",
         image: req.body.image,
+        extrnalSignIn: req.body.extrnalSignIn,
       });
 
       const token = jwt.sign(

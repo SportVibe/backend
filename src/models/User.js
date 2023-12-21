@@ -49,7 +49,7 @@ module.exports = (sequelize) => {
       },
       email: {
         type: DataTypes.STRING(255),
-        unique: true,
+        unique: false,
         allowNull: false,
         validate: {
           isEmail: true,
@@ -60,12 +60,18 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       rol: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.ENUM('client', 'admin', 'super_admin'),
         allowNull: true,
+        defaultValue: 'client',
       },
       image: {
         type: DataTypes.STRING(255),
         allowNull: true,
+      },
+      externalSignIn: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
       },
     },
     { timestamps: true }

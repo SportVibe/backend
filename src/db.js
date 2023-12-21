@@ -85,8 +85,8 @@ User.belongsToMany(Product, { through: "Order" });
 Product.belongsToMany(User, { through: "Order" });
 
 // tabla intermedia de las compras recibidas por cada usuario.
-User.belongsToMany(Product, { through: "Purchase" });
-Product.belongsToMany(User, { through: "Purchase" });
+/* User.belongsToMany(Product, { through: "Purchase" });
+Product.belongsToMany(User, { through: "Purchase" }); */
 
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });
@@ -108,16 +108,20 @@ Color.belongsToMany(Product, { through: "ProductColor" });
 Product.belongsToMany(Gender, { through: "ProductGender" });
 Gender.belongsToMany(Product, { through: "ProductGender" });
 
-// Relación entre Purchase (carrito) y Product
-Purchase.belongsToMany(Product, { through: 'PurchaseProduct' });
-Product.belongsToMany(Purchase, { through: 'PurchaseProduct' });
+// Relación entre Purchase y User, crea una tabla intermedia que funciona como carrito (UserPurchaseCart_product)
+User.belongsToMany(Purchase, {through: 'User_purchaseCart'});
+Purchase.belongsToMany(User, {through: 'User_purchaseCart'});
 
-/* //Relacion enre Order y Product
-Order.belongsToMany(Product, { through: 'OrderProduct' });
+// Relación entre Purchase (carrito) y Product
+/* Purchase.belongsToMany(Product, { through: 'PurchaseProduct' });
+Product.belongsToMany(Purchase, { through: 'PurchaseProduct' }); */
+
+//Relacion entre Order y Product
+/* Order.belongsToMany(Product, { through: 'OrderProduct' });
 Product.belongsToMany(Order, { through: 'OrderProduct' }); */
 
-/* //Relación entre purchace y Order
-Purchase.belongsToMany(Order, { through: 'PurchaseOrder' });
+//Relación entre purchace y Order
+/* Purchase.belongsToMany(Order, { through: 'PurchaseOrder' });
 Order.belongsToMany(Purchase, { through: 'PurchaseOrder' }); */
 
 module.exports = {

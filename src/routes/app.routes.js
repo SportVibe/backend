@@ -13,6 +13,7 @@ const PostRegisterGoogle = require("../controllers/User/postRegisterGoogle");
 const getUser = require("../controllers/User/getUser");
 const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
+const updateUser = require("../controllers/User/updateUser");
 
 // RUTAS de Productos
 
@@ -36,6 +37,8 @@ router.post("/userRegister", postRegister);
 router.post("/google", PostRegisterGoogle);
 
 router.post("/login", postLogin);
+
+router.put("/login/:id", updateUser);
 
 router.get("/user/:id", getUser);
 
