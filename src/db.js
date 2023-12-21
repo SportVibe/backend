@@ -85,8 +85,8 @@ User.belongsToMany(Product, { through: "Order" });
 Product.belongsToMany(User, { through: "Order" });
 
 // tabla intermedia de las compras recibidas por cada usuario.
-User.belongsToMany(Product, { through: "Purchase" });
-Product.belongsToMany(User, { through: "Purchase" });
+/* User.belongsToMany(Product, { through: "Purchase" });
+Product.belongsToMany(User, { through: "Purchase" }); */
 
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });

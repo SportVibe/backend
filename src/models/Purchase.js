@@ -55,8 +55,8 @@ module.exports = (sequelize) => {
         },
         // Estado del carrito
         status: {
-            type: DataTypes.ENUM('in_progress', 'received'),
-            defaultValue: 'in_progress',
+            type: DataTypes.ENUM('pendiente', 'completed', 'failed'),
+            defaultValue: 'pendiente',
         },
     }, { timestamps: true });
 
