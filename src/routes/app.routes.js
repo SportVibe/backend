@@ -13,35 +13,28 @@ const PostRegisterGoogle = require("../controllers/User/postRegisterGoogle");
 const getUser = require("../controllers/User/getUser");
 const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
-const updateUser = require("../controllers/User/updateUser");
+const putUserById = require("../controllers/User/putUserById");
 
-// RUTAS de Productos
-
+// Rutas de Productos
 router.get("/product", getProduct);
-router.post("/product", postProduct);
-
 router.get("/search/:product", searchProduct);
-
 router.get("/detail/:id", getProductByPk);
-
 router.get("/admin", getProductAdmin);
+
+router.post("/product", postProduct);
 
 router.delete("/deleteProduct/:id", deleteProductByPk);
 
 router.put("/product/:id", putProductbyID);
 
 // Rutas de Usuarios
-
 router.post("/userRegister", postRegister);
-
 router.post("/google", PostRegisterGoogle);
-
 router.post("/login", postLogin);
 
-router.put("/login/:id", updateUser);
+router.put("/user/:id", putUserById);
 
 router.get("/user/:id", getUser);
-
 router.get("/users", getAllUsers);
 
 module.exports = router;
