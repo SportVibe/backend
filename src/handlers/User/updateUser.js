@@ -2,7 +2,7 @@ const { User } = require("../../db");
 
 const updateUser = async (user) => {
   try {
-    const userUpdated = await User.update(
+    await User.update(
       { ...user },
       {
         where: {
