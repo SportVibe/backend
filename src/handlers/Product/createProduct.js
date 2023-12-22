@@ -12,6 +12,7 @@ const createProduct = async ({
   price,
   discount,
   images,
+  sport,
 }) => {
   if (title && description && price && category && sizes.length && images.length) {
     const currentProduct = await Product.create({
@@ -21,6 +22,7 @@ const createProduct = async ({
       category: category.toUpperCase(),
       subCategory: subCategory.toUpperCase(),
       gender: gender.toUpperCase(),
+      sport: sport.toUpperCase(),
       price,
       discount,
     });
