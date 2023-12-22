@@ -26,7 +26,9 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Product, Order, Transaction, Image, Size, Stock, Purchase} = sequelize.models;
+
+const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart } = sequelize.models;
+
 // RELACIÓN DE LAS TABLAS:
 
 // creará una columna 'order_id' en la tabla Transaction con el id de una orden.
@@ -88,17 +90,21 @@ Product.belongsToMany(User, { through: "Order" });
 /* User.belongsToMany(Product, { through: "Purchase" });
 Product.belongsToMany(User, { through: "Purchase" }); */
 
+// tabla de relacion entre el carrito de compras y el usuario (uno a uno)
+User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true } });
+ShoppingCart.belongsTo(User, { foreignKey: "UserId" });
+
+// tabla de relacion entre el carrito de compras y el producto (muchos a muchos)
+ShoppingCart.belongsToMany(Product, { through: "Cart_Product" });
+Product.belongsToMany(ShoppingCart, { through: "Cart_Product" });
+
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });
 Product.belongsToMany(Size, { through: "Product_size" });
 
-const { Category, Subcategory, Color, Gender } = sequelize.models;
+const { Color, Gender } = sequelize.models;
 
-// RELACIONES CON Category, Subcategory, Color y Gender:
-
-// Relación entre Category y Subcategory (uno a muchos)
-Category.hasMany(Subcategory);
-Subcategory.belongsTo(Category);
+// RELACIONES CON  Color y Gender:
 
 // Relación entre Product y Color (muchos a muchos)
 Product.belongsToMany(Color, { through: "ProductColor" });
