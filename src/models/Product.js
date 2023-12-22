@@ -45,6 +45,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      sport: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     { timestamps: true }
   );

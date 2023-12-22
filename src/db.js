@@ -26,7 +26,9 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
+
 const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart } = sequelize.models;
+
 // RELACIÓN DE LAS TABLAS:
 
 // creará una columna 'order_id' en la tabla Transaction con el id de una orden.
@@ -85,8 +87,8 @@ User.belongsToMany(Product, { through: "Order" });
 Product.belongsToMany(User, { through: "Order" });
 
 // tabla intermedia de las compras recibidas por cada usuario.
-User.belongsToMany(Product, { through: "Purchase" });
-Product.belongsToMany(User, { through: "Purchase" });
+/* User.belongsToMany(Product, { through: "Purchase" });
+Product.belongsToMany(User, { through: "Purchase" }); */
 
 // tabla de relacion entre el carrito de compras y el usuario (uno a uno)
 User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true } });
@@ -111,6 +113,22 @@ Color.belongsToMany(Product, { through: "ProductColor" });
 // Relación entre Product y Gender (muchos a muchos)
 Product.belongsToMany(Gender, { through: "ProductGender" });
 Gender.belongsToMany(Product, { through: "ProductGender" });
+
+// Relación entre Purchase y User, crea una tabla intermedia que funciona como carrito (UserPurchaseCart_product)
+User.belongsToMany(Purchase, {through: 'User_purchaseCart'});
+Purchase.belongsToMany(User, {through: 'User_purchaseCart'});
+
+// Relación entre Purchase (carrito) y Product
+/* Purchase.belongsToMany(Product, { through: 'PurchaseProduct' });
+Product.belongsToMany(Purchase, { through: 'PurchaseProduct' }); */
+
+//Relacion entre Order y Product
+/* Order.belongsToMany(Product, { through: 'OrderProduct' });
+Product.belongsToMany(Order, { through: 'OrderProduct' }); */
+
+//Relación entre purchace y Order
+/* Purchase.belongsToMany(Order, { through: 'PurchaseOrder' });
+Order.belongsToMany(Purchase, { through: 'PurchaseOrder' }); */
 
 module.exports = {
   sequelize,
