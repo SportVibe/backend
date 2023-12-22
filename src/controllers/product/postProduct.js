@@ -4,7 +4,7 @@ const { allProducts } = require("../../utilities/initAllProducts");
 
 const postProduct = async (req, res) => {
   try {
-    const { title, description, brand, color, category, subCategory, sizes, gender, price, discount, images } =
+    const { title, description, brand, color, category, subCategory, sizes, gender, price, discount, images, sport } =
       req.body;
 
     if (title && description && brand && price && category && sizes.length && images.length) {
@@ -16,6 +16,7 @@ const postProduct = async (req, res) => {
           category: category.toUpperCase(),
           subCategory: subCategory?.toUpperCase(),
           gender: gender.toUpperCase(),
+          sport: sport.toUpperCase(),
           price,
           discount,
         },
@@ -35,6 +36,7 @@ const postProduct = async (req, res) => {
           discount,
           images,
           gender,
+          sport,
         });
 
         return res.status(201).json(response);

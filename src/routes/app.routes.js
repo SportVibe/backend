@@ -13,33 +13,32 @@ const PostRegisterGoogle = require("../controllers/User/postRegisterGoogle");
 const getUser = require("../controllers/User/getUser");
 const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
+
 const postShopping = require("../controllers/Carrito/PostShopping");
 
-// RUTAS de Productos
+const putUserById = require("../controllers/User/putUserById");
 
+
+// Rutas de Productos
 router.get("/product", getProduct);
-router.post("/product", postProduct);
-
 router.get("/search/:product", searchProduct);
-
 router.get("/detail/:id", getProductByPk);
-
 router.get("/admin", getProductAdmin);
+
+router.post("/product", postProduct);
 
 router.delete("/deleteProduct/:id", deleteProductByPk);
 
 router.put("/product/:id", putProductbyID);
 
 // Rutas de Usuarios
-
 router.post("/userRegister", postRegister);
-
 router.post("/google", PostRegisterGoogle);
-
 router.post("/login", postLogin);
 
-router.get("/user/:id", getUser);
+router.put("/user/:id", putUserById);
 
+router.get("/user/:id", getUser);
 router.get("/users", getAllUsers);
 
 // Rutas de Carrito

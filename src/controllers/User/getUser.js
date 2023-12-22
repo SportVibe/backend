@@ -2,8 +2,8 @@ const getUserByID = require("../../handlers/User/getUserByID");
 
 const getUser = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const user = await getUserByID(userId);
+    const { id } = req.params;
+    const user = await getUserByID(id);
 
     if (!user) {
       return res.status(404).json({ error: "Usuario no encontrado" });

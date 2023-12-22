@@ -3,11 +3,12 @@ const { User } = require("../../db");
 const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
+const getUserByID = require("./getUserByID");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: { email, externalSignIn: false } });
   if (user) {
     if (!user.active) {
       console.error("Cuenta bloqueada");
