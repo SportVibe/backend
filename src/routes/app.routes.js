@@ -17,6 +17,7 @@ const getAllUsers = require("../controllers/User/getAllUser");
 const postShopping = require("../controllers/Carrito/PostShopping");
 
 const putUserById = require("../controllers/User/putUserById");
+const getPropery = require("../controllers/product/getProperty");
 
 
 // Rutas de Productos
@@ -24,6 +25,7 @@ router.get("/product", getProduct);
 router.get("/search/:product", searchProduct);
 router.get("/detail/:id", getProductByPk);
 router.get("/admin", getProductAdmin);
+router.get("/property", getPropery);
 
 router.post("/product", postProduct);
 
