@@ -13,7 +13,11 @@ const PostRegisterGoogle = require("../controllers/User/postRegisterGoogle");
 const getUser = require("../controllers/User/getUser");
 const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
+
+const postShopping = require("../controllers/Carrito/PostShopping");
+
 const putUserById = require("../controllers/User/putUserById");
+
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -36,5 +40,9 @@ router.put("/user/:id", putUserById);
 
 router.get("/user/:id", getUser);
 router.get("/users", getAllUsers);
+
+// Rutas de Carrito
+
+router.post("/shoppingCart", postShopping);
 
 module.exports = router;
