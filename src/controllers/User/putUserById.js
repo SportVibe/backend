@@ -4,9 +4,9 @@ const updateUser = require("../../handlers/User/updateUser.js");
 const putUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    // Se verifica que exista en la base de datos el Producto a editar.
+    // Se verifica que exista en la base de datos el Usuario a editar.
     const existe = await User.findByPk(id);
-    // Se responde que no existe si no se encuentra el Producto.
+    // Se responde que no existe si no se encuentra el Usuario.
     if (!existe) {
       return res.status(404).json({ message: "El usuario no existe" });
     }
