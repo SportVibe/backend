@@ -94,8 +94,32 @@ User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true } });
 ShoppingCart.belongsTo(User, { foreignKey: "UserId" });
 
 // tabla de relación entre el carrito de compras y el producto (muchos a muchos)
-ShoppingCart.belongsToMany(Product, { through: "Cart_Product" });
-Product.belongsToMany(ShoppingCart, { through: "Cart_Product" });
+ShoppingCart.belongsToMany(Product, {
+  through: "Cart_Product",
+  scope: {
+    cantidad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    subtotal: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+  },
+});
+Product.belongsToMany(ShoppingCart, {
+  through: "Cart_Product",
+  scope: {
+    cantidad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    subtotal: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+  },
+});
 
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });
