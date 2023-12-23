@@ -18,7 +18,7 @@ const postShopping = require("../controllers/Carrito/PostShopping");
 
 const putUserById = require("../controllers/User/putUserById");
 const getPropery = require("../controllers/product/getProperty");
-
+const putPassword = require("../controllers/User/putPassword");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -39,12 +39,12 @@ router.post("/google", PostRegisterGoogle);
 router.post("/login", postLogin);
 
 router.put("/user/:id", putUserById);
+router.put("/user/:id/password", putPassword);
 
 router.get("/user/:id", getUser);
 router.get("/users", getAllUsers);
 
 // Rutas de Carrito
-
 router.post("/shoppingCart", postShopping);
 
 module.exports = router;
