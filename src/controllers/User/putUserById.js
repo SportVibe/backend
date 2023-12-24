@@ -24,29 +24,28 @@ const putUserById = async (req, res) => {
       email,
       rol,
       image,
-      externalSignIn,
     } = req.body;
+    console.log('tukisssss');
 
     const response = await updateUser({
       id,
       active,
       sendMailsActive,
-      firstName: firstName ? firstName.toUpperCase() : firstName,
-      lastName: lastName ? lastName.toUpperCase() : lastName,
-      phoneNumber,
-      address: address ? address.toUpperCase() : address,
-      city: city ? city.toUpperCase() : city,
-      country: country ? country.toUpperCase() : country,
-      zipCode,
-      email: email ? email.toUpperCase() : email,
-      rol: rol ? rol.toUpperCase() : rol,
+      firstName: firstName && firstName.toUpperCase(),
+      lastName: lastName ? lastName.toUpperCase() : null,
+      phoneNumber: phoneNumber ? phoneNumber : null,
+      address: address ? address.toUpperCase() : null,
+      city: city ? city.toUpperCase() : null,
+      country: country ? country.toUpperCase() : null,
+      zipCode: zipCode ? zipCode : null,
+      email,
+      rol,
       image,
-      externalSignIn,
     });
 
     return res.status(200).json({ message: response });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ message: "Hubo un error al actualizar el Usuario." });
   }
 };
