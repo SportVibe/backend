@@ -10,6 +10,7 @@ const getUser = async (req, res) => {
     }
     res.json({
       id: user.id,
+      active: user.active,
       firstName: user.firstName,
       lastName: user.lastName,
       image: user.image,

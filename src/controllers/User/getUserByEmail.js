@@ -8,6 +8,7 @@ const getUserByEmail = async (req, res) => {
             if (user) {
                 res.json({
                     id: user.id,
+                    active: user.active,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     image: user.image,
