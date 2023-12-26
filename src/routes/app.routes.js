@@ -22,6 +22,9 @@ const getDiscountProducts = require("../controllers/product/getDiscountProducts"
 const getUserByEmail = require("../controllers/User/getUserByEmail");
 
 const putPassword = require("../controllers/User/putPassword");
+const captureOrder = require("../controllers/paypal/captureOrder");
+const createOrder = require("../controllers/paypal/createOrder");
+const cancelOrder = require("../controllers/paypal/cancelOrder");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -51,5 +54,10 @@ router.get("/users", getAllUsers);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
+
+// Rutas PayPal
+router.post("/create-order", createOrder);
+router.get("/capture-order", captureOrder);
+router.get("/cancel-order", cancelOrder);
 
 module.exports = router;

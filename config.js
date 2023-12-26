@@ -1,15 +1,20 @@
 const PORT = process.env.PORT;
+const { config } = require("dotenv");
+config();
 // const LOCALHOST = process.env.LOCALHOST;
 
 // const PORT = 3005;
+const HOST = "http://localhost:3005";
 
 const URL_FONT = "";
 const SECRETKEY = "sportvibe";
 
-// const NODE_ENV = process.env.NODE_ENV || true;
+//PayPal
+const PAYPAL_CLIENT = process.env.PAYPAL_CLIENT;
+const PAYPAL_SECRET_KEY = process.env.PAYPAL_SECRET_KEY;
+const PAYPAL_URL = process.env.PAYPAL_URL;
 
-const clientID = "";
-
+//DB
 const DB_USER = process.env.DB_USER || "postgres";
 const DB_PASSWORD = process.env.DB_PASSWORD || "admin";
 const DB_HOST = process.env.DB_HOST || "localhost";
@@ -22,4 +27,8 @@ module.exports = {
   URL_FONT,
   PORT,
   DB_URL,
+  PAYPAL_URL,
+  PAYPAL_CLIENT,
+  PAYPAL_SECRET_KEY,
+  HOST,
 };
