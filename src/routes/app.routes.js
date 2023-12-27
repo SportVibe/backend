@@ -17,7 +17,7 @@ const getAllUsers = require("../controllers/User/getAllUser");
 const postShopping = require("../controllers/Carrito/PostShopping");
 
 const putUserById = require("../controllers/User/putUserById");
-
+const addToCart = require("../controllers/Carrito/addToCart");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -44,5 +44,7 @@ router.get("/users", getAllUsers);
 // Rutas de Carrito
 
 router.post("/shoppingCart", postShopping);
+
+router.post("/addToCart", addToCart);
 
 module.exports = router;
