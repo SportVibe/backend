@@ -15,8 +15,12 @@ const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
 
 const postShopping = require("../controllers/Carrito/PostShopping");
+const deleteProductFromCart = require("../controllers/Carrito/deleteProductFromCart");
+const deleteMultipleProductsFromCart = require("../controllers/Carrito/deleteMultipleProductsFromCart");
+const softDeleteProduct = require("../controllers/Carrito/softDeleteProductController");
 
 const putUserById = require("../controllers/User/putUserById");
+
 const getPropery = require("../controllers/product/getProperty");
 const getDiscountProducts = require("../controllers/product/getDiscountProducts");
 const getUserByEmail = require("../controllers/User/getUserByEmail");
@@ -25,6 +29,7 @@ const putPassword = require("../controllers/User/putPassword");
 const captureOrder = require("../controllers/paypal/captureOrder");
 const createOrder = require("../controllers/paypal/createOrder");
 const cancelOrder = require("../controllers/paypal/cancelOrder");
+
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -54,10 +59,16 @@ router.get("/users", getAllUsers);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
+router.delete("/cart/:userId/:productId", deleteProductFromCart);
+router.delete("/cart/:userId/delete-multiple", deleteMultipleProductsFromCart);
+
+router.put("/cart/:userId/delete", softDeleteProduct);
+
 
 // Rutas PayPal
 router.post("/create-order", createOrder);
 router.get("/capture-order", captureOrder);
 router.get("/cancel-order", cancelOrder);
+
 
 module.exports = router;

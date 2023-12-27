@@ -1910,7 +1910,7 @@ const allProducts = [
     brand: "ADIDAS",
     gender: "NIÑO",
     category: "ROPA",
-    subCategory: "CONJUNTO",
+    subCategory: "CONJUNTOS",
     color: ["ROJO"],
     sizes: [
       {
