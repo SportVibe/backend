@@ -40,6 +40,14 @@ const login = async (req, res) => {
       return res.status(200).json({
         message: `Login exitoso, bienvenido ${user.firstName}!`,
         token,
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          image: user.image,
+          email: user.email,
+          externalSignIn: user.externalSignIn
+        }
       });
     } else {
       console.error("Contraseña incorrecta");

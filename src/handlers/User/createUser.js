@@ -43,18 +43,20 @@ const createUser = async (req, res) => {
         });
         if (existingUser) {
           throw Error("El correo electrónico ya está registrado");
+
         } else {
           const hashedPassword = await bcrypt.hash(password, 10);
 
+
           const newUser = await User.create({
             firstName: firstName && firstName.toUpperCase(),
-            lastName: lastName && lastName.toUpperCase(),
-            phoneNumber,
-            address: address && address.toUpperCase(),
-            city: city && city.toUpperCase(),
-            country: country && country.toUpperCase(),
-            zipCode,
-            email,
+            lastName: lastName ? lastName.toUpperCase(): null,
+            phoneNumber: phoneNumber ? phoneNumber: null,
+            address: address ? address.toUpperCase(): null,
+            city: city ? city.toUpperCase(): null,
+            country: country ? country.toUpperCase(): null,
+            zipCode: zipCode ? zipCode: null,
+            email: email ? email: null,
             password: hashedPassword,
             rol,
             image: userImage,

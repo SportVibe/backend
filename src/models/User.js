@@ -9,6 +9,11 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      externalSignIn: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
       active: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
@@ -67,11 +72,6 @@ module.exports = (sequelize) => {
       image: {
         type: DataTypes.STRING(255),
         allowNull: true,
-      },
-      externalSignIn: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-        defaultValue: false,
       },
     },
     { timestamps: true }

@@ -4,9 +4,9 @@ const updateUser = require("../../handlers/User/updateUser.js");
 const putUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    // Se verifica que exista en la base de datos el Producto a editar.
+    // Se verifica que exista en la base de datos el Usuario a editar.
     const existe = await User.findByPk(id);
-    // Se responde que no existe si no se encuentra el Producto.
+    // Se responde que no existe si no se encuentra el Usuario.
     if (!existe) {
       return res.status(404).json({ message: "El usuario no existe" });
     }
@@ -22,33 +22,30 @@ const putUserById = async (req, res) => {
       country,
       zipCode,
       email,
-      password,
       rol,
       image,
-      externalSignIn,
     } = req.body;
+    console.log('tukisssss');
 
     const response = await updateUser({
       id,
       active,
       sendMailsActive,
-      firstName,
-      lastName,
-      phoneNumber,
-      address,
-      city,
-      country,
-      zipCode,
+      firstName: firstName && firstName.toUpperCase(),
+      lastName: lastName ? lastName.toUpperCase() : null,
+      phoneNumber: phoneNumber ? phoneNumber : null,
+      address: address ? address.toUpperCase() : null,
+      city: city ? city.toUpperCase() : null,
+      country: country ? country.toUpperCase() : null,
+      zipCode: zipCode ? zipCode : null,
       email,
-      password,
       rol,
       image,
-      externalSignIn,
     });
 
     return res.status(200).json({ message: response });
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     res.status(500).json({ message: "Hubo un error al actualizar el Usuario." });
   }
 };

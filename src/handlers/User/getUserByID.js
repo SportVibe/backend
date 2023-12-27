@@ -5,7 +5,9 @@ const getUserByID = async (userId) => {
     const user = await User.findByPk(userId, {
       attributes: { exclude: ['password'] }, // Excluir la contraseña de la respuesta
     });
-    return user;
+    if (user) {
+      return user;
+    }
   } catch (error) {
     throw error;
   }

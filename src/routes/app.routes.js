@@ -17,13 +17,24 @@ const getAllUsers = require("../controllers/User/getAllUser");
 const postShopping = require("../controllers/Carrito/PostShopping");
 
 const putUserById = require("../controllers/User/putUserById");
-const addToCart = require("../controllers/Carrito/addToCart");
+
+const getPropery = require("../controllers/product/getProperty");
+const getDiscountProducts = require("../controllers/product/getDiscountProducts");
+const getUserByEmail = require("../controllers/User/getUserByEmail");
+
+const putPassword = require("../controllers/User/putPassword");
+const captureOrder = require("../controllers/paypal/captureOrder");
+const createOrder = require("../controllers/paypal/createOrder");
+const cancelOrder = require("../controllers/paypal/cancelOrder");
+
 
 // Rutas de Productos
 router.get("/product", getProduct);
 router.get("/search/:product", searchProduct);
 router.get("/detail/:id", getProductByPk);
 router.get("/admin", getProductAdmin);
+router.get("/property", getPropery);
+router.get("/product/discount", getDiscountProducts);
 
 router.post("/product", postProduct);
 
@@ -37,14 +48,20 @@ router.post("/google", PostRegisterGoogle);
 router.post("/login", postLogin);
 
 router.put("/user/:id", putUserById);
+router.put("/user/:id/password", putPassword);
 
 router.get("/user/:id", getUser);
+router.get("/user", getUserByEmail);
 router.get("/users", getAllUsers);
 
 // Rutas de Carrito
-
 router.post("/shoppingCart", postShopping);
 
-router.post("/addToCart", addToCart);
+
+// Rutas PayPal
+router.post("/create-order", createOrder);
+router.get("/capture-order", captureOrder);
+router.get("/cancel-order", cancelOrder);
+
 
 module.exports = router;
