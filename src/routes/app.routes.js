@@ -18,7 +18,7 @@ const postShopping = require("../controllers/Carrito/PostShopping");
 const deleteProductFromCart = require("../controllers/Carrito/deleteProductFromCart");
 const deleteMultipleProductsFromCart = require("../controllers/Carrito/deleteMultipleProductsFromCart");
 const softDeleteProduct = require("../controllers/Carrito/softDeleteProductController");
-
+const putShopping = require('../controllers/Carrito/PutShopping');
 const putUserById = require("../controllers/User/putUserById");
 
 const getPropery = require("../controllers/product/getProperty");
@@ -61,7 +61,7 @@ router.get("/users", getAllUsers);
 router.post("/shoppingCart", postShopping);
 router.delete("/cart/:userId/:productId", deleteProductFromCart);
 router.delete("/cart/:userId/delete-multiple", deleteMultipleProductsFromCart);
-
+router.put('/shopping', putShopping);
 router.put("/cart/:userId/delete", softDeleteProduct);
 
 
