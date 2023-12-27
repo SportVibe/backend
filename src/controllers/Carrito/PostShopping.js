@@ -5,7 +5,11 @@ const { serialize } = require("cookie");
 
 const postShopping = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId, type } = req.body;
+
+    if (type !== 'guest' && type !== 'member') {
+      return res.status(401).json({ error: "Type inválido" });
+    }
 
     if (!userId) {
       return res.status(401).json({ error: "Falta id del usuario" });
@@ -19,6 +23,9 @@ const postShopping = async (req, res) => {
 
     const [newCart, created] = await ShoppingCart.findOrCreate({
       where: { UserId: userId },
+      defaults: {
+        type: type
+      }
     });
 
     if (created) {
@@ -28,6 +35,7 @@ const postShopping = async (req, res) => {
           total: newCart.total,
           available: newCart.available,
           UserId: userId,
+          type: type ? type : 'guest'
         },
         SECRETKEY,
         { expiresIn: "1h" }
@@ -42,12 +50,14 @@ const postShopping = async (req, res) => {
 
       res.setHeader("Set-Cookie", tokenCookie);
 
-      return res.status(200).json({
+      return res.status(201).json({
         message: "Carrito creado exitosamente",
         token,
       });
     } else {
-      return res.status(200).json(newCart, "Carrito existente");
+      return res.status(200).json({
+        message: "Carrito existente", 
+        shoppingCart: newCart});
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
