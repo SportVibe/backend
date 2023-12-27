@@ -70,5 +70,5 @@ router.get("/capture-order", captureOrder);
 router.get("/cancel-order", cancelOrder);
 
 //Rutas Stock
-router.get("/get-stock/:productId", getStock);
+router.get("/stock/:productId", getStock);
 module.exports = router;
