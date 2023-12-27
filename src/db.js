@@ -3,7 +3,7 @@ const { DB_URL } = require("../config");
 const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize(`${DB_URL}`, {
   dialectModule: require("pg"),
