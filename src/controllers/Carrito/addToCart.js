@@ -3,9 +3,6 @@ const addProduct = require("../../handlers/Carrito/addProduct");
 const addToCart = async (req, res) => {
   try {
     const { userId, carrito, total } = req.body;
-
-    const currentCart = req.cookies.cart || [];
-
     if (!userId) {
       return res.status(401).json({ error: "Falta id del usuario" });
     }

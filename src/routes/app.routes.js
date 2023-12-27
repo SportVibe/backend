@@ -15,6 +15,9 @@ const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
 
 const postShopping = require("../controllers/Carrito/PostShopping");
+const deleteProductFromCart = require("../controllers/Carrito/deleteProductFromCart");
+const deleteMultipleProductsFromCart = require("../controllers/Carrito/deleteMultipleProductsFromCart");
+const softDeleteProduct = require("../controllers/Carrito/softDeleteProductController");
 
 const putUserById = require("../controllers/User/putUserById");
 
@@ -56,6 +59,10 @@ router.get("/users", getAllUsers);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
+router.delete("/cart/:userId/:productId", deleteProductFromCart);
+router.delete("/cart/:userId/delete-multiple", deleteMultipleProductsFromCart);
+
+router.put("/cart/:userId/delete", softDeleteProduct);
 
 
 // Rutas PayPal
