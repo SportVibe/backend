@@ -14,8 +14,10 @@ const addToCart = async (req, res) => {
     }
 
     const response = await addProduct(userId, carrito, total);
-    if (response) {
+    if (response.message === "Carrito actualizado") {
       return res.status(200).json(response);
+    } else {
+      return res.status(401).json(response);
     }
   } catch (error) {
     res.status(400).json({ error: error.message });

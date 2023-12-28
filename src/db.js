@@ -26,7 +26,8 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase } = sequelize.models;
+const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase, Cart_Product } =
+  sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:
 
@@ -94,32 +95,8 @@ User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true } });
 ShoppingCart.belongsTo(User, { foreignKey: "UserId" });
 
 // tabla de relación entre el carrito de compras y el producto (muchos a muchos)
-ShoppingCart.belongsToMany(Product, {
-  through: "Cart_Product",
-  scope: {
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    subtotal: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-  },
-});
-Product.belongsToMany(ShoppingCart, {
-  through: "Cart_Product",
-  scope: {
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    subtotal: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-  },
-});
+ShoppingCart.belongsToMany(Product, { through: Cart_Product });
+Product.belongsToMany(ShoppingCart, { through: Cart_Product });
 
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });
