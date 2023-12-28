@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      type: {
+        type: DataTypes.ENUM('guest', 'member'),
+        defaultValue: 'guest',
+      },
     },
     { timestamps: false }
   );

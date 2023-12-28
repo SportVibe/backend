@@ -29,7 +29,11 @@ const putPassword = require("../controllers/User/putPassword");
 const captureOrder = require("../controllers/paypal/captureOrder");
 const createOrder = require("../controllers/paypal/createOrder");
 const cancelOrder = require("../controllers/paypal/cancelOrder");
+
 const addToCart = require("../controllers/Carrito/addToCart");
+
+const getStock = require("../controllers/stock/getStockByProductId");
+
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -69,5 +73,10 @@ router.put("/cart/:userId/delete", softDeleteProduct);
 router.post("/create-order", createOrder);
 router.get("/capture-order", captureOrder);
 router.get("/cancel-order", cancelOrder);
+
+
+
+//Rutas Stock
+router.get("/stock/:productId", getStock);
 
 module.exports = router;
