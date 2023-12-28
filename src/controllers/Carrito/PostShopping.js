@@ -22,10 +22,12 @@ const postShopping = async (req, res) => {
     }
 
     const [newCart, created] = await ShoppingCart.findOrCreate({
-      where: { UserId: userId },
+
+      where: { UserId: userId, available: true  },
       defaults: {
         type: type
       }
+
     });
 
     if (created) {
@@ -55,9 +57,11 @@ const postShopping = async (req, res) => {
         token,
       });
     } else {
+
       return res.status(200).json({
         message: "Carrito existente", 
         shoppingCart: newCart});
+
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
