@@ -1,61 +1,59 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
 const { Op } = require("sequelize");
 
-const deleteProduct = async (productId) => {
+const deleteProduct = async (userId, carrito, total) => {
   try {
     const cartUser = await ShoppingCart.findOne({
-      where: { UserId: req.userId }, 
+      where: { UserId: userId },
     });
 
     if (!cartUser) {
-      throw new Error("No se encontró el carrito para el usuario");
+      return { message: "No se encontró un carrito asociado a ese UserId" };
     }
 
-    const deleted = await Cart_Product.destroy({
-      where: {
-        [Op.and]: [{ ShoppingCartId: cartUser.id }, { ProductId: productId }],
-      },
-    });
-
-    if (deleted === 0) {
-      return "Producto no encontrado en el carrito";
-    }
-
-    await updateCartOnProductDelete(cartUser.id, productId);
-
-    return "Producto eliminado";
-  } catch (error) {
-    return error.message;
-  }
-};
-
-const updateCartOnProductDelete = async (cartId, productId) => {
-  try {
-    const cartProducts = await Cart_Product.findAll({
-      where: { ShoppingCartId: cartId },
-    });
-
-    const productInCart = cartProducts.find(
-      (product) => product.ProductId === productId
-    );
-
-    if (!productInCart) {
-      throw new Error("El producto no está en el carrito");
-    }
-
-    await Cart_Product.update(
-      {
-        cantidad: 0,
-        subtotal: 0,
-      },
+    await ShoppingCart.update(
+      { total: total },
       {
         where: {
-          [Op.and]: [{ ShoppingCartId: cartId }, { ProductId: productId }],
+          id: cartUser.id,
         },
       }
     );
+
+    const productsInShop = [];
+
+    for (let producto of carrito) {
+      let stock = producto.quantity.reduce((resultado, talle) => {
+        const unidades = Object.values(talle)[0];
+        return resultado + unidades;
+      }, 0);
+
+      const cartProduct = await Cart_Product.findOne({
+        where: {
+          [Op.and]: [
+            { ShoppingCartId: cartUser.id },
+            { ProductId: producto.id },
+          ],
+        },
+      });
+
+      if (cartProduct) {
+        await Cart_Product.destroy({
+          where: {
+            [Op.and]: [
+              { ShoppingCartId: cartUser.id },
+              { ProductId: producto.id },
+            ],
+          },
+        });
+      }
+
+      productsInShop.push(cartProduct, ...producto.quantity);
+    }
+
+    return { message: "Producto eliminado del carrito", removedProducts: productsInShop };
   } catch (error) {
-    throw new Error(error.message);
+    return { message: error.message };
   }
 };
 

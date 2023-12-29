@@ -1,23 +1,22 @@
-const updateProductQuantity = require("../../handlers/Carrito/PutProduct");
+const updateProductHandler = require("../../handlers/Carrito/PutProduct");
 
-const modifyProductQuantity = async (req, res) => {
+const updateProduct= async (req, res) => {
   try {
-    const { userId, productId } = req.params;
-    const { quantity } = req.body;
+    const { userId, productId, newTotal } = req.body; // Se espera el userId, productId y el nuevo total para actualizar el producto
 
-    if (!userId || !productId || !quantity || isNaN(quantity)) {
-      return res.status(401).json({ error: "Faltan datos o los datos son inválidos" });
-    }
+    const result = await updateProductHandler(userId, productId, newTotal); // Llamada a la función updateProduct
 
-    const response = await updateProductQuantity(userId, productId, quantity);
-    if (response === "Cantidad actualizada") {
-      return res.status(200).json({ message: "Cantidad del producto actualizada en el carrito" });
-    } else {
+    // Manejo de posibles respuestas según el resultado de updateProduct
+    if (result.message === "No se encontró un carrito asociado a ese UserId") {
+      return res.status(404).json({ error: "No se encontró un carrito para este usuario" });
+    } else if (result.message === "El producto no está en el carrito") {
       return res.status(404).json({ error: "El producto no está en el carrito" });
     }
+
+    return res.status(200).json(result); // Respuesta exitosa
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: "Error al actualizar el producto del carrito" }); // Manejo de error
   }
 };
 
-module.exports = modifyProductQuantity;
+module.exports = updateProduct;

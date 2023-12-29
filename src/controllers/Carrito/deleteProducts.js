@@ -1,25 +1,19 @@
-const deleteProducts = require("../../handlers/Carrito/deleteProducts");
+const deleteProductsHandler = require("../../handlers/Carrito/deleteProducts");
 
-const deleteProductsController = async (req, res) => {
+const deleteProducts = async (req, res) => {
   try {
-    const { productIds } = req.params;
+    const { userId, productsToDelete, total } = req.body;
 
-    if (!productIds || !Array.isArray(productIds) || productIds.length === 0) {
-      return res.status(401).json({ error: "Falta ID de los productos" });
+    const result = await deleteProductsHandler(userId, productsToDelete, total);
+
+    if (result.message === "No se encontró un carrito asociado a ese UserId") {
+      return res.status(404).json({ error: "No se encontró un carrito para este usuario" });
     }
 
-    const userId = req.userId; 
-
-    const response = await deleteProducts(userId, productIds.split(',')); // Convertir los IDs a un array
-
-    if (response === "Productos eliminados") {
-      return res.status(200).json({ message: "Productos eliminados del carrito" });
-    } else {
-      return res.status(404).json({ error: "Algunos productos no están en el carrito" });
-    }
+    return res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: "Error al eliminar productos del carrito" });
   }
 };
 
-module.exports = deleteProductsController;
+module.exports = deleteProducts;
