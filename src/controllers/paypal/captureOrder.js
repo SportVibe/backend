@@ -1,5 +1,6 @@
-const { PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
 const axios = require("axios");
+const { Order } = require("../../db");
+const { PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
 
 const captureOrder = async (req, res) => {
   try {
@@ -17,12 +18,29 @@ const captureOrder = async (req, res) => {
     );
 
     console.log(response.data);
+    const orderTotal = response.data.purchase_units.payments;
+    const { id, status } = response.data;
 
-    return res.send("¡Pagado!");
+    if (status === "COMPLETED") {
+      await Order.update(
+        { status: "accepted" },
+        {
+          where: {
+            orderIdPaypal: response.data.id,
+          },
+        }
+      );
+
+      return res.json({
+        success: true,
+        message: "¡Pago aceptado!",
+        orderId: id,
+        total: orderTotal,
+      });
+    }
   } catch (error) {
     console.error("Error al capturar la orden:", error);
     return res.status(500).json({ error: "Error Interno del Servidor" });
   }
 };
-
 module.exports = captureOrder;
