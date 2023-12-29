@@ -15,9 +15,7 @@ const captureOrder = async (req, res) => {
         },
       }
     );
-
     console.log(response.data);
-
     return res.send("¡Pagado!");
   } catch (error) {
     console.error("Error al capturar la orden:", error);

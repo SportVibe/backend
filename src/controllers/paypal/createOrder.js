@@ -1,15 +1,18 @@
 const axios = require("axios");
+const { Order } = require("../../db");
 const { HOST, PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
 
 const createOrder = async (req, res) => {
   try {
+    const { userId, ShoppingCartId, total } = req.body;
+    console.log(total);
     const order = {
       intent: "CAPTURE",
       purchase_units: [
         {
           amount: {
             currency_code: "usd",
-            value: "130.00",
+            value: total,
           },
         },
       ],
@@ -39,7 +42,17 @@ const createOrder = async (req, res) => {
       },
     });
 
-    console.log(response.data);
+    // Extraer la información necesaria de la orden capturada
+    const { id } = capturedOrder;
+
+    // Crear una entrada en la base de datos usando el modelo Order
+    const newOrder = await Order.create({
+      orderIdPaypal: id,
+      userId,
+      ShoppingCartId,
+      total,
+    });
+
     return res.json(response.data.links[1].href);
   } catch (error) {
     console.error("Error al crear la orden:", error);
