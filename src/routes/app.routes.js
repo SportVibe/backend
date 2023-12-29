@@ -35,7 +35,6 @@ const getSports = require("../controllers/product/getSports");
 
 const addToCart = require("../controllers/Carrito/addToCart");
 
-const getStock = require("../controllers/stock/getStockByProductId");
 
 // Rutas de Productos
 router.get("/product", getProduct);

@@ -11,7 +11,7 @@ const putProductbyID = async (req, res) => {
       return res.status(404).json({ message: "El producto no existe" });
     }
 
-    const {
+    let {
       title,
       description,
       brand,
@@ -25,6 +25,10 @@ const putProductbyID = async (req, res) => {
       images,
       available,
     } = req.body;
+
+    if (discount && Number(discount) > 0 && Number(discount) <= 100) {
+      price = price * (100 - Number(discount)) / 100; // El precio debe quedar registrado en la BDD con el descuento aplicado.
+    }
 
     const response = await updateProduct({
       id,
