@@ -21,14 +21,17 @@ const softDeleteProduct = require("../controllers/Carrito/softDeleteProductContr
 
 const putUserById = require("../controllers/User/putUserById");
 
-const getPropery = require("../controllers/product/getProperty");
+const getProperty = require("../controllers/product/getProperty");
 const getDiscountProducts = require("../controllers/product/getDiscountProducts");
+const getProductOrderby = require("../controllers/product/getProductOrderBy");
 const getUserByEmail = require("../controllers/User/getUserByEmail");
 
 const putPassword = require("../controllers/User/putPassword");
 const captureOrder = require("../controllers/paypal/captureOrder");
 const createOrder = require("../controllers/paypal/createOrder");
 const cancelOrder = require("../controllers/paypal/cancelOrder");
+const getBrands = require("../controllers/product/getBrands");
+const getSports = require("../controllers/product/getSports");
 
 
 // Rutas de Productos
@@ -36,8 +39,11 @@ router.get("/product", getProduct);
 router.get("/search/:product", searchProduct);
 router.get("/detail/:id", getProductByPk);
 router.get("/admin", getProductAdmin);
-router.get("/property", getPropery);
+router.get("/property", getProperty);
 router.get("/product/discount", getDiscountProducts);
+router.get("/product/orderBy", getProductOrderby);
+router.get("/product/brands", getBrands);
+router.get("/product/sports", getSports);
 
 router.post("/product", postProduct);
 
