@@ -9,6 +9,11 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      externalSignIn: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
       active: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
@@ -25,7 +30,7 @@ module.exports = (sequelize) => {
       },
       lastName: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       phoneNumber: {
         type: DataTypes.INTEGER,
@@ -33,23 +38,23 @@ module.exports = (sequelize) => {
       },
       address: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       city: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       country: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
       zipCode: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING(255),
-        unique: true,
+        unique: false,
         allowNull: false,
         validate: {
           isEmail: true,
@@ -57,7 +62,12 @@ module.exports = (sequelize) => {
       },
       password: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
+      },
+      rol: {
+        type: DataTypes.ENUM('client', 'admin', 'super_admin'),
+        allowNull: true,
+        defaultValue: 'client',
       },
       image: {
         type: DataTypes.STRING(255),

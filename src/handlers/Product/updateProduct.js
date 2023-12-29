@@ -1,37 +1,57 @@
-const { Product, Image, Stock, Size } = require("../../db");
+const { Product, Image, Stock, Size, Color } = require("../../db");
 
-const updateProduct = async ({
-  id,
-  title,
-  description,
-  category,
-  subCategory,
-  brand,
-  sizes,
-  price,
-  discount,
-  images,
-  gender,
-  color,
-  available,
-}) => {
+const updateProduct = async (product) => {
+  // console.log(product);
   try {
-    const productEdit = await Product.findByPk(id);
+    await Product.update(product, {
+      where: {
+        id: product.id,
+      },
+    });
 
-    productEdit.title = title;
-    productEdit.description = description;
-    productEdit.category = category;
-    productEdit.subCategory = subCategory;
-    productEdit.brand = brand;
-    productEdit.price = price;
-    productEdit.discount = discount;
-    productEdit.available = available;
-    productEdit.gender = gender;
+    productEdit = await Product.findByPk(product.id);
 
-    await productEdit.save();
-    return "El Producto se actualizo correctamente";
+    if (product.images) {
+      const createdImages = await Promise.all(product.images.map((img) => Image.create({ url: img })));
+      await productEdit.addImages(createdImages);
+    }
+
+    if (product.color) {
+      for (const colorName of product.color) {
+        const [existingColor, colorCreated] = await Color.findOrCreate({
+          where: { name: colorName.toUpperCase() },
+        });
+        await productEdit.addColor(existingColor);
+      }
+    }
+
+    if (product.sizes) {
+      for (const stockInfo of product.sizes) {
+        const [size, created] = await Size.findOrCreate({
+          where: { name: stockInfo.size },
+        });
+
+        const [stock, stockCreated] = await Stock.findOrCreate({
+          where: {
+            product_id: productEdit.id,
+            size_id: size.id,
+          },
+          defaults: {
+            quantity: stockInfo.stock,
+          },
+        });
+
+        if (!stockCreated) {
+          await stock.update({ quantity: stockInfo.stock });
+        }
+      }
+    }
   } catch (error) {
-    return error;
+    console.log(error);
   }
+
+  // await productEdit.save();
+
+  return "El Producto se actualizó correctamente";
 };
 module.exports = updateProduct;
