@@ -1,6 +1,5 @@
 const cancelOrder = async (req, res) => {
   try {
-    // hacer update de shopping cart available dejarlo en true
     res.send("¡Se canceló el pago!");
   } catch (error) {
     console.error("Error al cancelar el pago:", error);

@@ -3,6 +3,9 @@ const { Product, Stock, Image, Color, Size } = require("../../db");
 const getProductAdmin = async (req, res) => {
   try {
     const products = await Product.findAll({
+      where: {
+        available: true,
+      },
       include: [
         {
           model: Stock,
