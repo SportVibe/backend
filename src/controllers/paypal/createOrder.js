@@ -36,13 +36,12 @@ const createOrder = async (req, res) => {
       },
     });
 
-    const response = await axios.post(`${PAYPAL_URL}/v2/checkout/orders`, order, {
+    const { data: capturedOrder } = await axios.post(`${PAYPAL_URL}/v2/checkout/orders`, order, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
 
-    // Extraer la información necesaria de la orden capturada
     const { id } = capturedOrder;
 
     // Crear una entrada en la base de datos usando el modelo Order
@@ -53,9 +52,9 @@ const createOrder = async (req, res) => {
       total,
     });
 
-    return res.json(response.data.links[1].href);
+    return res.json(capturedOrder.links[1].href);
   } catch (error) {
-    console.error("Error al crear la orden:", error);
+    console.log("Error al crear la orden:", error);
     return res.status(500).json({ error: "Error Interno del Servidor" });
   }
 };
