@@ -12,6 +12,7 @@ const updateProduct = async (product) => {
     productEdit = await Product.findByPk(product.id);
 
     if (product.images) {
+      await productEdit.setImages([]);
       const createdImages = await Promise.all(product.images.map((img) => Image.create({ url: img })));
       await productEdit.addImages(createdImages);
     }
