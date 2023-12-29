@@ -3,7 +3,7 @@ const { DB_URL } = require("../config");
 const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize(`${DB_URL}`, {
   dialectModule: require("pg"),
@@ -26,7 +26,8 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase } = sequelize.models;
+const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase, Cart_Product } =
+  sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:
 
@@ -90,12 +91,12 @@ Product.belongsToMany(User, { through: "Order" });
 Product.belongsToMany(User, { through: "Purchase" }); */
 
 // tabla de relación entre el carrito de compras y el usuario (uno a uno)
-User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true } });
+User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true, type: 'member' } });
 ShoppingCart.belongsTo(User, { foreignKey: "UserId" });
 
 // tabla de relación entre el carrito de compras y el producto (muchos a muchos)
-ShoppingCart.belongsToMany(Product, { through: "Cart_Product" });
-Product.belongsToMany(ShoppingCart, { through: "Cart_Product" });
+ShoppingCart.belongsToMany(Product, { through: Cart_Product });
+Product.belongsToMany(ShoppingCart, { through: Cart_Product });
 
 // tabla intermedia de las compras recibidas por cada usuario.
 Size.belongsToMany(Product, { through: "Product_size" });

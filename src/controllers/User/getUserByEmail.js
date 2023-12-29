@@ -4,10 +4,11 @@ const getUserByEmail = async (req, res) => {
     try {
         const { email, externalSignIn } = req.query;
         if (email && externalSignIn) {
-            const user = await User.findOne({ where: { email, externalSignIn: externalSignIn } });
+            const user = await User.findOne({ where: { email, externalSignIn: externalSignIn, active: true } });
             if (user) {
                 res.json({
                     id: user.id,
+                    active: user.active,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     image: user.image,

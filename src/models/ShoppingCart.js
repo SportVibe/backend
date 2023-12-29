@@ -12,10 +12,15 @@ module.exports = (sequelize) => {
       total: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
+        defaultValue: 0,
       },
       available: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+      },
+      type: {
+        type: DataTypes.ENUM('guest', 'member'),
+        defaultValue: 'guest',
       },
     },
     { timestamps: false }
