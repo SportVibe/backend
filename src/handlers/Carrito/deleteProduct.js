@@ -1,10 +1,10 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
 const { Op } = require("sequelize");
 
-const deleteProduct = async (userId, productId) => {
+const deleteProduct = async (productId) => {
   try {
     const cartUser = await ShoppingCart.findOne({
-      where: { UserId: userId },
+      where: { UserId: req.userId }, 
     });
 
     if (!cartUser) {
@@ -21,7 +21,6 @@ const deleteProduct = async (userId, productId) => {
       return "Producto no encontrado en el carrito";
     }
 
-    // Actualizar el carrito si se eliminó el producto
     await updateCartOnProductDelete(cartUser.id, productId);
 
     return "Producto eliminado";
@@ -44,7 +43,6 @@ const updateCartOnProductDelete = async (cartId, productId) => {
       throw new Error("El producto no está en el carrito");
     }
 
-    // Eliminar y actualizar el subtotal y cantidad
     await Cart_Product.update(
       {
         cantidad: 0,

@@ -1,12 +1,14 @@
 const deleteProduct = require("../../handlers/Carrito/deleteProduct");
 
-const deleteProductFromCart = async (req, res) => {
+const removeProductFromCart = async (req, res) => {
   try {
-    const { userId, productId } = req.params;
+    const { productId } = req.params;
 
-    if (!userId || !productId) {
-      return res.status(401).json({ error: "Falta id del usuario o del producto" });
+    if (!productId) {
+      return res.status(401).json({ error: "Falta el ID del producto" });
     }
+
+    const userId = req.userId;
 
     const response = await deleteProduct(userId, productId);
     if (response === "Producto eliminado") {
@@ -19,4 +21,4 @@ const deleteProductFromCart = async (req, res) => {
   }
 };
 
-module.exports = deleteProductFromCart;
+module.exports = removeProductFromCart;
