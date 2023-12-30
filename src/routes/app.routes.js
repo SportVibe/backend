@@ -16,13 +16,17 @@ const getProductAdmin = require("../controllers/product/getProductAdmin");
 const getAllUsers = require("../controllers/User/getAllUser");
 
 const postShopping = require("../controllers/Carrito/PostShopping");
-const deleteProductFromCart = require("../controllers/Carrito/deleteProductFromCart");
-const deleteMultipleProductsFromCart = require("../controllers/Carrito/deleteMultipleProductsFromCart");
-const softDeleteProduct = require("../controllers/Carrito/softDeleteProductController");
+const deleteShopping = require('../controllers/Carrito/deleteShopping');
 const putShopping = require("../controllers/Carrito/PutShopping");
+const addToCart = require("../controllers/Carrito/addToCart");
+const deleteProduct  = require("../controllers/Carrito/deleteProduct");
+const deleteProducts = require("../controllers/Carrito/deleteProducts");
+const updateProductQuantityController = require("../controllers/Carrito/PutProduct");
 const putUserById = require("../controllers/User/putUserById");
 
+
 const getProperty = require("../controllers/product/getProperty");
+
 const getDiscountProducts = require("../controllers/product/getDiscountProducts");
 const getUserByEmail = require("../controllers/User/getUserByEmail");
 
@@ -33,7 +37,6 @@ const cancelOrder = require("../controllers/paypal/cancelOrder");
 const getBrands = require("../controllers/product/getBrands");
 const getSports = require("../controllers/product/getSports");
 
-const addToCart = require("../controllers/Carrito/addToCart");
 
 const getStock = require("../controllers/stock/getStockByProductId");
 const getAllPurchases = require("../controllers/User/getAllPurchases");
@@ -70,11 +73,13 @@ router.get("/purchases/:id", getAllPurchases);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
-router.post("/addtocart", addToCart);
-router.delete("/cart/:userId/:productId", deleteProductFromCart);
-router.delete("/cart/:userId/delete-multiple", deleteMultipleProductsFromCart);
 router.put("/shopping", putShopping);
-router.put("/cart/:userId/delete", softDeleteProduct);
+router.delete('/shopping', deleteShopping);
+router.post("/addtocart", addToCart);
+router.delete("/deleteProduct/:productId", deleteProduct);
+router.delete("/deleteProducts/:productIds", deleteProducts);
+router.put('/cart/:userId/product/:productId', updateProductQuantityController);
+
 
 // Rutas PayPal
 router.post("/create-order", createOrder);

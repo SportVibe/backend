@@ -1,7 +1,7 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
 const { Op } = require("sequelize");
 
-const deleteProduct = async (userId, carrito, total) => {
+const deleteProducts = async (userId, productsToDelete, total) => {
   try {
     const cartUser = await ShoppingCart.findOne({
       where: { UserId: userId },
@@ -20,19 +20,15 @@ const deleteProduct = async (userId, carrito, total) => {
       }
     );
 
-    const productsInShop = [];
+    const removedProducts = [];
 
-    for (let producto of carrito) {
-      let stock = producto.quantity.reduce((resultado, talle) => {
-        const unidades = Object.values(talle)[0];
-        return resultado + unidades;
-      }, 0);
-
+    for (let product of productsToDelete) {
       const cartProduct = await Cart_Product.findOne({
         where: {
           [Op.and]: [
             { ShoppingCartId: cartUser.id },
-            { ProductId: producto.id },
+            { ProductId: product.id },
+            { talle: product.talle }, // Consideración del talle
           ],
         },
       });
@@ -42,19 +38,20 @@ const deleteProduct = async (userId, carrito, total) => {
           where: {
             [Op.and]: [
               { ShoppingCartId: cartUser.id },
-              { ProductId: producto.id },
+              { ProductId: product.id },
+              { talle: product.talle }, // Consideración del talle
             ],
           },
         });
-      }
 
-      productsInShop.push(cartProduct, ...producto.quantity);
+        removedProducts.push(cartProduct);
+      }
     }
 
-    return { message: "Producto eliminado del carrito", removedProducts: productsInShop };
+    return { message: "Productos eliminados del carrito", removedProducts };
   } catch (error) {
     return { message: error.message };
   }
 };
 
-module.exports = deleteProduct;
+module.exports = deleteProducts;
