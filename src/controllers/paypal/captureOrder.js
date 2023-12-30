@@ -1,6 +1,7 @@
 const axios = require("axios");
-const { Order } = require("../../db");
+const { Order, ShoppingCart } = require("../../db");
 const { PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
+const createOrder = require("./createOrder");
 
 const captureOrder = async (req, res) => {
   try {
@@ -17,7 +18,6 @@ const captureOrder = async (req, res) => {
       }
     );
 
-    console.log(response.data);
     const orderTotal = response.data.purchase_units.payments;
     const { id, status } = response.data;
 
@@ -27,6 +27,14 @@ const captureOrder = async (req, res) => {
         {
           where: {
             orderIdPaypal: response.data.id,
+          },
+        }
+      );
+      await ShoppingCart.update(
+        { available: false },
+        {
+          where: {
+            orderIdPaypal: token,
           },
         }
       );

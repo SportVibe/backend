@@ -91,7 +91,7 @@ Product.belongsToMany(User, { through: "Order" });
 Product.belongsToMany(User, { through: "Purchase" }); */
 
 // tabla de relación entre el carrito de compras y el usuario (uno a uno)
-User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true, type: 'member' } });
+User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true, type: "member" } });
 ShoppingCart.belongsTo(User, { foreignKey: "UserId" });
 
 // tabla de relación entre el carrito de compras y el producto (muchos a muchos)
