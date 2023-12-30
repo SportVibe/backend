@@ -1,16 +1,20 @@
 const { Product, Image, Stock, Size, Color } = require("../../db");
 
 const updateProduct = async (product) => {
-  // console.log(product);
+  console.log(product);
   try {
+    productEdit = await Product.findByPk(product.id);
+
+    if (product.discount && Number(product.discount) > 0 && Number(product.discount) <= 100) {
+      product.price = (productEdit.price * (100 - Number(product.discount))) / 100; // El precio debe quedar registrado en la BDD con el descuento aplicado.
+      console.log(product.price);
+    }
+
     await Product.update(product, {
       where: {
         id: product.id,
       },
     });
-
-    productEdit = await Product.findByPk(product.id);
-
     if (product.images) {
       await productEdit.setImages([]);
       const createdImages = await Promise.all(product.images.map((img) => Image.create({ url: img })));

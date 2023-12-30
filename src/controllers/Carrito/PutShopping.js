@@ -21,7 +21,7 @@ const putShopping = async (req, res) => {
     console.log(cartUser);
     //Si no se encuentra un carrito asignado al usuario se da aviso
     if (cartUser === null) {
-      return { message: "no se encontró carrito con ese UserId" };
+      return res.status(401).json({ error: "no se encontró carrito con ese UserId" });
     }
 
     //Se actualiza el total del carrito con lo que se recibe desde el front
