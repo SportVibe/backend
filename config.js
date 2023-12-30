@@ -4,7 +4,7 @@ config();
 // const LOCALHOST = process.env.LOCALHOST;
 
 // const PORT = 3005;
-const HOST = "http://localhost:3005";
+const HOST = process.env.HOST || "http://localhost:3005";
 
 const URL_FONT = "";
 const SECRETKEY = "sportvibe";
