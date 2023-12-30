@@ -25,7 +25,6 @@ const putUserById = async (req, res) => {
       rol,
       image,
     } = req.body;
-    console.log('tukisssss');
 
     const response = await updateUser({
       id,

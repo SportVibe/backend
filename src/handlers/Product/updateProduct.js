@@ -12,11 +12,13 @@ const updateProduct = async (product) => {
     productEdit = await Product.findByPk(product.id);
 
     if (product.images) {
+      await productEdit.setImages([]);
       const createdImages = await Promise.all(product.images.map((img) => Image.create({ url: img })));
       await productEdit.addImages(createdImages);
     }
 
     if (product.color) {
+      await productEdit.setColors([]);
       for (const colorName of product.color) {
         const [existingColor, colorCreated] = await Color.findOrCreate({
           where: { name: colorName.toUpperCase() },
@@ -49,8 +51,6 @@ const updateProduct = async (product) => {
   } catch (error) {
     console.log(error);
   }
-
-  // await productEdit.save();
 
   return "El Producto se actualizó correctamente";
 };
