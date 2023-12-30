@@ -36,7 +36,7 @@ const getSports = require("../controllers/product/getSports");
 const addToCart = require("../controllers/Carrito/addToCart");
 
 const getStock = require("../controllers/stock/getStockByProductId");
-
+const getAllPurchases = require("../controllers/User/getAllPurchases");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -66,6 +66,7 @@ router.put("/user/:id/password", putPassword);
 router.get("/user/:id", getUser);
 router.get("/user", getUserByEmail);
 router.get("/users", getAllUsers);
+router.get("/purchases/:id", getAllPurchases);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
@@ -79,8 +80,6 @@ router.put("/cart/:userId/delete", softDeleteProduct);
 router.post("/create-order", createOrder);
 router.get("/capture-order", captureOrder);
 router.get("/cancel-order", cancelOrder);
-
-
 
 //Rutas Stock
 router.get("/stock/:productId", getStock);
