@@ -19,8 +19,11 @@ module.exports = (sequelize) => {
         defaultValue: true,
       },
       type: {
-        type: DataTypes.ENUM('guest', 'member'),
-        defaultValue: 'guest',
+        type: DataTypes.ENUM("guest", "member"),
+        defaultValue: "guest",
+      },
+      orderIdPaypal: {
+        type: DataTypes.STRING,
       },
     },
     { timestamps: false }

@@ -1,11 +1,10 @@
 const axios = require("axios");
-const { Order } = require("../../db");
+const { Order, ShoppingCart } = require("../../db");
 const { HOST, PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
 
 const createOrder = async (req, res) => {
   try {
     const { userId, ShoppingCartId, total } = req.body;
-    console.log(total);
     const order = {
       intent: "CAPTURE",
       purchase_units: [
@@ -52,7 +51,19 @@ const createOrder = async (req, res) => {
       total,
     });
 
-    return res.json(capturedOrder.links[1].href);
+    await ShoppingCart.update(
+      { orderIdPaypal: id },
+      {
+        where: {
+          id: ShoppingCartId,
+        },
+      }
+    );
+
+    return res.json({
+      orderUrl: capturedOrder.links[1].href,
+      ShoppingCartId,
+    });
   } catch (error) {
     console.log("Error al crear la orden:", error);
     return res.status(500).json({ error: "Error Interno del Servidor" });
