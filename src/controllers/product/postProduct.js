@@ -4,12 +4,20 @@ const { allProducts } = require("../../utilities/initAllProducts");
 
 const postProduct = async (req, res) => {
   try {
-    let { title, description, brand, color, category, subCategory, sizes, gender, price, discount, images, sport } =
+    let { title, description, brand, color, category, subCategory, sizes, gender, images, sport } =
       req.body;
     let sport_test = req.body.sport_test ? req.body.sport_test.toUpperCase() : '';
     let brand_test = req.body.brand_test ? req.body.brand_test.toUpperCase() : '';
-    if (discount && Number(discount) > 0 && Number(discount) <= 100) {
-      price = price * (100 - Number(discount)) / 100; // El precio debe quedar registrado en la BDD con el descuento aplicado.
+    let price = Number(req.body.price);
+    let discount = Number(req.body.discount);
+
+    if (isNaN(price) || isNaN(discount)) {
+      throw new Error("El precio o el descuento no son válidos.");
+    }
+
+    // El precio debe quedar registrado en la BDD con el descuento aplicado.
+    if (discount > 0 && discount <= 100) { 
+      price = parseInt(((price * (100 - discount)) / 100));
     }
     if (title && description && brand && price && category && sizes.length && images.length) {
       const isThisAlreadyCreated = await Product.findOne({
