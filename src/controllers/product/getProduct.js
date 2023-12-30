@@ -2,11 +2,13 @@ const { Op } = require("sequelize");
 
 const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
+const { quitarTildes } = require('../../utilities/removeSigns');
 
 const getProduct = async (req, res) => {
   try {
-    const { gender, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
+    let { gender, discount, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
     let { page, limit } = req.query;
+    search = search ? quitarTildes(search) : '';
 
     // nos aseguramos de que el page y limit sean números
     if (isNaN(page) || !page) {
@@ -42,6 +44,7 @@ const getProduct = async (req, res) => {
         { gender: { [Op.iLike]: `%${search}%` } },
         { category: { [Op.iLike]: `%${search}%` } },
         { subCategory: { [Op.iLike]: `%${search}%` } },
+        { sport: { [Op.iLike]: `%${search}%` } },
       ];
 
       // si el usuario usa el search bar, se anulan los filtros por category y subCategory, porque es muy probable que hayan conflictos
@@ -62,6 +65,12 @@ const getProduct = async (req, res) => {
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
       filterCriteria.price = {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
+      };
+    }
+
+    if (discount && !isNaN(discount)) { 
+      filterCriteria.discount = {
+        [Op.gte]: discount,
       };
     }
 
