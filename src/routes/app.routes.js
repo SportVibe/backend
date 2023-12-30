@@ -3,6 +3,7 @@ const router = Router();
 const postProduct = require("../controllers/product/postProduct");
 const getProductByPk = require("../controllers/product/getProductByPk");
 const getProduct = require("../controllers/product/getProduct");
+const getProductOrderby = require("../controllers/product/getProductOrderBy");
 const deleteProductByPk = require("../controllers/product/deleteProductByPk");
 const putProductbyID = require("../controllers/product/putProductbyID");
 const searchProduct = require("../controllers/product/searchProduct");
