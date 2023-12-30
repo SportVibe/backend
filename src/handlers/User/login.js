@@ -23,7 +23,7 @@ const login = async (req, res) => {
           userId: user.id,
           email: user.email,
           name: user.firstName,
-          roll: user.roll,
+          rol: user.rol,
         },
         SECRETKEY,
         { expiresIn: "1h" }
@@ -46,6 +46,7 @@ const login = async (req, res) => {
           lastName: user.lastName,
           image: user.image,
           email: user.email,
+          rol: user.rol,
           externalSignIn: user.externalSignIn
         }
       });
