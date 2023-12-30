@@ -8,11 +8,9 @@ const postProduct = async (req, res) => {
       req.body;
     let sport_test = req.body.sport_test ? req.body.sport_test.toUpperCase() : '';
     let brand_test = req.body.brand_test ? req.body.brand_test.toUpperCase() : '';
-    console.log(price);
     if (discount && Number(discount) > 0 && Number(discount) <= 100) {
       price = price * (100 - Number(discount)) / 100; // El precio debe quedar registrado en la BDD con el descuento aplicado.
     }
-    console.log(price);
     if (title && description && brand && price && category && sizes.length && images.length) {
       const isThisAlreadyCreated = await Product.findOne({
         where: {
