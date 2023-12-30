@@ -10,14 +10,31 @@ const login = async (req, res) => {
 
   const user = await User.findOne({ where: { email, externalSignIn: false } });
   if (user) {
-    if (!user.active) {
-      console.error("Cuenta bloqueada");
-      return res.status(403).json({ error: "Cuenta bloqueada" });
-    }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
+      if (!user.active) {
+        console.error("Cuenta bloqueada");
+        return res.status(200).json({
+          message: `Cuenta de ${user.firstName} desactivada`,
+          user: {
+            id: user.id,
+            active: user.active,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            image: user.image,
+            email: user.email,
+            address: user.address,
+            city: user.city,
+            zipCode: user.zipCode,
+            phoneNumber: user.phoneNumber,
+            sendMailsActive: user.sendMailsActive,
+            rol: user.rol,
+            externalSignIn: user.externalSignIn
+          }
+        });
+      }
       const token = jwt.sign(
         {
           userId: user.id,
@@ -42,10 +59,16 @@ const login = async (req, res) => {
         token,
         user: {
           id: user.id,
+          active: user.active,
           firstName: user.firstName,
           lastName: user.lastName,
           image: user.image,
           email: user.email,
+          address: user.address,
+          city: user.city,
+          zipCode: user.zipCode,
+          phoneNumber: user.phoneNumber,
+          sendMailsActive: user.sendMailsActive,
           rol: user.rol,
           externalSignIn: user.externalSignIn
         }
