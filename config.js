@@ -3,8 +3,11 @@ const { config } = require("dotenv");
 config();
 // const LOCALHOST = process.env.LOCALHOST;
 
-// const PORT = 3005;
-const HOST = process.env.HOST || "http://localhost:3005";
+// Host local
+// const HOST = "http://localhost:3005";
+
+// Host Railway
+const HOST = "https://back-sportvibe.up.railway.app";
 
 const URL_FONT = "";
 const SECRETKEY = "sportvibe";
