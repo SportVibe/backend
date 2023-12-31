@@ -19,12 +19,17 @@ const putProductbyID = async (req, res) => {
       subCategory,
       sizes,
       color,
-      price,
       gender,
-      discount,
       images,
       available,
     } = req.body;
+    let price = Number(req.body.price);
+    let discount = Number(req.body.discount);
+
+    // El precio debe quedar registrado en la BDD con el descuento aplicado.
+    if (discount > 0 && discount <= 100) { 
+      price = parseInt(((price * (100 - discount)) / 100));
+    }
 
     const response = await updateProduct({
       id,
