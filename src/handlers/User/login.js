@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../../db");
+const { User, ShoppingCart } = require("../../db");
 const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
@@ -54,9 +54,36 @@ const login = async (req, res) => {
 
       res.setHeader("Set-Cookie", tokenCookie);
 
+      // Vemos si el usuario tiene carrito de compras.
+      const userCart = await ShoppingCart.findOne({
+        where: { UserId: user.id, available: true },
+      });
+      console.log(userCart);
+      let cartToken = null;
+      if (userCart) {
+        cartToken = jwt.sign(
+          {
+            id: userCart.id,
+            total: userCart.total,
+            available: userCart.available,
+            UserId: user.id,
+            type: userCart.type
+          },
+          SECRETKEY,
+          { expiresIn: "1h" }
+        );
+        const cartTokenCookieOptions = {
+          httpOnly: true,
+          maxAge: 3600000,
+        };
+        const cartTokenCookie = serialize("cartToken", cartToken, cartTokenCookieOptions);
+        res.setHeader("Set-CartCookie", cartTokenCookie);
+      }
+      //enviamos al front la data del usuario mas el token de usuario y el token de su carrito.
       return res.status(200).json({
         message: `Login exitoso, bienvenido ${user.firstName}!`,
         token,
+        cartToken, 
         user: {
           id: user.id,
           active: user.active,
