@@ -11,7 +11,6 @@ const getShoppingCart = async (req, res) => {
     const shoppingCart = await ShoppingCart.findOne({
       where: { id: id },
     });
-    console.log(shoppingCart);
     if (!shoppingCart) {
       return res.status(404).json({ message: "Carrito no encontrado para el ID ofrecido" });
     }
@@ -20,24 +19,32 @@ const getShoppingCart = async (req, res) => {
       where: { ShoppingCartId: id },
     });
     console.log(carrito);
-    const productos = carrito.map(({ ProductId, cantidad }) => ({ ProductId, cantidad }));
-
+    const productos = carrito.map(({ ProductId, cantidad, detalle }) => ({ ProductId, cantidad, detalle }));
+    console.log(productos);
     const detalleProducto = [];
     for (let producto of productos) {
+      const regex = /Cantidad: (\d+)/g;
+      let totalStock = 0;
+      while ((match = regex.exec(producto.detalle)) !== null) {
+        const cantidad = parseInt(match[1], 10);
+        totalStock += cantidad;
+      }
       const nombreProducto = await Product.findOne({
         where: { id: producto.ProductId },
       });
       detalleProducto.push({
+        id: producto.ProductId,
         product: nombreProducto.dataValues.title,
-        quantity: producto.cantidad,
+        quantity: totalStock,
         price: nombreProducto.dataValues.price,
         discount:
           nombreProducto.dataValues.discount !== 0
             ? nombreProducto.dataValues.discount
             : "Este producto no tiene descuento",
+        detalle: producto.detalle,
       });
     }
-    res.json({
+    res.status(200).json({
       productos: detalleProducto,
     });
   } catch (error) {
