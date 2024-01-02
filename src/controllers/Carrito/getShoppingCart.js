@@ -18,34 +18,41 @@ const getShoppingCart = async (req, res) => {
     const carrito = await Cart_Product.findAll({
       where: { ShoppingCartId: id },
     });
-    console.log(carrito);
-    const productos = carrito.map(({ ProductId, cantidad, detalle }) => ({ ProductId, cantidad, detalle }));
-    console.log(productos);
-    const detalleProducto = [];
-    for (let producto of productos) {
-      const regex = /Cantidad: (\d+)/g;
-      let totalStock = 0;
-      while ((match = regex.exec(producto.detalle)) !== null) {
-        const cantidad = parseInt(match[1], 10);
-        totalStock += cantidad;
-      }
+    const productosPromises = carrito.map(async ({ ProductId, detalle }) => {
       const nombreProducto = await Product.findOne({
-        where: { id: producto.ProductId },
+        where: { id: ProductId }, // Usar ProductId directamente ya que está en el ámbito
       });
-      detalleProducto.push({
-        id: producto.ProductId,
-        product: nombreProducto.dataValues.title,
-        quantity: totalStock,
+
+      const partes = detalle.split("Talle:").filter(Boolean);
+
+      // Crear un array de objetos con talle y cantidad
+      const resultado = partes.map((parte) => {
+        const [talle, cantidad] = parte.split(", Cantidad: ");
+        return {
+          quantity: cantidad,
+          size: talle,
+        };
+      });
+
+      // Mapear cada resultado a un objeto de producto
+      return resultado.map((product) => ({
+        ProductId,
+        title: nombreProducto.dataValues.title,
         price: nombreProducto.dataValues.price,
         discount:
           nombreProducto.dataValues.discount !== 0
             ? nombreProducto.dataValues.discount
             : "Este producto no tiene descuento",
-        detalle: producto.detalle,
-      });
-    }
+        size: product.size,
+        quantity: product.quantity,
+      }));
+    });
+
+    // Esperar a que todas las promesas se resuelvan
+    const productos = (await Promise.all(productosPromises)).flat();
+
     res.status(200).json({
-      productos: detalleProducto,
+      productos: productos,
     });
   } catch (error) {
     console.error(error);
