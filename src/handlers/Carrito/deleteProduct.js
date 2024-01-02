@@ -1,7 +1,7 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
 const { Op } = require("sequelize");
 
-const deleteProduct = async (shoppingId, productId, talle) => {
+const deleteProduct = async (shoppingId, productId) => {
   try {
     const cart = await ShoppingCart.findByPk(shoppingId);
 
@@ -11,25 +11,19 @@ const deleteProduct = async (shoppingId, productId, talle) => {
 
     const deletedProduct = await Cart_Product.findOne({
       where: {
-        [Op.and]: [
-          { ShoppingCartId: shoppingId },
-          { ProductId: productId },
-          { talle }, // Incluimos el campo de talle en la búsqueda
-        ],
+        ShoppingCartId: shoppingId,
+        ProductId: productId,
       },
     });
 
     if (!deletedProduct) {
-      return { message: "Producto con esa talla no encontrado en el carrito" };
+      return { message: "Producto no encontrado en el carrito" };
     }
 
     await Cart_Product.destroy({
       where: {
-        [Op.and]: [
-          { ShoppingCartId: shoppingId },
-          { ProductId: productId },
-          { talle },
-        ],
+        ShoppingCartId: shoppingId,
+        ProductId: productId,
       },
     });
 
@@ -41,22 +35,14 @@ const deleteProduct = async (shoppingId, productId, talle) => {
     const productsInShop = [];
 
     for (let product of productsInCart) {
-      let stock = 0;
-      for (let quantity of product.quantity) {
-        if (quantity.talle === talle) { // Filtramos por la talla específica
-          stock += Object.values(quantity)[0];
-        }
-      }
-      product.cantidad = stock;
-      product.subtotal = product.price * stock;
-      await product.save();
+      product.subtotal = product.price * product.cantidad;
       total += product.subtotal;
       productsInShop.push(product);
     }
 
     await ShoppingCart.update({ total: total }, { where: { id: shoppingId } });
 
-    return { message: "Producto eliminado del carrito con esa talla", updatedCart: { total, products: productsInShop } };
+    return { message: "Producto eliminado del carrito", updatedCart: { total, products: productsInShop } };
   } catch (error) {
     return { message: error.message };
   }
