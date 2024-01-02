@@ -22,24 +22,46 @@ const putShopping = async (req, res) => {
       return res.status(401).json({ error: "no se encontró carrito con ese UserId" });
     }
 
-    const carrito = products.map((producto) => {
+    const mapeoInicial = products.map((producto) => {
       return {
         id: producto.id,
         size: producto.size,
         price: producto.price,
         quantity: producto.quantity,
+        tallas: `Talle: ${producto.size}, Cantidad: ${producto.quantity}.`,
       };
     });
+    const carrito = mapeoInicial.reduce((acc, producto) => {
+      const existingProduct = acc.find((p) => p.id === producto.id);
+
+      if (existingProduct) {
+        // Si ya existe un producto con el mismo id, actualizar sus tallas
+        existingProduct.tallas += producto.tallas;
+      } else {
+        // Si no existe, agregar el producto al array
+        acc.push(producto);
+      }
+
+      return acc;
+    }, []);
 
     // Se crea un array donde van a estar los datos de cada producto
     const productsInShop = [];
 
     //En este bucle se recorre el carrito para calcular el subtotal de cada producto
     for (let producto of carrito) {
+      const regex = /Cantidad: (\d+)/g;
+      let totalStock = 0;
+      while ((match = regex.exec(producto.tallas)) !== null) {
+        const cantidad = parseInt(match[1], 10);
+        totalStock += cantidad;
+      }
+
       await Cart_Product.update(
         {
-          cantidad: producto.quantity,
-          subtotal: producto.price * producto.quantity,
+          cantidad: totalStock,
+          subtotal: producto.price * totalStock,
+          detalle: producto.tallas,
         },
         {
           where: {
@@ -55,8 +77,9 @@ const putShopping = async (req, res) => {
         defaults: {
           ShoppingCartId: cartUser.id,
           ProductId: producto.id,
-          cantidad: producto.quantity,
-          subtotal: producto.price * producto.quantity,
+          cantidad: totalStock,
+          subtotal: producto.price * totalStock,
+          detalle: producto.tallas,
         },
       });
 

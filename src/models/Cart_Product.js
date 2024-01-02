@@ -20,6 +20,10 @@ module.exports = (sequelize) => {
           key: "id",
         },
       },
+      detalle: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       cantidad: {
         type: DataTypes.INTEGER,
       },

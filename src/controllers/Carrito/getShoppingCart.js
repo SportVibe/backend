@@ -11,7 +11,6 @@ const getShoppingCart = async (req, res) => {
     const shoppingCart = await ShoppingCart.findOne({
       where: { id: id },
     });
-    console.log(shoppingCart);
     if (!shoppingCart) {
       return res.status(404).json({ message: "Carrito no encontrado para el ID ofrecido" });
     }
@@ -19,26 +18,41 @@ const getShoppingCart = async (req, res) => {
     const carrito = await Cart_Product.findAll({
       where: { ShoppingCartId: id },
     });
-    console.log(carrito);
-    const productos = carrito.map(({ ProductId, cantidad }) => ({ ProductId, cantidad }));
-
-    const detalleProducto = [];
-    for (let producto of productos) {
+    const productosPromises = carrito.map(async ({ ProductId, detalle }) => {
       const nombreProducto = await Product.findOne({
-        where: { id: producto.ProductId },
+        where: { id: ProductId }, // Usar ProductId directamente ya que está en el ámbito
       });
-      detalleProducto.push({
-        product: nombreProducto.dataValues.title,
-        quantity: producto.cantidad,
+
+      const partes = detalle.split("Talle:").filter(Boolean);
+
+      // Crear un array de objetos con talle y cantidad
+      const resultado = partes.map((parte) => {
+        const [talle, cantidad] = parte.split(", Cantidad: ");
+        return {
+          quantity: cantidad,
+          size: talle,
+        };
+      });
+
+      // Mapear cada resultado a un objeto de producto
+      return resultado.map((product) => ({
+        ProductId,
+        title: nombreProducto.dataValues.title,
         price: nombreProducto.dataValues.price,
         discount:
           nombreProducto.dataValues.discount !== 0
             ? nombreProducto.dataValues.discount
             : "Este producto no tiene descuento",
-      });
-    }
-    res.json({
-      productos: detalleProducto,
+        size: product.size,
+        quantity: product.quantity,
+      }));
+    });
+
+    // Esperar a que todas las promesas se resuelvan
+    const productos = (await Promise.all(productosPromises)).flat();
+
+    res.status(200).json({
+      productos: productos,
     });
   } catch (error) {
     console.error(error);

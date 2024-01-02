@@ -1,5 +1,5 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
 const addProduct = async (idUser, products) => {
   try {
@@ -12,14 +12,29 @@ const addProduct = async (idUser, products) => {
       return { message: "no se encontro carrito con ese UserId" };
     }
 
-    const carrito = products.map((producto) => {
+    const mapeoInicial = products.map((producto) => {
       return {
         id: producto.id,
         size: producto.size,
         price: producto.price,
         quantity: producto.quantity,
+        tallas: `Talle: ${producto.size}, Cantidad: ${producto.quantity}.`,
       };
     });
+    const carrito = mapeoInicial.reduce((acc, producto) => {
+      const existingProduct = acc.find((p) => p.id === producto.id);
+
+      if (existingProduct) {
+        // Si ya existe un producto con el mismo id, actualizar sus tallas
+        existingProduct.tallas += producto.tallas;
+      } else {
+        // Si no existe, agregar el producto al array
+        acc.push(producto);
+      }
+
+      return acc;
+    }, []);
+
     // Se crea un array donde van a estar los datos de cada producto
     const productsInShop = [];
 
@@ -35,9 +50,9 @@ const addProduct = async (idUser, products) => {
           ProductId: producto.id,
           cantidad: producto.quantity,
           subtotal: producto.price * producto.quantity,
+          detalle: producto.tallas,
         },
       });
-
       if (!created) {
         await Cart_Product.update(
           {
@@ -45,6 +60,7 @@ const addProduct = async (idUser, products) => {
             ProductId: producto.id,
             cantidad: producto.quantity,
             subtotal: producto.price * producto.quantity,
+            detalle: producto.tallas,
           },
           {
             where: {
@@ -56,6 +72,7 @@ const addProduct = async (idUser, products) => {
       //Se guarda en el array los datos del producto, juntos con los talles seleccionados
       productsInShop.push(newItem);
     }
+
     const subTotales = productsInShop.map((producto) => {
       return {
         subtotal: producto.dataValues.subtotal,
