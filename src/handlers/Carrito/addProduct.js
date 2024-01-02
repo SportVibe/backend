@@ -73,7 +73,11 @@ const addProduct = async (idUser, products) => {
         },
       }
     );
-    return { message: "Carrito actualizado", ShoppingCart: productsInShop, total: total };
+    return {
+      message: "Carrito actualizado",
+      ShoppingCart: productsInShop,
+      total: total,
+    };
   } catch (error) {
     return { message: error.message };
   }
