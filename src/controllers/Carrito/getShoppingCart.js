@@ -11,7 +11,7 @@ const getShoppingCart = async (req, res) => {
     const shoppingCart = await ShoppingCart.findOne({
       where: { id: id },
     });
-    // console.log(shoppingCart);
+    console.log(shoppingCart);
     if (!shoppingCart) {
       return res.status(404).json({ message: "Carrito no encontrado para el ID ofrecido" });
     }
