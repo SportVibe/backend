@@ -5,6 +5,7 @@ const { HOST, PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../..
 const createOrder = async (req, res) => {
   try {
     const { userId, ShoppingCartId, total } = req.body;
+    console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', { userId, ShoppingCartId, total });
     const order = {
       intent: "CAPTURE",
       purchase_units: [
@@ -28,20 +29,21 @@ const createOrder = async (req, res) => {
 
     const {
       data: { access_token },
-    } = await axios.post(`${PAYPAL_URL}/v1/oauth2/token`, params, {
+    } = await axios.post(`${PAYPAL_URL}v1/oauth2/token`, params, {
       auth: {
         username: PAYPAL_CLIENT,
         password: PAYPAL_SECRET_KEY,
       },
     });
 
-    const { data: capturedOrder } = await axios.post(`${PAYPAL_URL}/v2/checkout/orders`, order, {
+    const { data: capturedOrder } = await axios.post(`${PAYPAL_URL}v2/checkout/orders`, order, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
 
     const { id } = capturedOrder;
+    console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',id);
 
     // Crear una entrada en la base de datos usando el modelo Order
     const newOrder = await Order.create({
