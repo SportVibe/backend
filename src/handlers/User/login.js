@@ -86,7 +86,7 @@ const login = async (req, res) => {
         cartToken, 
         user: {
           id: user.id,
-          cartId: userCart.id,
+          cartId: userCart ? userCart.id : null,
           active: user.active,
           firstName: user.firstName,
           lastName: user.lastName,

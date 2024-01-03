@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3005;
 
 sequelize
 
-  .sync({ force: true })
+  .sync({ force: false })
 
   .then(() => {
     app.listen(PORT, () => {
@@ -14,3 +14,6 @@ sequelize
     });
   })
   .catch((error) => console.error(error.message));
+
+  /* user paypal: sb-43wquc28899558@personal.example.com
+pass paypal: os;c(4Z& */
