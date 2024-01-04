@@ -14,9 +14,7 @@ const putReview = async (req, res) => {
       return res.status(400).json({ message: `No se encuentra la reseña id: ${id}.` });
     }
 
-    await Reviews.update({ status: status }, { where: { id: id } });
-
-    const review = await Reviews.findByPk(id);
+    const [count, review] = await Reviews.update({ status }, { where: { id }, individualHooks: true });
 
     return res.status(201).json({
       message: "La actualización fue exitosa",

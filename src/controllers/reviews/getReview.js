@@ -7,7 +7,7 @@ const getReview = async (req, res) => {
     if (!status && !productId) {
       const reviews = await Reviews.findAll();
 
-      return res.status(201).json({
+      return res.status(200).json({
         message: "OK",
         data: reviews,
       });
@@ -23,7 +23,7 @@ const getReview = async (req, res) => {
       if (!reviews.length) {
         return res.status(400).json({ message: `No se encuentran reseñas con status: ${status}.` });
       }
-      return res.status(201).json({
+      return res.status(200).json({
         message: "OK",
         data: reviews,
       });
@@ -39,7 +39,7 @@ const getReview = async (req, res) => {
       if (!reviews.length) {
         return res.status(400).json({ message: `No se encuentran reseñas con ID: ${productId}.` });
       }
-      return res.status(201).json({
+      return res.status(200).json({
         message: "OK",
         data: reviews,
       });

@@ -27,16 +27,17 @@ module.exports = (sequelize) => {
       timestamps: false,
     }
   );
-  Review.addHook("afterSave", "updateProductAverageScore", async (review) => {
+  Review.afterUpdate(async (review) => {
     if (review.status === "accepted") {
+      console.log(review);
       const product = await review.getProduct();
-      const acceptedReviews = await product.getReviews({ where: { status: "accepted" } });
+      const reviews = await product.getReviews();
 
-      const totalScore = acceptedReviews.reduce((sum, r) => sum + r.score, 0);
-      const averageScore = totalScore / acceptedReviews.length;
+      const totalScore = reviews.reduce((sum, r) => sum + r.score, 0);
+      const averageScore = totalScore / reviews.length;
 
       product.averageScore = averageScore;
-      product.countReviews = acceptedReviews.length;
+      product.countReviews = reviews.length;
       await product.save();
     }
   });
