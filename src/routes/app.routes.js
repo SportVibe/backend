@@ -35,6 +35,8 @@ const getSports = require("../controllers/product/getSports");
 const getStock = require("../controllers/stock/getStockByProductId");
 const getAllPurchases = require("../controllers/User/getAllPurchases");
 const addToCart = require("../controllers/Carrito/addToCart");
+const getShoppingCart = require("../controllers/Carrito/getShoppingCart");
+const deleteProduct = require("../controllers/Carrito/deleteProductController");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -70,6 +72,8 @@ router.get("/purchases/:id", getAllPurchases);
 router.post("/shoppingCart", postShopping);
 router.put("/shopping", putShopping);
 router.post("/addToCart", addToCart);
+router.get("/shoppingCart/:id", getShoppingCart);
+router.delete("/shoppingCart", deleteProduct);
 
 // Rutas PayPal
 router.post("/create-order", createOrder);
