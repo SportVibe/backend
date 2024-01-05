@@ -14,7 +14,7 @@ const createProduct = async ({
   images,
   sport,
   sport_id,
-  brand_id
+  brand_id,
 }) => {
   if (title && description && price && category && sizes.length && images.length) {
     const currentProduct = await Product.create({
@@ -28,7 +28,7 @@ const createProduct = async ({
       price,
       discount,
       sport_id,
-      brand_id
+      brand_id,
     });
 
     // Crear tallas y stocks asociados
@@ -37,8 +37,8 @@ const createProduct = async ({
         where: { name: sizeInfo.size },
       });
       await Stock.create({
-        product_id: currentProduct.id,
-        size_id: size.id,
+        ProductId: currentProduct.id,
+        SizeId: size.id,
         quantity: sizeInfo.stock,
       });
     }
