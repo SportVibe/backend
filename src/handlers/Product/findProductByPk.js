@@ -13,7 +13,7 @@ const findProductByPk = async (req, res) => {
         { model: Color, attributes: ["name"], through: { attributes: [] } },
         {
           model: Reviews,
-          attributes: ["id", "description", "score"],
+          attributes: ["id", "description", "score", "UserId"],
           where: { status: "accepted" },
           required: false,
         },

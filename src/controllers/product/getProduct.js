@@ -94,7 +94,7 @@ const getProduct = async (req, res) => {
         { model: Color, attributes: ["name"] },
         {
           model: Reviews,
-          attributes: ["id", "description", "score"],
+          attributes: ["id", "description", "score", "UserId"],
           where: { status: "accepted" },
           required: false,
         },
