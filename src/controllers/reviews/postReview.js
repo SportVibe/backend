@@ -2,7 +2,7 @@ const { Reviews, Orders } = require("../../db");
 
 const postReview = async (req, res) => {
   try {
-    const { UserId, ProductId, score, description } = req.body;
+    const { UserId, ProductId, score, description, status } = req.body;
 
     //   const order = await Orders.findOne({ where: { userId, productId } });
 
@@ -26,6 +26,7 @@ const postReview = async (req, res) => {
       ProductId,
       score,
       description,
+      status,
     });
 
     return res.status(201).json({
