@@ -26,8 +26,21 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Brand, Sport, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase, Cart_Product } =
-  sequelize.models;
+const {
+  User,
+  Brand,
+  Sport,
+  Product,
+  Order,
+  Transaction,
+  Image,
+  Size,
+  Stock,
+  ShoppingCart,
+  Purchase,
+  Cart_Product,
+  Reviews,
+} = sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:
 
@@ -135,6 +148,12 @@ Product.belongsTo(Sport, {
   foreignKey: "sport_id",
   targetKey: "id",
 });
+
+// relación de reviews con users y products
+Reviews.belongsTo(User);
+User.hasMany(Reviews);
+Reviews.belongsTo(Product);
+Product.hasMany(Reviews);
 
 module.exports = {
   sequelize,

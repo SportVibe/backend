@@ -37,6 +37,9 @@ const getAllPurchases = require("../controllers/User/getAllPurchases");
 const addToCart = require("../controllers/Carrito/addToCart");
 const getShoppingCart = require("../controllers/Carrito/getShoppingCart");
 const deleteProduct = require("../controllers/Carrito/deleteProductController");
+const postReview = require("../controllers/reviews/postReview");
+const putReview = require("../controllers/reviews/putReview");
+const getReview = require("../controllers/reviews/getReview");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -82,5 +85,10 @@ router.get("/cancel-order", cancelOrder);
 
 //Rutas Stock
 router.get("/stock/:productId", getStock);
+
+//Rutas Reviews
+router.post("/reviews", postReview);
+router.put("/reviews", putReview);
+router.get("/reviews", getReview);
 
 module.exports = router;

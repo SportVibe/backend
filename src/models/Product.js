@@ -49,6 +49,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      averageScore: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+      countReviews: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
     { timestamps: true }
   );
