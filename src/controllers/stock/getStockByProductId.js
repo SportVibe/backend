@@ -6,17 +6,32 @@ const getStock = async (req, res) => {
     // console.log(productId);
     const response = await Stock.findAll({
       where: {
-        product_id: productId,
+        ProductId: productId,
       },
-      include: [{ model: Size, attributes: ["name"] }],
     });
 
-    const formattedResponse = response.reduce((acc, stock) => {
-      acc[stock.Size.name] = stock.quantity;
-      return acc;
+    const formattedResponse = await Promise.all(
+      response.map(async (stock) => {
+        const talla = await Size.findOne({
+          where: {
+            id: stock.dataValues.SizeId,
+          },
+        });
+
+        const resultado = {
+          [talla.name]: stock.dataValues.quantity,
+        };
+        return resultado;
+      })
+    );
+    const resultado = formattedResponse.reduce((acumulador, objeto) => {
+      const talla = Object.keys(objeto)[0];
+      const cantidad = objeto[talla];
+      acumulador[talla] = cantidad;
+      return acumulador;
     }, {});
 
-    res.status(200).json(formattedResponse);
+    res.status(200).json(resultado);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error en el servidor" });

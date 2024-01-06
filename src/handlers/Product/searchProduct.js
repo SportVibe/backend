@@ -11,15 +11,7 @@ const search = async (req, res) => {
         },
       },
       include: [
-        {
-          model: Stock,
-          include: [
-            {
-              model: Size,
-              attributes: ["name"],
-            },
-          ],
-        },
+        { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
@@ -40,8 +32,8 @@ const search = async (req, res) => {
         modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
       }
 
-      modifiedProduct.Stocks = modifiedProduct.Stocks.map((stock) => ({
-        [stock.Size.name]: stock.quantity,
+      modifiedProduct.Stocks = modifiedProduct.Sizes.map((size) => ({
+        [size.name]: size.Stock.quantity, // Acceder a la cantidad de stock desde la relación con Size
       }));
 
       delete modifiedProduct.Size;
