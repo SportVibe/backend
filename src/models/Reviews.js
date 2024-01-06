@@ -31,7 +31,9 @@ module.exports = (sequelize) => {
     if (review.status === "accepted") {
       console.log(review);
       const product = await review.getProduct();
-      const reviews = await product.getReviews();
+      let reviews = await product.getReviews();
+
+      reviews = reviews.filter((review) => review.status === "accepted");
 
       const totalScore = reviews.reduce((sum, r) => sum + r.score, 0);
       const averageScore = totalScore / reviews.length;
