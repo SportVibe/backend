@@ -5,9 +5,11 @@ config();
 
 // Host local
 // const HOST = "http://localhost:3005";
+// const HOST_FRONT = "http://localhost:5173";
 
 // Host Railway
 const HOST = "https://back-sportvibe.up.railway.app";
+const HOST_FRONT = "https://frontend-black-eta-64.vercel.app/";
 
 const URL_FONT = "";
 const SECRETKEY = "sportvibe";
@@ -35,4 +37,5 @@ module.exports = {
   PAYPAL_CLIENT,
   PAYPAL_SECRET_KEY,
   HOST,
+  HOST_FRONT,
 };

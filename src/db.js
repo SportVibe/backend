@@ -26,8 +26,21 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Brand, Sport, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase, Cart_Product } =
-  sequelize.models;
+const {
+  User,
+  Brand,
+  Sport,
+  Product,
+  Order,
+  Transaction,
+  Image,
+  Size,
+  Stock,
+  ShoppingCart,
+  Purchase,
+  Cart_Product,
+  Reviews,
+} = sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:
 
@@ -41,23 +54,11 @@ Transaction.belongsTo(Order, {
   targetKey: "id",
 });
 //relaciono la tabla size con la tabla stock
-Size.hasMany(Stock, {
-  foreignKey: "size_id",
-  sourceKey: "id",
-});
-Stock.belongsTo(Size, {
-  foreignKey: "size_id",
-  targetKey: "id",
-});
+
+Size.belongsToMany(Product, { through: Stock });
+Product.belongsToMany(Size, { through: Stock });
+
 // relaciono la tabla product con la tabla stock
-Product.hasMany(Stock, {
-  foreignKey: "product_id",
-  sourceKey: "id",
-});
-Stock.belongsTo(Product, {
-  foreignKey: "product_id",
-  targetKey: "id",
-});
 
 // tabla intermedia de las imágenes de cada producto.
 Product.belongsToMany(Image, {
@@ -99,8 +100,8 @@ ShoppingCart.belongsToMany(Product, { through: Cart_Product });
 Product.belongsToMany(ShoppingCart, { through: Cart_Product });
 
 // tabla intermedia de las compras recibidas por cada usuario.
-Size.belongsToMany(Product, { through: "Product_size" });
-Product.belongsToMany(Size, { through: "Product_size" });
+Stock.belongsTo(Product, { foreignKey: "ProductId" });
+Stock.belongsTo(Size, { foreignKey: "SizeId" });
 
 const { Color, Gender } = sequelize.models;
 
@@ -135,6 +136,12 @@ Product.belongsTo(Sport, {
   foreignKey: "sport_id",
   targetKey: "id",
 });
+
+// relación de reviews con users y products
+Reviews.belongsTo(User);
+User.hasMany(Reviews);
+Reviews.belongsTo(Product);
+Product.hasMany(Reviews);
 
 module.exports = {
   sequelize,

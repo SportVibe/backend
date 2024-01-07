@@ -1,14 +1,14 @@
 const { Op } = require("sequelize");
 
-const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
+const { Product, Image, Stock, Size, Color, Reviews } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
-const { quitarTildes } = require('../../utilities/removeSigns');
+const { quitarTildes } = require("../../utilities/removeSigns");
 
 const getProduct = async (req, res) => {
   try {
     let { gender, discount, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
     let { page, limit } = req.query;
-    search = search ? quitarTildes(search) : '';
+    search = search ? quitarTildes(search) : "";
 
     // nos aseguramos de que el page y limit sean números
     if (isNaN(page) || !page) {
@@ -68,7 +68,7 @@ const getProduct = async (req, res) => {
       };
     }
 
-    if (discount && !isNaN(discount)) { 
+    if (discount && !isNaN(discount)) {
       filterCriteria.discount = {
         [Op.gte]: discount,
       };
@@ -85,14 +85,19 @@ const getProduct = async (req, res) => {
       limit,
       offset,
 
-      order: orderCriteria, //-----> criterio del ordenamiento
+      order: orderCriteria,
       include: [
-        {
-          model: Stock,
-          include: [{ model: Size, attributes: ["name"] }],
-        },
+        { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
+   
+        {
+          model: Reviews,
+          attributes: ["id", "description", "score", "UserId"],
+          where: { status: "accepted" },
+          required: false,
+        },
+
       ],
     });
 
@@ -114,12 +119,12 @@ const getProduct = async (req, res) => {
       }
 
       // Modificar el array de tallas y cantidades (stock)
-      modifiedProduct.Stocks = modifiedProduct.Stocks?.map((stock) => ({
-        [stock.Size?.name]: stock.quantity,
+      modifiedProduct.Stocks = modifiedProduct.Sizes.map((size) => ({
+        [size.name]: size.Stock.quantity, // Acceder a la cantidad de stock desde la relación con Size
       }));
 
       // Eliminar la propiedad 'Size' si no es necesaria en este punto
-      delete modifiedProduct.Size;
+      delete modifiedProduct.Sizes;
 
       return modifiedProduct;
     });
