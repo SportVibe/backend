@@ -21,13 +21,21 @@ const postReview = async (req, res) => {
       return res.status(400).json({ message: "El usuario ya ha realizado una reseña para este producto." });
     }
 
-    const review = await Reviews.create({
+    let review = await Reviews.create({
       UserId,
       ProductId,
       score,
       description,
-      status,
     });
+    review = await Reviews.update(
+      {
+        status,
+      },
+      {
+        where: { UserId: UserId, ProductId: ProductId },
+        individualHooks: true,
+      }
+    );
 
     return res.status(201).json({
       message: "Tu reseña fue exitosa",
