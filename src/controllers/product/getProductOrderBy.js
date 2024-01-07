@@ -1,4 +1,5 @@
-const { Product, Stock, Image, Color, Size } = require("../../db");
+
+const { Product, Stock, Image, Color, Size, Reviews } = require("../../db");
 const { Op } = require("sequelize");
 
 const getProductOrderby = async (req, res) => {
@@ -11,6 +12,12 @@ const getProductOrderby = async (req, res) => {
         { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
+         {
+          model: Reviews,
+          attributes: ["id", "description", "score", "UserId"],
+          where: { status: "accepted" },
+          required: false,
+        }
       ],
       order: [
         [`${order}`, `${type}`], // Ordena por la propiedad 'id' en orden descendente de creación en la base de datos (de mas nuevo a mas antiguo).
@@ -42,6 +49,7 @@ const getProductOrderby = async (req, res) => {
       // Eliminar la propiedad 'Size' si no es necesaria en este punto
       delete modifiedProduct.Size;
 
+
       return modifiedProduct;
     });
 
@@ -52,4 +60,4 @@ const getProductOrderby = async (req, res) => {
   }
 };
 
-module.exports = getProductOrderby;
+module.exports = getProductOrderBy;

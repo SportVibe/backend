@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { Order, ShoppingCart } = require("../../db");
-const { PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
+const { PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY, HOST_FRONT } = require("../../../config");
 const createOrder = require("./createOrder");
 
 const captureOrder = async (req, res) => {
@@ -18,7 +18,6 @@ const captureOrder = async (req, res) => {
       }
     );
 
-    const orderTotal = response.data.purchase_units.payments;
     const { id, status } = response.data;
 
     if (status === "COMPLETED") {
@@ -39,12 +38,9 @@ const captureOrder = async (req, res) => {
         }
       );
 
-      return res.json({
-        success: true,
-        message: "¡Pago aceptado!",
-        orderId: id,
-        total: orderTotal,
-      });
+      const redirectUrl = `${HOST_FRONT}/payment-status?orderId=${id}&status=${status}`;
+
+      return res.redirect(redirectUrl);
     }
   } catch (error) {
     console.error("Error al capturar la orden:", error);

@@ -1,4 +1,4 @@
-const { Product, Image, Stock, Size, Color } = require("../../db");
+const { Product, Image, Stock, Size, Color, Reviews } = require("../../db");
 
 const findProductByPk = async (req, res) => {
   try {
@@ -8,6 +8,12 @@ const findProductByPk = async (req, res) => {
         { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
+        {
+          model: Reviews,
+          attributes: ["id", "description", "score", "UserId"],
+          where: { status: "accepted" },
+          required: false,
+        },
       ],
     });
 

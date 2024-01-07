@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 
-const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
+const { Product, Image, Stock, Size, Color, Reviews } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
 const { quitarTildes } = require("../../utilities/removeSigns");
 
@@ -84,11 +84,20 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
+
       order: orderCriteria,
       include: [
         { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
+   
+        {
+          model: Reviews,
+          attributes: ["id", "description", "score", "UserId"],
+          where: { status: "accepted" },
+          required: false,
+        },
+
       ],
     });
 

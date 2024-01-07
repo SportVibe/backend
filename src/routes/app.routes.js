@@ -3,7 +3,7 @@ const router = Router();
 const postProduct = require("../controllers/product/postProduct");
 const getProductByPk = require("../controllers/product/getProductByPk");
 const getProduct = require("../controllers/product/getProduct");
-const getProductOrderby = require("../controllers/product/getProductOrderBy");
+const getProductOrderBy = require("../controllers/product/getProductOrderBy");
 const deleteProductByPk = require("../controllers/product/deleteProductByPk");
 const putProductbyID = require("../controllers/product/putProductbyID");
 const searchProduct = require("../controllers/product/searchProduct");
@@ -37,6 +37,9 @@ const getAllPurchases = require("../controllers/User/getAllPurchases");
 const addToCart = require("../controllers/Carrito/addToCart");
 const getShoppingCart = require("../controllers/Carrito/getShoppingCart");
 const deleteProduct = require("../controllers/Carrito/deleteProductController");
+const postReview = require("../controllers/reviews/postReview");
+const putReview = require("../controllers/reviews/putReview");
+const getReview = require("../controllers/reviews/getReview");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -45,7 +48,7 @@ router.get("/detail/:id", getProductByPk);
 router.get("/admin", getProductAdmin);
 router.get("/property", getProperty);
 router.get("/product/discount", getDiscountProducts);
-router.get("/product/orderBy", getProductOrderby);
+router.get("/product/orderBy", getProductOrderBy);
 router.get("/product/brands", getBrands);
 router.get("/product/sports", getSports);
 
@@ -82,5 +85,10 @@ router.get("/cancel-order", cancelOrder);
 
 //Rutas Stock
 router.get("/stock/:productId", getStock);
+
+//Rutas Reviews
+router.post("/reviews", postReview);
+router.put("/reviews", putReview);
+router.get("/reviews", getReview);
 
 module.exports = router;

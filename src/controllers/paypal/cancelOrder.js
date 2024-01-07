@@ -1,4 +1,5 @@
 const { Order } = require("../../db");
+const { HOST_FRONT } = require("../../../config");
 
 const cancelOrder = async (req, res) => {
   try {
@@ -21,11 +22,9 @@ const cancelOrder = async (req, res) => {
       });
     }
 
-    res.json({
-      success: false,
-      message: "¡Pago cancelado!",
-      orderId,
-    });
+    const redirectUrl = `${HOST_FRONT}/payment-status?orderId=${orderId}&status=Cancelled`;
+
+    return res.redirect(redirectUrl);
   } catch (error) {
     console.error("Error al cancelar el pago:", error);
     return res.status(500).json({ error: "Error Interno del Servidor" });
