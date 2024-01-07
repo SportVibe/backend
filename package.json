@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": " node index.js",
     "initP": " node initProducts.js",
+    "initU": " node initUsers.js",
+    "init": "npm run initP & npm run initU",
     "dev": "nodemon index.js"
   },
   "keywords": [],

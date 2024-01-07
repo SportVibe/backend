@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       discount: {
@@ -48,6 +48,14 @@ module.exports = (sequelize) => {
       sport: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      averageScore: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+      countReviews: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
     },
     { timestamps: true }

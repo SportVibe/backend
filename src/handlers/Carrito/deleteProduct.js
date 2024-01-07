@@ -1,63 +1,50 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
 const { Op } = require("sequelize");
 
-const deleteProduct = async (userId, productId) => {
+const deleteProduct = async (shoppingId, productId) => {
   try {
-    const cartUser = await ShoppingCart.findOne({
-      where: { UserId: userId },
-    });
+    const cart = await ShoppingCart.findByPk(shoppingId);
 
-    if (!cartUser) {
-      throw new Error("No se encontró el carrito para el usuario");
+    if (!cart) {
+      return { message: "Carrito no encontrado" };
     }
 
-    const deleted = await Cart_Product.destroy({
+    const deletedProduct = await Cart_Product.findOne({
       where: {
-        [Op.and]: [{ ShoppingCartId: cartUser.id }, { ProductId: productId }],
+        [Op.and]: [{ ShoppingCartId: cart.id }, { ProductId: productId }],
       },
     });
 
-    if (deleted === 0) {
-      return "Producto no encontrado en el carrito";
+    if (!deletedProduct) {
+      return { message: "Producto no encontrado en el carrito" };
     }
 
-    // Actualizar el carrito si se eliminó el producto
-    await updateCartOnProductDelete(cartUser.id, productId);
-
-    return "Producto eliminado";
-  } catch (error) {
-    return error.message;
-  }
-};
-
-const updateCartOnProductDelete = async (cartId, productId) => {
-  try {
-    const cartProducts = await Cart_Product.findAll({
-      where: { ShoppingCartId: cartId },
+    await Cart_Product.destroy({
+      where: {
+        ShoppingCartId: shoppingId,
+        ProductId: productId,
+      },
     });
 
-    const productInCart = cartProducts.find(
-      (product) => product.ProductId === productId
-    );
+    const productsInCart = await Cart_Product.findAll({
+      where: { ShoppingCartId: shoppingId },
+    });
 
-    if (!productInCart) {
-      throw new Error("El producto no está en el carrito");
-    }
+    const subTotales = productsInCart.map((producto) => {
+      return {
+        subtotal: producto.dataValues.subtotal,
+      };
+    });
+    const total = subTotales.reduce((acumulador, subtotal) => {
+      const subtotalNumero = parseFloat(subtotal.subtotal);
+      return acumulador + subtotalNumero;
+    }, 0);
 
-    // Eliminar y actualizar el subtotal y cantidad
-    await Cart_Product.update(
-      {
-        cantidad: 0,
-        subtotal: 0,
-      },
-      {
-        where: {
-          [Op.and]: [{ ShoppingCartId: cartId }, { ProductId: productId }],
-        },
-      }
-    );
+    await ShoppingCart.update({ total: total }, { where: { id: shoppingId } });
+
+    return { message: "Producto eliminado del carrito", total: total };
   } catch (error) {
-    throw new Error(error.message);
+    return { message: error.message };
   }
 };
 

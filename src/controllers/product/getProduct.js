@@ -1,12 +1,14 @@
 const { Op } = require("sequelize");
 
-const { Product, Image, Stock, Size, Color, Comment } = require("../../db");
+const { Product, Image, Stock, Size, Color, Reviews } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
+const { quitarTildes } = require("../../utilities/removeSigns");
 
 const getProduct = async (req, res) => {
   try {
-    const { gender, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
+    let { gender, discount, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
     let { page, limit } = req.query;
+    search = search ? quitarTildes(search) : "";
 
     // nos aseguramos de que el page y limit sean números
     if (isNaN(page) || !page) {
@@ -42,6 +44,7 @@ const getProduct = async (req, res) => {
         { gender: { [Op.iLike]: `%${search}%` } },
         { category: { [Op.iLike]: `%${search}%` } },
         { subCategory: { [Op.iLike]: `%${search}%` } },
+        { sport: { [Op.iLike]: `%${search}%` } },
       ];
 
       // si el usuario usa el search bar, se anulan los filtros por category y subCategory, porque es muy probable que hayan conflictos
@@ -65,6 +68,12 @@ const getProduct = async (req, res) => {
       };
     }
 
+    if (discount && !isNaN(discount)) {
+      filterCriteria.discount = {
+        [Op.gte]: discount,
+      };
+    }
+
     // cantidad de productos filtrados
     const countFilterCriteria = await Product.count({
       where: { ...filterCriteria, available: true },
@@ -75,15 +84,20 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
-
-      order: orderCriteria, //-----> criterio del ordenamiento
+      order: orderCriteria, // Criterio de ordenamiento
       include: [
         {
           model: Stock,
           include: [{ model: Size, attributes: ["name"] }],
         },
-        { model: Image, attributes: ["url"], through: { attributes: [] } },
-        { model: Color, attributes: ["name"], through: { attributes: [] } },
+        { model: Image, attributes: ["url"] },
+        { model: Color, attributes: ["name"] },
+        {
+          model: Reviews,
+          attributes: ["id", "description", "score", "UserId"],
+          where: { status: "accepted" },
+          required: false,
+        },
       ],
     });
 

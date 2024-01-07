@@ -26,8 +26,21 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Product, Order, Transaction, Image, Size, Stock, ShoppingCart, Purchase, Cart_Product } =
-  sequelize.models;
+const {
+  User,
+  Brand,
+  Sport,
+  Product,
+  Order,
+  Transaction,
+  Image,
+  Size,
+  Stock,
+  ShoppingCart,
+  Purchase,
+  Cart_Product,
+  Reviews,
+} = sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:
 
@@ -91,7 +104,7 @@ Product.belongsToMany(User, { through: "Order" });
 Product.belongsToMany(User, { through: "Purchase" }); */
 
 // tabla de relación entre el carrito de compras y el usuario (uno a uno)
-User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true, type: 'member' } });
+User.hasOne(ShoppingCart, { foreignKey: "UserId", scope: { available: true, type: "member" } });
 ShoppingCart.belongsTo(User, { foreignKey: "UserId" });
 
 // tabla de relación entre el carrito de compras y el producto (muchos a muchos)
@@ -118,17 +131,29 @@ Gender.belongsToMany(Product, { through: "ProductGender" });
 User.belongsToMany(Purchase, { through: "User_purchaseCart" });
 Purchase.belongsToMany(User, { through: "User_purchaseCart" });
 
-// // Relación entre Purchase (carrito) y Product
-// Purchase.belongsToMany(Product, { through: "PurchaseProduct" });
-// Product.belongsToMany(Purchase, { through: "PurchaseProduct" });
+Brand.hasMany(Product, {
+  foreignKey: "brand_id",
+  sourceKey: "id",
+});
+Product.belongsTo(Brand, {
+  foreignKey: "brand_id",
+  targetKey: "id",
+});
 
-// //Relación entre Order y Product
-// Order.belongsToMany(Product, { through: "OrderProduct" });
-// Product.belongsToMany(Order, { through: "OrderProduct" });
+Sport.hasMany(Product, {
+  foreignKey: "sport_id",
+  sourceKey: "id",
+});
+Product.belongsTo(Sport, {
+  foreignKey: "sport_id",
+  targetKey: "id",
+});
 
-// //Relación entre purchase y Order
-// Purchase.belongsToMany(Order, { through: "PurchaseOrder" });
-// Order.belongsToMany(Purchase, { through: "PurchaseOrder" });
+// relación de reviews con users y products
+Reviews.belongsTo(User);
+User.hasMany(Reviews);
+Reviews.belongsTo(Product);
+Product.hasMany(Reviews);
 
 module.exports = {
   sequelize,

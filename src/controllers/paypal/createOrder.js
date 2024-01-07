@@ -1,15 +1,17 @@
 const axios = require("axios");
+const { Order, ShoppingCart } = require("../../db");
 const { HOST, PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../../config");
 
 const createOrder = async (req, res) => {
   try {
+    const { userId, ShoppingCartId, total } = req.body;
     const order = {
       intent: "CAPTURE",
       purchase_units: [
         {
           amount: {
             currency_code: "usd",
-            value: "130.00",
+            value: total,
           },
         },
       ],
@@ -33,16 +35,37 @@ const createOrder = async (req, res) => {
       },
     });
 
-    const response = await axios.post(`${PAYPAL_URL}/v2/checkout/orders`, order, {
+    const { data: capturedOrder } = await axios.post(`${PAYPAL_URL}/v2/checkout/orders`, order, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
 
-    console.log(response.data);
-    return res.json(response.data.links[1].href);
+    const { id } = capturedOrder;
+
+    // Crear una entrada en la base de datos usando el modelo Order
+    const newOrder = await Order.create({
+      orderIdPaypal: id,
+      userId,
+      ShoppingCartId,
+      total,
+    });
+
+    await ShoppingCart.update(
+      { orderIdPaypal: id },
+      {
+        where: {
+          id: ShoppingCartId,
+        },
+      }
+    );
+
+    return res.json({
+      orderUrl: capturedOrder.links[1].href,
+      ShoppingCartId,
+    });
   } catch (error) {
-    console.error("Error al crear la orden:", error);
+    console.log("Error al crear la orden:", error);
     return res.status(500).json({ error: "Error Interno del Servidor" });
   }
 };

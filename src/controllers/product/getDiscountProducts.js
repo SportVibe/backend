@@ -3,6 +3,7 @@ const { Op } = require('sequelize');
 
 const getDiscountProducts = async (req, res) => {
     try {
+        const limit = req.query.limit ? req.query.limit : 12;
         const products = await Product.findAll({
             where: {
                 discount: {
@@ -28,11 +29,14 @@ const getDiscountProducts = async (req, res) => {
             order: [
                 ['discount', 'DESC'], // Ordena por la propiedad 'discount' en orden descendente (de mayor a menor)
             ],
+            limit: limit
         });
         if (products && products.length) {
             res.json(products);
         }
-        res.status(404).json('no hay productos con descuentos')
+        else {
+            res.status(404).json('no hay productos con descuentos')
+        }
     } catch (error) {
         console.error({ error: error.message });
         res.status(500).json({ error: error.message });
