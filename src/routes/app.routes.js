@@ -3,7 +3,7 @@ const router = Router();
 const postProduct = require("../controllers/product/postProduct");
 const getProductByPk = require("../controllers/product/getProductByPk");
 const getProduct = require("../controllers/product/getProduct");
-const getProductOrderby = require("../controllers/product/getProductOrderBy");
+const getProductOrderBy = require("../controllers/product/getProductOrderBy");
 const deleteProductByPk = require("../controllers/product/deleteProductByPk");
 const putProductbyID = require("../controllers/product/putProductbyID");
 const searchProduct = require("../controllers/product/searchProduct");
@@ -48,7 +48,7 @@ router.get("/detail/:id", getProductByPk);
 router.get("/admin", getProductAdmin);
 router.get("/property", getProperty);
 router.get("/product/discount", getDiscountProducts);
-router.get("/product/orderBy", getProductOrderby);
+router.get("/product/orderBy", getProductOrderBy);
 router.get("/product/brands", getBrands);
 router.get("/product/sports", getSports);
 
