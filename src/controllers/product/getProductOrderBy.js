@@ -1,7 +1,7 @@
 const { Product, Stock, Image, Color, Size } = require("../../db");
 const { Op } = require('sequelize');
 
-const getProductOrderby = async (req, res) => {
+const getProductOrderBy = async (req, res) => {
     try {
         const order = req.query.order ? req.query.order : 'id';
         const type = req.query.type ? req.query.type : 'desc';
@@ -63,4 +63,4 @@ const getProductOrderby = async (req, res) => {
     }
 };
 
-module.exports = getProductOrderby;
+module.exports = getProductOrderBy;
