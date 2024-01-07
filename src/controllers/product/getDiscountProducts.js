@@ -1,4 +1,7 @@
+
+
 const { Product, Stock, Image, Color, Size, Reviews } = require("../../db");
+
 const { Op } = require("sequelize");
 
 const getDiscountProducts = async (req, res) => {
@@ -11,26 +14,11 @@ const getDiscountProducts = async (req, res) => {
         },
       },
       include: [
-        {
-          model: Stock,
-          include: [{ model: Size, attributes: ["name"] }],
-        },
-        {
-          model: Image,
-          attributes: ["url"],
-          through: { attributes: [] },
-        },
-        {
-          model: Color,
-          attributes: ["name"],
-          through: { attributes: [] },
-        },
-        {
-          model: Reviews,
-          attributes: ["id", "description", "score", "UserId"],
-          where: { status: "accepted" },
-          required: false,
-        },
+
+        { model: Size, attributes: ["name"], through: { model: Stock } },
+        { model: Image, attributes: ["url"], through: { attributes: [] } },
+        { model: Color, attributes: ["name"], through: { attributes: [] } },
+
       ],
       order: [
         ["discount", "DESC"], // Ordena por la propiedad 'discount' en orden descendente (de mayor a menor)

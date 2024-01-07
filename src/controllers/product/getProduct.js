@@ -84,20 +84,20 @@ const getProduct = async (req, res) => {
       where: { ...filterCriteria, available: true },
       limit,
       offset,
-      order: orderCriteria, // Criterio de ordenamiento
+
+      order: orderCriteria,
       include: [
-        {
-          model: Stock,
-          include: [{ model: Size, attributes: ["name"] }],
-        },
-        { model: Image, attributes: ["url"] },
-        { model: Color, attributes: ["name"] },
+        { model: Size, attributes: ["name"], through: { model: Stock } },
+        { model: Image, attributes: ["url"], through: { attributes: [] } },
+        { model: Color, attributes: ["name"], through: { attributes: [] } },
+   
         {
           model: Reviews,
           attributes: ["id", "description", "score", "UserId"],
           where: { status: "accepted" },
           required: false,
         },
+
       ],
     });
 
@@ -119,12 +119,12 @@ const getProduct = async (req, res) => {
       }
 
       // Modificar el array de tallas y cantidades (stock)
-      modifiedProduct.Stocks = modifiedProduct.Stocks?.map((stock) => ({
-        [stock.Size?.name]: stock.quantity,
+      modifiedProduct.Stocks = modifiedProduct.Sizes.map((size) => ({
+        [size.name]: size.Stock.quantity, // Acceder a la cantidad de stock desde la relación con Size
       }));
 
       // Eliminar la propiedad 'Size' si no es necesaria en este punto
-      delete modifiedProduct.Size;
+      delete modifiedProduct.Sizes;
 
       return modifiedProduct;
     });

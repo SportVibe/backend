@@ -39,8 +39,8 @@ const updateProduct = async (product) => {
 
         const [stock, stockCreated] = await Stock.findOrCreate({
           where: {
-            product_id: productEdit.id,
-            size_id: size.id,
+            ProductId: productEdit.id,
+            SizeId: size.id,
           },
           defaults: {
             quantity: stockInfo.stock,
