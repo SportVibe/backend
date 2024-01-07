@@ -1,5 +1,6 @@
-const { Product, Stock, Image, Color, Size } = require("../../db");
-const { Op } = require('sequelize');
+const { Product, Stock, Image, Color, Size, Reviews } = require("../../db");
+const { Op } = require("sequelize");
+
 
 const getProductOrderBy = async (req, res) => {
     try {
@@ -22,6 +23,12 @@ const getProductOrderBy = async (req, res) => {
                     attributes: ["name"],
                     through: { attributes: [] },
                 },
+              {
+          model: Reviews,
+          attributes: ["id", "description", "score", "UserId"],
+          where: { status: "accepted" },
+          required: false,
+        },
             ],
             order: [
                 [`${order}`, `${type}`], // Ordena por la propiedad 'id' en orden descendente de creación en la base de datos (de mas nuevo a mas antiguo).
@@ -32,35 +39,36 @@ const getProductOrderBy = async (req, res) => {
             return res.status(404).json({ mensaje: "No se encontraron productos." });
         }
 
-        const modifiedProducts = products.map((product) => {
-            // Crear un nuevo objeto para cada producto
-            const modifiedProduct = { ...product.toJSON() };
-            // Modificar el array de imágenes
 
-            modifiedProduct.Images = modifiedProduct.Images?.map((image) => image.url);
-            // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
+    const modifiedProducts = products.map((product) => {
+      // Crear un nuevo objeto para cada producto
+      const modifiedProduct = { ...product.toJSON() };
+      // Modificar el array de imágenes
 
-            // Verificar si existe la propiedad Color antes de mapear
-            if (modifiedProduct.Colors) {
-                modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
-            }
+      modifiedProduct.Images = modifiedProduct.Images?.map((image) => image.url);
+      // modifiedProduct.Sizes = modifiedProduct.Sizes.map((Size) => Size.name);
 
-            // Modificar el array de tallas y cantidades (stock)
-            modifiedProduct.Stocks = modifiedProduct.Stocks?.map((stock) => ({
-                [stock.Size?.name]: stock.quantity,
-            }));
+      // Verificar si existe la propiedad Color antes de mapear
+      if (modifiedProduct.Colors) {
+        modifiedProduct.Colors = modifiedProduct.Colors.map(({ name }) => name);
+      }
 
-            // Eliminar la propiedad 'Size' si no es necesaria en este punto
-            delete modifiedProduct.Size;
+      // Modificar el array de tallas y cantidades (stock)
+      modifiedProduct.Stocks = modifiedProduct.Stocks?.map((stock) => ({
+        [stock.Size?.name]: stock.quantity,
+      }));
 
-            return modifiedProduct;
-        });
+      // Eliminar la propiedad 'Size' si no es necesaria en este punto
+      delete modifiedProduct.Size;
 
-        return res.status(200).json(modifiedProducts);
-    } catch (error) {
-        console.error({ error: error.message });
-        res.status(500).json({ error: error.message });
-    }
+      return modifiedProduct;
+    });
+
+    return res.status(200).json(modifiedProducts);
+  } catch (error) {
+    console.error({ error: error.message });
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = getProductOrderBy;
