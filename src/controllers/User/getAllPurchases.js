@@ -40,12 +40,12 @@ const getAllPurchases = async (req, res) => {
 
     const fechaFormateada = fecha.toISOString().split("T")[0];
     const horaFormateada = fecha.toISOString().split("T")[1].split(".")[0];
-
     res.json({
       purchases: detalleProducto,
       totalPaid: shoppingCart.total,
       date: fechaFormateada,
       time: horaFormateada,
+      orderId: shoppingCart.orderIdPaypal,
     });
   } catch (error) {
     console.error(error);
