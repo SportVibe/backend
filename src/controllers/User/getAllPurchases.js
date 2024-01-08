@@ -40,7 +40,6 @@ const getAllPurchases = async (req, res) => {
 
     const fechaFormateada = fecha.toISOString().split("T")[0];
     const horaFormateada = fecha.toISOString().split("T")[1].split(".")[0];
-    console.log(shoppingCart);
     res.json({
       purchases: detalleProducto,
       totalPaid: shoppingCart.total,
