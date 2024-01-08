@@ -23,4 +23,4 @@ async function initializeReviews() {
   }
 }
 
-module.exports = initializeReviews;
+initializeReviews();

@@ -29,7 +29,6 @@ module.exports = (sequelize) => {
   );
   Review.afterUpdate(async (review) => {
     if (review.status === "accepted") {
-      console.log(review);
       const product = await review.getProduct();
       let reviews = await product.getReviews();
 
