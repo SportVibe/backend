@@ -21,12 +21,12 @@ function sendWelcomeEmail(newUser) {
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
   const emailContent = emailHTML.replace(
     "{{userFirstName}}",
-    newUser.firstName
+    newUser.user.firstName
   );
-
+  
   transporter.sendMail({
     from: '"SportVibe" <sportvibe07@gmail.com>',
-    to: newUser.email,
+    to: newUser.user.email,
     subject: "Registro en SportVibe",
     text: `Bienvenido ${newUser.firstName}!!, desde SportVibe te agradecemos tu confianza`,
     html: emailContent,
