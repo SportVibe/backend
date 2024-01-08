@@ -22,7 +22,7 @@ const cancelOrder = async (req, res) => {
       });
     }
 
-    const redirectUrl = `${HOST_FRONT}/payment-status?orderId=${orderId}&status=Cancelled`;
+    const redirectUrl = `${HOST_FRONT}`;
 
     return res.redirect(redirectUrl);
   } catch (error) {
