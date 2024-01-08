@@ -33,9 +33,19 @@ const getAllPurchases = async (req, res) => {
         total: nombreProducto.dataValues.price * producto.cantidad,
       });
     }
+
+    const fecha = new Date(shoppingCart.createdAt);
+    // Restar 3 horas a la hora actual
+    fecha.setHours(fecha.getHours() - 3);
+
+    const fechaFormateada = fecha.toISOString().split("T")[0];
+    const horaFormateada = fecha.toISOString().split("T")[1].split(".")[0];
+
     res.json({
       purchases: detalleProducto,
       totalPaid: shoppingCart.total,
+      date: fechaFormateada,
+      time: horaFormateada,
     });
   } catch (error) {
     console.error(error);
