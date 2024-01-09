@@ -40,6 +40,8 @@ const deleteProduct = require("../controllers/Carrito/deleteProductController");
 const postReview = require("../controllers/reviews/postReview");
 const putReview = require("../controllers/reviews/putReview");
 const getReview = require("../controllers/reviews/getReview");
+const getCategory = require("../controllers/product/getCategory");
+const getSubCategory = require("../controllers/product/getSubCategory");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -51,6 +53,8 @@ router.get("/product/discount", getDiscountProducts);
 router.get("/product/orderBy", getProductOrderby);
 router.get("/product/brands", getBrands);
 router.get("/product/sports", getSports);
+router.get("/product/category", getCategory);
+router.get("/product/sub-category", getSubCategory);
 
 router.post("/product", postProduct);
 
