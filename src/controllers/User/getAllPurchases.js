@@ -27,6 +27,7 @@ const getAllPurchases = async (req, res) => {
         where: { id: producto.ProductId },
       });
       detalleProducto.push({
+        productId: nombreProducto.dataValues.id,
         product: nombreProducto.dataValues.title,
         quantity: producto.cantidad,
         price: nombreProducto.dataValues.price,
