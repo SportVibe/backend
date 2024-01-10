@@ -23,6 +23,6 @@ async function initializeReviews() {
   }
 }
 
-// initializeReviews();
+initializeReviews();
 
 module.exports = initializeReviews;

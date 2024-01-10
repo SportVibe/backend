@@ -3,7 +3,6 @@ const { allProducts } = require("./src/utilities/initAllProducts");
 const { Brand, Sport } = require("./src/db");
 const allBrands = require("./src/utilities/brands");
 const allSports = require("./src/utilities/sports");
-const initializeReviews = require('./initReviews');
 
 async function initializeProducts() {
   try {
@@ -26,7 +25,6 @@ async function initializeProducts() {
     if (allSports && allSports.length) {
       await Sport.bulkCreate(allSports);
     }
-    await initializeReviews();
     console.log("Productos inicializados con éxito.");
   } catch (error) {
     console.error("Error al inicializar los productos o reviews", error.message);
