@@ -21,7 +21,7 @@ const getProduct = async (req, res) => {
     let orderCriteria = [];
     // ordenamientos, no puede ser mas de un ordenamiento a la vez
     if (sort && typeSort && !Array.isArray(sort) && !Array.isArray(typeSort)) {
-      orderCriteria = [[`${sort.toLowerCase()}`, `${typeSort.toUpperCase()}`]];
+      orderCriteria = [[`${sort}`, `${typeSort.toUpperCase()}`]];
     }
     //cantidad de productos en la db
     const countProducts = await Product.count({
@@ -38,13 +38,13 @@ const getProduct = async (req, res) => {
     // la prioridad es lo que se busca por el search bar
     if (search && !Array.isArray(search)) {
       filterCriteria[Op.or] = [
-        { title: { [Op.iLike]: `%${search}%` } },
-        { description: { [Op.iLike]: `%${search}%` } },
-        { brand: { [Op.iLike]: `%${search}%` } },
-        { gender: { [Op.iLike]: `%${search}%` } },
-        { category: { [Op.iLike]: `%${search}%` } },
-        { subCategory: { [Op.iLike]: `%${search}%` } },
-        { sport: { [Op.iLike]: `%${search}%` } },
+        { title: { [Op.iLike]: `%${search.trim()}%` } },
+        { description: { [Op.iLike]: `%${search.trim()}%` } },
+        { brand: { [Op.iLike]: `%${search.trim()}%` } },
+        { gender: { [Op.iLike]: `%${search.trim()}%` } },
+        { category: { [Op.iLike]: `%${search.trim()}%` } },
+        { subCategory: { [Op.iLike]: `%${search.trim()}%` } },
+        { sport: { [Op.iLike]: `%${search.trim()}%` } },
       ];
 
       // si el usuario usa el search bar, se anulan los filtros por category y subCategory, porque es muy probable que hayan conflictos
@@ -53,8 +53,8 @@ const getProduct = async (req, res) => {
     }
 
     if (!search || Array.isArray(search)) {
-      filterCriteria.subCategory = subCategory || { [Op.not]: null };
-      filterCriteria.category = category || { [Op.not]: null };
+      filterCriteria.subCategory = subCategory ? { [Op.iLike]: subCategory } : { [Op.not]: null };
+      filterCriteria.category = category ? { [Op.iLike]: category } : { [Op.not]: null };
     }
 
     // si el usuario no usa el ni search ni los filtros, los filtros se anulan y se devuelven todos los productos de la BDD
@@ -90,7 +90,7 @@ const getProduct = async (req, res) => {
         { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
-   
+
         {
           model: Reviews,
           attributes: ["id", "description", "score", "UserId"],
