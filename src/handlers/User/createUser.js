@@ -36,10 +36,18 @@ const createUser = async (req, res) => {
         },
       });
       // Vemos si el usuario tiene carrito de compras.
-      const userCart = await ShoppingCart.findOne({
+      let userCart = await ShoppingCart.findOne({
         where: { UserId: newUser.id, available: true },
       });
       let cartToken = null;
+      if (!userCart) {
+        userCart = await ShoppingCart.create({
+          where: { UserId: newUser.id, available: true },
+          defaults: {
+            type: 'member'
+          }
+        })
+      }
       if (userCart) {
         cartToken = jwt.sign(
           {
