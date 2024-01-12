@@ -3,7 +3,8 @@ const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
 const bcrypt = require("bcrypt");
-const { sendWelcomeEmail } = require("../../email/mailer/mailer");
+const { sendWelcomeEmail, sendWelcomeEmailExternal } = require("../../email/mailer/mailer");
+const { log } = require("handlebars");
 
 const createUser = async (req, res) => {
   try {
@@ -37,7 +38,7 @@ const createUser = async (req, res) => {
         },
       });
       if (created) {
-        sendWelcomeEmail(newUser); //-------> se envía el mail solo si el usuario fue creado
+        sendWelcomeEmailExternal(newUser); //-------> se envía el mail solo si el usuario fue creado
       }
       // Vemos si el usuario tiene carrito de compras.
       let userCart = await ShoppingCart.findOne({
@@ -140,7 +141,7 @@ const createUser = async (req, res) => {
               externalSignIn: newUser.externalSignIn,
             },
           };
-          sendWelcomeEmail(newUser);
+          sendWelcomeEmail(newUser); //----------> se envía mail cuando se registra un nuevo usuario
           return newUser;
         }
       }
