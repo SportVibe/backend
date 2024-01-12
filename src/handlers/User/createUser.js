@@ -3,6 +3,8 @@ const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
 const bcrypt = require("bcrypt");
+const { sendWelcomeEmail, sendWelcomeEmailExternal } = require("../../email/mailer/mailer");
+const { log } = require("handlebars");
 
 const createUser = async (req, res) => {
   try {
@@ -35,6 +37,9 @@ const createUser = async (req, res) => {
           image: userImage,
         },
       });
+      if (created) {
+        sendWelcomeEmailExternal(newUser); //-------> se envía el mail solo si el usuario fue creado
+      }
       // Vemos si el usuario tiene carrito de compras.
       let userCart = await ShoppingCart.findOne({
         where: { UserId: newUser.id, available: true },
@@ -44,9 +49,9 @@ const createUser = async (req, res) => {
         userCart = await ShoppingCart.create({
           where: { UserId: newUser.id, available: true },
           defaults: {
-            type: 'member'
-          }
-        })
+            type: "member",
+          },
+        });
       }
       if (userCart) {
         cartToken = jwt.sign(
@@ -55,7 +60,7 @@ const createUser = async (req, res) => {
             total: userCart.total,
             available: userCart.available,
             UserId: newUser.id,
-            type: userCart.type
+            type: userCart.type,
           },
           SECRETKEY,
           { expiresIn: "1h" }
@@ -85,9 +90,9 @@ const createUser = async (req, res) => {
           phoneNumber: newUser.phoneNumber,
           sendMailsActive: newUser.sendMailsActive,
           rol: newUser.rol,
-          externalSignIn: newUser.externalSignIn
-        }
-      }
+          externalSignIn: newUser.externalSignIn,
+        },
+      };
       return newUser;
     } else {
       if (!firstName || !email || !password) {
@@ -133,9 +138,10 @@ const createUser = async (req, res) => {
               phoneNumber: newUser.phoneNumber,
               sendMailsActive: newUser.sendMailsActive,
               rol: newUser.rol,
-              externalSignIn: newUser.externalSignIn
-            }
-          }
+              externalSignIn: newUser.externalSignIn,
+            },
+          };
+          sendWelcomeEmail(newUser); //----------> se envía mail cuando se registra un nuevo usuario
           return newUser;
         }
       }
