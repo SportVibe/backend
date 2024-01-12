@@ -1,4 +1,4 @@
-const { Cart_Product, ShoppingCart, User } = require("../../db");
+const { Cart_Product, ShoppingCart, User, Product } = require("../../db");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
@@ -35,7 +35,7 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
   const carrito = await Cart_Product.findAll({
     where: { ShoppingCartId: ShoppingCartId },
   });
-  const productos = carrito.map(({ ProductId, cantidad }) => ({ ProductId, cantidad }));
+  const productos = carrito.map(({ ProductId, cantidad, detalle }) => ({ ProductId, cantidad, detalle }));
 
   const detalleProducto = [];
   for (let producto of productos) {
@@ -44,15 +44,16 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
     });
     detalleProducto.push({
       product: nombreProducto.dataValues.title,
-      quantity: producto.cantidad,
+      quantity: producto.cantidad, 
+      detalle: producto.detalle,
       price: nombreProducto.dataValues.price,
       total: nombreProducto.dataValues.price * producto.cantidad,
     });
   }
-
+ console.log(detalleProducto);
   const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
 
-  const idUser = carrito.dataValues.UserId;
+  const idUser = totalDeCarrito.dataValues.UserId;
 
   const user = await User.findByPk(idUser);
 
@@ -61,7 +62,7 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
   const emailTemplatePath = path.resolve(__dirname, "../orders.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
   const emailContent = {
-    orderId: carrito.dataValues.orderIdPaypal,
+    orderId: totalDeCarrito.dataValues.orderIdPaypal,
     Name: userName,
     total: totalDeCarrito.dataValues.total,
     products: detalleProducto,
@@ -71,7 +72,6 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
     return a * b;
   });
  */
-  console.log(products);
   const renderedContent = handlebars.compile(emailHTML)(emailContent);
 
   transporter.sendMail({
