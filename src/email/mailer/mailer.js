@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
+const { log } = require("console");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -30,6 +31,18 @@ function sendWelcomeEmail(newUser) {
     html: emailContent,
   });
 }
+function sendWelcomeEmailExternal(newUser) {
+  const emailTemplatePath = path.resolve(__dirname, "../welcome.hbs");
+  const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
+  const emailContent = emailHTML.replace("{{userFirstName}}", newUser.dataValues.firstName);
+  transporter.sendMail({
+    from: '"SportVibe" <sportvibe07@gmail.com>',
+    to: newUser.dataValues.email,
+    subject: "Registro en SportVibe",
+    text: `Bienvenido ${newUser.dataValues.firstName}!!, desde SportVibe te agradecemos tu confianza`,
+    html: emailContent,
+  });
+}
 
 async function sendOrderConfirmationEmail(ShoppingCartId) {
   const carrito = await Cart_Product.findAll({
@@ -44,13 +57,13 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
     });
     detalleProducto.push({
       product: nombreProducto.dataValues.title,
-      quantity: producto.cantidad, 
+      quantity: producto.cantidad,
       detalle: producto.detalle,
       price: nombreProducto.dataValues.price,
       total: nombreProducto.dataValues.price * producto.cantidad,
     });
   }
- console.log(detalleProducto);
+  console.log(detalleProducto);
   const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
 
   const idUser = totalDeCarrito.dataValues.UserId;
@@ -85,4 +98,5 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
 module.exports = {
   sendWelcomeEmail,
   sendOrderConfirmationEmail,
+  sendWelcomeEmailExternal,
 };
