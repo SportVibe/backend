@@ -1,16 +1,15 @@
-const {Cart_Product, ShoppingCart, User} = require("../../db")
+const { Cart_Product, ShoppingCart, User } = require("../../db");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
- 
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
 
- // aca deberíamos crear variables de entorno en Railway
+  // aca deberíamos crear variables de entorno en Railway
   auth: {
     user: "sportvibe07@gmail.com",
     pass: "xavv zswa wcyr dsye",
@@ -21,11 +20,8 @@ const transporter = nodemailer.createTransport({
 function sendWelcomeEmail(newUser) {
   const emailTemplatePath = path.resolve(__dirname, "../welcome.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
-  const emailContent = emailHTML.replace(
-    "{{userFirstName}}",
-    newUser.user.firstName
-  );
-  
+  const emailContent = emailHTML.replace("{{userFirstName}}", newUser.user.firstName);
+
   transporter.sendMail({
     from: '"SportVibe" <sportvibe07@gmail.com>',
     to: newUser.user.email,
@@ -36,32 +32,42 @@ function sendWelcomeEmail(newUser) {
 }
 
 async function sendOrderConfirmationEmail(ShoppingCartId) {
-  const tukis = await Cart_Product.findAll({
-    where: {
-      ShoppingCartId: ShoppingCartId,
-    },
+  const carrito = await Cart_Product.findAll({
+    where: { ShoppingCartId: ShoppingCartId },
   });
+  const productos = carrito.map(({ ProductId, cantidad }) => ({ ProductId, cantidad }));
 
- 
-  const carrito = await ShoppingCart.findByPk(ShoppingCartId);
-  
-  const idUser = carrito.dataValues.UserId
-  
+  const detalleProducto = [];
+  for (let producto of productos) {
+    const nombreProducto = await Product.findOne({
+      where: { id: producto.ProductId },
+    });
+    detalleProducto.push({
+      product: nombreProducto.dataValues.title,
+      quantity: producto.cantidad,
+      price: nombreProducto.dataValues.price,
+      total: nombreProducto.dataValues.price * producto.cantidad,
+    });
+  }
+
+  const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
+
+  const idUser = carrito.dataValues.UserId;
 
   const user = await User.findByPk(idUser);
 
-  const userName = user.dataValues.firstName
+  const userName = user.dataValues.firstName;
 
   const emailTemplatePath = path.resolve(__dirname, "../orders.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
   const emailContent = {
     orderId: carrito.dataValues.orderIdPaypal,
     Name: userName,
-    total: carrito.dataValues.total,
-    products: tukis,
+    total: totalDeCarrito.dataValues.total,
+    products: detalleProducto,
   };
-  
- /*  handlebars.registerHelper("multiply", function (a, b) {
+
+  /*  handlebars.registerHelper("multiply", function (a, b) {
     return a * b;
   });
  */
