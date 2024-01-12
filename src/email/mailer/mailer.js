@@ -1,4 +1,4 @@
-const { Cart_Product, ShoppingCart, User, Product } = require("../../db");
+const { Cart_Product, ShoppingCart, Users, Product } = require("../../db");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
@@ -38,19 +38,21 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
   const productos = carrito.map(({ ProductId, cantidad, detalle }) => ({ ProductId, cantidad, detalle }));
 
   const detalleProducto = [];
+
   for (let producto of productos) {
     const nombreProducto = await Product.findOne({
       where: { id: producto.ProductId },
     });
+
     detalleProducto.push({
       product: nombreProducto.dataValues.title,
-      quantity: producto.cantidad, 
+      quantity: producto.cantidad,
       detalle: producto.detalle,
       price: nombreProducto.dataValues.price,
       total: nombreProducto.dataValues.price * producto.cantidad,
     });
   }
- console.log(detalleProducto);
+
   const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
 
   const idUser = totalDeCarrito.dataValues.UserId;
@@ -78,6 +80,27 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
     from: '"SportVibe" <sportvibe07@gmail.com>',
     to: "danijcdm.com@gmail.com",
     subject: "Confirmación de compra en SportVibe",
+    html: renderedContent,
+  });
+}
+async function sendMailChangeOfPassword(mail) {
+  const emailTemplatePath = path.resolve(__dirname, "../changeOfPassword.hbs");
+  const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
+  const user = await Users.findOne({
+    where: {
+      email: mail,
+    },
+  });
+  const emailContent = emailHTML.replace("{{userFirstName}}", user.firstName);
+
+  //logica del token aqui!!
+
+  const renderedContent = handlebars.compile(emailHTML)(emailContent);
+
+  transporter.sendMail({
+    from: '"SportVibe" <sportvibe07@gmail.com>',
+    to: mail,
+    subject: "Cambio de contraseña de SportVibe",
     html: renderedContent,
   });
 }

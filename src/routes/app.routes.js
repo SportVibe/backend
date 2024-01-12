@@ -77,9 +77,13 @@ router.get("/purchases/:id", getAllPurchases);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
+
 router.put("/shopping", putShopping);
+
 router.post("/addToCart", addToCart);
+
 router.get("/shoppingCart/:id", getShoppingCart);
+
 router.delete("/shoppingCart", deleteProduct);
 
 // Rutas PayPal
