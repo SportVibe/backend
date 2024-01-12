@@ -70,6 +70,8 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
 
   const user = await User.findByPk(idUser);
 
+  const userEmail = user.dataValues.email;
+
   const userName = user.dataValues.firstName;
 
   const emailTemplatePath = path.resolve(__dirname, "../orders.hbs");
@@ -89,7 +91,7 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
 
   transporter.sendMail({
     from: '"SportVibe" <sportvibe07@gmail.com>',
-    to: "danijcdm.com@gmail.com",
+    to: userEmail,
     subject: "Confirmación de compra en SportVibe",
     html: renderedContent,
   });
