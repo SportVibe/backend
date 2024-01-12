@@ -53,19 +53,27 @@
           <td style="text-align: center;">
             <table class="order-details" style="margin: 0 auto; text-align: left;">
               <tr>
-                <th>Item Nro</th>
+                <th>Código Producto</th>
                 <th>Descripción</th>
+                <th>Detalle</th>
                 <th>Cant.</th>
                 <th>Precio Unit.</th>
                 <th>Total</th>
               </tr>
               {{#each products}}
                 <tr>
-                  <td>{{this.id}}</td>
-                  <td>{{this.name}}</td>
-                  <td>{{this.cantidad}}</td>
-                  <td>${{this.price}}</td>
-                  <td>${{multiply price cantidad}}</td>
+                  <td>{{this.dataValues.ProductId}}</td>
+                 {{!--   <td>
+                    {{#if this.dataValues.title}}
+                      {{this.dataValues.title}}
+                    {{else}}
+                      Nombre no definido
+                    {{/if}}
+                  </td> --}}
+                  <td>{{this.dataValues.detalle}}</td>
+                  <td>{{this.dataValues.cantidad}}</td>
+                 {{!-- <td>${{dataValues.subtotal/dataValues.cantidad}}</td> --}}
+                  <td>${{this.dataValues.subtotal}}</td>
                 </tr>
               {{/each}}
             </table>

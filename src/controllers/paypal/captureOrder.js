@@ -1,11 +1,11 @@
 const axios = require("axios");
 const { Order, ShoppingCart, Cart_Product, Size, Stock } = require("../../db");
 const { PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY, HOST_FRONT } = require("../../../config");
+const {sendOrderConfirmationEmail} = require("../../email/mailer/mailer")
 
 const captureOrder = async (req, res) => {
   try {
     const { token, ShoppingCartId } = req.query;
-    console.log({ ShoppingCartId });
     const response = await axios.post(
       `${PAYPAL_URL}/v2/checkout/orders/${token}/capture`,
       {},
@@ -53,7 +53,6 @@ const captureOrder = async (req, res) => {
 
           // Separar el detalle en combinaciones de talle y cantidad
           const matches = detalle.match(/Talle: (\w+), Cantidad: (\d+)/g);
-          console.log(matches);
 
           if (matches) {
             // Iterar sobre cada combinación en el detalle
@@ -70,7 +69,6 @@ const captureOrder = async (req, res) => {
                     name: talle,
                   },
                 });
-                // console.log(sizes);
                 if (sizes.length > 0) {
                   // Iterar sobre cada Size encontrado
                   for (const size of sizes) {
@@ -121,10 +119,12 @@ const captureOrder = async (req, res) => {
         }
 
         // Imprimir todas las líneas al final del bucle
-        console.log(resultLines.join("\n"));
+       /*  console.log(resultLines.join("\n")); */
       } else {
         console.log("No se encontraron resultados para el ShoppingCartId especificado.");
       }
+
+      sendOrderConfirmationEmail(ShoppingCartId);
 
       const redirectUrl = `${HOST_FRONT}/payment-status?orderId=${id}&status=${status}`;
       return res.redirect(redirectUrl);

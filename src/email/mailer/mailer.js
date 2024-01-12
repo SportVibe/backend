@@ -1,7 +1,9 @@
+const {Cart_Product, ShoppingCart, User} = require("../../db")
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
+ 
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -33,25 +35,42 @@ function sendWelcomeEmail(newUser) {
   });
 }
 
-function sendOrderConfirmationEmail(order, user, cart) {
+async function sendOrderConfirmationEmail(ShoppingCartId) {
+  const tukis = await Cart_Product.findAll({
+    where: {
+      ShoppingCartId: ShoppingCartId,
+    },
+  });
+
+ 
+  const carrito = await ShoppingCart.findByPk(ShoppingCartId);
+  
+  const idUser = carrito.dataValues.UserId
+  
+
+  const user = await User.findByPk(idUser);
+
+  const userName = user.dataValues.firstName
+
   const emailTemplatePath = path.resolve(__dirname, "../orders.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
   const emailContent = {
-    orderId: order.id,
-    Name: user.firstName,
-    total: order.total,
-    products: cart,
+    orderId: carrito.dataValues.orderIdPaypal,
+    Name: userName,
+    total: carrito.dataValues.total,
+    products: tukis,
   };
-
-  handlebars.registerHelper("multiply", function (a, b) {
+  
+ /*  handlebars.registerHelper("multiply", function (a, b) {
     return a * b;
   });
-
+ */
+  console.log(products);
   const renderedContent = handlebars.compile(emailHTML)(emailContent);
 
   transporter.sendMail({
     from: '"SportVibe" <sportvibe07@gmail.com>',
-    to: user.email,
+    to: "danijcdm.com@gmail.com",
     subject: "Confirmación de compra en SportVibe",
     html: renderedContent,
   });
