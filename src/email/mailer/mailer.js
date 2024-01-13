@@ -1,9 +1,10 @@
-const { Cart_Product, ShoppingCart, Users, Product } = require("../../db");
+const { Cart_Product, ShoppingCart, User, Product } = require("../../db");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
-const { log } = require("console");
+const { HOST_FRONT } = require("../../../config");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -65,7 +66,6 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
       total: nombreProducto.dataValues.price * producto.cantidad,
     });
   }
-  console.log(detalleProducto);
   const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
 
   const idUser = totalDeCarrito.dataValues.UserId;
@@ -101,16 +101,29 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
 async function sendMailChangeOfPassword(mail) {
   const emailTemplatePath = path.resolve(__dirname, "../changeOfPassword.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
-  const user = await Users.findOne({
+  const user = await User.findOne({
     where: {
       email: mail,
     },
   });
-  const emailContent = emailHTML.replace("{{userFirstName}}", user.firstName);
 
-  //logica del token aqui!!
+  const token = jwt.sign(
+    {
+      userId: user.id,
+      email: user.email,
+    },
+    "secreto_del_token",
+    { expiresIn: "10m" }
+  );
+  const emailContent = {
+    userFirstName: user.firstName,
+  };
+  const resetPasswordUrl = `${HOST_FRONT}/conditions?token=${token}`;
 
-  const renderedContent = handlebars.compile(emailHTML)(emailContent);
+  const renderedContent = handlebars.compile(emailHTML)({
+    ...emailContent,
+    resetPasswordUrl,
+  });
 
   transporter.sendMail({
     from: '"SportVibe" <sportvibe07@gmail.com>',
@@ -124,4 +137,5 @@ module.exports = {
   sendWelcomeEmail,
   sendOrderConfirmationEmail,
   sendWelcomeEmailExternal,
+  sendMailChangeOfPassword,
 };
