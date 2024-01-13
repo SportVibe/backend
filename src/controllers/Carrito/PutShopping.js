@@ -16,18 +16,34 @@ const putShopping = async (req, res) => {
     const cartUser = await ShoppingCart.findOne({
       where: { UserId: idUser },
     });
-    console.log(cartUser);
+
     //Si no se encuentra un carrito asignado al usuario se da aviso
     if (cartUser === null) {
       return res.status(401).json({ error: "no se encontró carrito con ese UserId" });
     }
 
+    const sumasPorId = {};
+
+    // Iterar sobre cada producto y sumar la quantity correspondiente al id
+    products.forEach((producto) => {
+      const { id, quantity } = producto;
+      sumasPorId[id] = (sumasPorId[id] || 0) + quantity;
+    });
+
+    // Crear un array con objetos que contienen id y totalQuantity
+    const cantidadPorId = Object.keys(sumasPorId).map((id) => ({
+      id: parseInt(id),
+      totalQuantity: sumasPorId[id],
+    }));
+
     const mapeoInicial = products.map((producto) => {
+      const cantidadTotal = cantidadPorId.find((item) => item.id === producto.id)?.totalQuantity || 0;
+
       return {
         id: producto.id,
         size: producto.size,
         price: producto.price,
-        quantity: producto.quantity,
+        quantity: cantidadTotal,
         tallas: `Talle: ${producto.size}, Cantidad: ${producto.quantity}.`,
       };
     });
@@ -50,17 +66,10 @@ const putShopping = async (req, res) => {
 
     //En este bucle se recorre el carrito para calcular el subtotal de cada producto
     for (let producto of carrito) {
-      const regex = /Cantidad: (\d+)/g;
-      let totalStock = 0;
-      while ((match = regex.exec(producto.tallas)) !== null) {
-        const cantidad = parseInt(match[1], 10);
-        totalStock += cantidad;
-      }
-
       await Cart_Product.update(
         {
-          cantidad: totalStock,
-          subtotal: producto.price * totalStock,
+          cantidad: producto.quantity,
+          subtotal: producto.price * producto.quantity,
           detalle: producto.tallas,
         },
         {
@@ -77,8 +86,8 @@ const putShopping = async (req, res) => {
         defaults: {
           ShoppingCartId: cartUser.id,
           ProductId: producto.id,
-          cantidad: totalStock,
-          subtotal: producto.price * totalStock,
+          cantidad: producto.quantity,
+          subtotal: producto.price * producto.quantity,
           detalle: producto.tallas,
         },
       });

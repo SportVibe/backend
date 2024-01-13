@@ -3,6 +3,8 @@ const { Op } = require("sequelize");
 
 const addProduct = async (idUser, products) => {
   try {
+    console.log(idUser);
+    console.log(products);
     // Primero se busca el carrito que tenga asignado en Userid
     const cartUser = await ShoppingCart.findOne({
       where: { UserId: idUser },
@@ -11,13 +13,28 @@ const addProduct = async (idUser, products) => {
     if (!cartUser) {
       return { message: "no se encontro carrito con ese UserId" };
     }
+    const sumasPorId = {};
+
+    // Iterar sobre cada producto y sumar la quantity correspondiente al id
+    products.forEach((producto) => {
+      const { id, quantity } = producto;
+      sumasPorId[id] = (sumasPorId[id] || 0) + quantity;
+    });
+
+    // Crear un array con objetos que contienen id y totalQuantity
+    const cantidadPorId = Object.keys(sumasPorId).map((id) => ({
+      id: parseInt(id),
+      totalQuantity: sumasPorId[id],
+    }));
 
     const mapeoInicial = products.map((producto) => {
+      const cantidadTotal = cantidadPorId.find((item) => item.id === producto.id)?.totalQuantity || 0;
+
       return {
         id: producto.id,
         size: producto.size,
         price: producto.price,
-        quantity: producto.quantity,
+        quantity: cantidadTotal,
         tallas: `Talle: ${producto.size}, Cantidad: ${producto.quantity}.`,
       };
     });
