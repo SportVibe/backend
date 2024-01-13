@@ -118,7 +118,7 @@ async function sendMailChangeOfPassword(mail) {
   const emailContent = {
     userFirstName: user.firstName,
   };
-  const resetPasswordUrl = `${HOST_FRONT}/conditions?token=${token}`;
+  const resetPasswordUrl = `${HOST_FRONT}/recoveryPassword?token=${token}`;
 
   const renderedContent = handlebars.compile(emailHTML)({
     ...emailContent,
