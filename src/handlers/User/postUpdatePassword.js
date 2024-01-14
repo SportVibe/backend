@@ -1,5 +1,6 @@
 const { User } = require("../../db");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // Función para validar el token
 function validateResetToken(token, secret) {
@@ -24,11 +25,8 @@ async function updatePassword(userId, newPassword) {
     if (!user) {
       return { success: false, error: "User not found" };
     }
-
-    // Aquí podrías aplicar tu lógica para hashear la nueva contraseña
-    // y luego guardarla en la base de datos
-    // user.password = hashedNewPassword;
-    user.password = newPassword;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
     await user.save();
 
     return { success: true };

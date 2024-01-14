@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
 const bcrypt = require("bcrypt");
 const { sendWelcomeEmail, sendWelcomeEmailExternal } = require("../../email/mailer/mailer");
-const { log } = require("handlebars");
 
 const createUser = async (req, res) => {
   try {
