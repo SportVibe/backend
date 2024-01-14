@@ -1,9 +1,10 @@
 const { Cart_Product, ShoppingCart, User, Product } = require("../../db");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
-const { log } = require("console");
+const { HOST_FRONT } = require("../../../config");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -51,10 +52,12 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
   const productos = carrito.map(({ ProductId, cantidad, detalle }) => ({ ProductId, cantidad, detalle }));
 
   const detalleProducto = [];
+
   for (let producto of productos) {
     const nombreProducto = await Product.findOne({
       where: { id: producto.ProductId },
     });
+
     detalleProducto.push({
       product: nombreProducto.dataValues.title,
       quantity: producto.cantidad,
@@ -63,7 +66,6 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
       total: nombreProducto.dataValues.price * producto.cantidad,
     });
   }
-  console.log(detalleProducto);
   const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
 
   const idUser = totalDeCarrito.dataValues.UserId;
@@ -96,9 +98,45 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
     html: renderedContent,
   });
 }
+async function sendMailChangeOfPassword(mail) {
+  const emailTemplatePath = path.resolve(__dirname, "../changeOfPassword.hbs");
+  const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
+  const user = await User.findOne({
+    where: {
+      email: mail,
+    },
+  });
+
+  const token = jwt.sign(
+    {
+      userId: user.id,
+      email: user.email,
+    },
+    "secreto_del_token",
+    { expiresIn: "1m" }
+  );
+  const emailContent = {
+    userFirstName: user.firstName,
+  };
+  const resetPasswordUrl = `${HOST_FRONT}/password-recover?token=${token}`;
+
+  const renderedContent = handlebars.compile(emailHTML)({
+    ...emailContent,
+    resetPasswordUrl,
+  });
+
+  transporter.sendMail({
+    from: '"SportVibe" <sportvibe07@gmail.com>',
+    to: mail,
+    subject: "Cambio de contraseña de SportVibe",
+    html: renderedContent,
+  });
+  return { email: user.email, token };
+}
 
 module.exports = {
   sendWelcomeEmail,
   sendOrderConfirmationEmail,
   sendWelcomeEmailExternal,
+  sendMailChangeOfPassword,
 };

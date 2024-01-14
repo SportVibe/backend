@@ -42,6 +42,8 @@ const putReview = require("../controllers/reviews/putReview");
 const getReview = require("../controllers/reviews/getReview");
 const getCategory = require("../controllers/product/getCategory");
 const getSubCategory = require("../controllers/product/getSubCategory");
+const PostRecoverPassword = require("../controllers/User/postRecoverPassword");
+const PostUpdatePassword = require("../controllers/User/postUpdatePassword");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -66,6 +68,8 @@ router.put("/product/:id", putProductbyID);
 router.post("/userRegister", postRegister);
 router.post("/google", PostRegisterGoogle);
 router.post("/login", postLogin);
+router.post("/password-recover", PostRecoverPassword);
+router.post("/password-update", PostUpdatePassword);
 
 router.put("/user/:id", putUserById);
 router.put("/user/:id/password", putPassword);
@@ -77,9 +81,13 @@ router.get("/purchases/:id", getAllPurchases);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
+
 router.put("/shopping", putShopping);
+
 router.post("/addToCart", addToCart);
+
 router.get("/shoppingCart/:id", getShoppingCart);
+
 router.delete("/shoppingCart", deleteProduct);
 
 // Rutas PayPal
