@@ -113,12 +113,12 @@ async function sendMailChangeOfPassword(mail) {
       email: user.email,
     },
     "secreto_del_token",
-    { expiresIn: "10m" }
+    { expiresIn: "1m" }
   );
   const emailContent = {
     userFirstName: user.firstName,
   };
-  const resetPasswordUrl = `${HOST_FRONT}/recoveryPassword?token=${token}`;
+  const resetPasswordUrl = `${HOST_FRONT}/password-recover?token=${token}`;
 
   const renderedContent = handlebars.compile(emailHTML)({
     ...emailContent,
@@ -131,6 +131,7 @@ async function sendMailChangeOfPassword(mail) {
     subject: "Cambio de contraseña de SportVibe",
     html: renderedContent,
   });
+  return { email: user.email, token };
 }
 
 module.exports = {

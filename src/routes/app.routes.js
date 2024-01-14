@@ -43,6 +43,7 @@ const getReview = require("../controllers/reviews/getReview");
 const getCategory = require("../controllers/product/getCategory");
 const getSubCategory = require("../controllers/product/getSubCategory");
 const PostRecoverPassword = require("../controllers/User/postRecoverPassword");
+const PostUpdatePassword = require("../controllers/User/postUpdatePassword");
 
 // Rutas de Productos
 router.get("/product", getProduct);
@@ -68,6 +69,7 @@ router.post("/userRegister", postRegister);
 router.post("/google", PostRegisterGoogle);
 router.post("/login", postLogin);
 router.post("/password-recover", PostRecoverPassword);
+router.post("/password-update", PostUpdatePassword);
 
 router.put("/user/:id", putUserById);
 router.put("/user/:id/password", putPassword);
