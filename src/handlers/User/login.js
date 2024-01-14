@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
-const { User, ShoppingCart } = require("../../db");
+const { User, ShoppingCart, user_like } = require("../../db");
+const { Sequelize } = require("sequelize");
 const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
@@ -79,11 +80,26 @@ const login = async (req, res) => {
         const cartTokenCookie = serialize("cartToken", cartToken, cartTokenCookieOptions);
         res.setHeader("Set-CartCookie", cartTokenCookie);
       }
+      // Obtener los productos que el usuario ha agregado a sus favoritos
+      const userLikes = await user_like.findAll({
+        attributes: ['UserId', [Sequelize.fn('array_agg', Sequelize.col('ProductId')), 'productIds']],
+        where: {
+          UserId: user.id,
+        },
+        group: ['UserId'],
+        raw: true,
+      });
+
+      // Extraer solo el resultado deseado
+      const favorites = {
+        userId: userLikes[0]?.UserId,
+        productIds: userLikes[0]?.productIds || [],
+      };
       //enviamos al front la data del usuario mas el token de usuario y el token de su carrito.
       return res.status(200).json({
         message: `Login exitoso, bienvenido ${user.firstName}!`,
         token,
-        cartToken, 
+        cartToken,
         user: {
           id: user.id,
           cartId: userCart ? userCart.id : null,
@@ -98,7 +114,8 @@ const login = async (req, res) => {
           phoneNumber: user.phoneNumber,
           sendMailsActive: user.sendMailsActive,
           rol: user.rol,
-          externalSignIn: user.externalSignIn
+          externalSignIn: user.externalSignIn,
+          favorites: favorites.productIds
         }
       });
     } else {
