@@ -107,6 +107,13 @@ async function sendMailChangeOfPassword(mail) {
     },
   });
 
+  if (!user) {
+    return {
+      error: "El correo electrónico proporcionado no existe.",
+      status: 401,
+    };
+  }
+
   const token = jwt.sign(
     {
       userId: user.id,
