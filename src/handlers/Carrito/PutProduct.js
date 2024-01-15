@@ -1,53 +1,70 @@
-const { ShoppingCart, Cart_Product } = require("../../db");
-const { Op } = require("sequelize");
+const { Product } = require("../../db");
 
-const updateProduct = async (userId, productId, newTotal, newTalle) => {
+function stringArray(detalle) {
+  // Dividir el string en segmentos de "Talle: " y "Cantidad: "
+  const segmentos = detalle.split("Talle: ");
+
+  // Filtrar los segmentos que contienen información de tamaño y cantidad
+  const segmentosValidos = segmentos.filter((segmento) => segmento.includes("Cantidad: "));
+
+  // Crear un array de arrays con la información de tamaño y cantidad
+  const infoTallayCantidad = segmentosValidos.map((segmento) => {
+    const [talle, cantidad] = segmento.split(", Cantidad: ");
+    return [talle, parseInt(cantidad)];
+  });
+
+  return infoTallayCantidad;
+}
+
+async function moldeRespuesta(productId, detalle) {
   try {
-    const cartUser = await ShoppingCart.findOne({
-      where: { UserId: userId },
-    });
+    const listProducts = [];
 
-    if (!cartUser) {
-      return { message: "No se encontró un carrito asociado a ese UserId" };
-    }
+    const tallesYcantidades = stringArray(detalle);
 
-    const cartProduct = await Cart_Product.findOne({
+    const dateProduct = await Product.findOne({
       where: {
-        [Op.and]: [
-          { ShoppingCartId: cartUser.id },
-          { ProductId: productId },
-        ],
+        id: productId,
       },
     });
 
-    if (!cartProduct) {
-      return { message: "El producto no está en el carrito" };
-    }
+    if (!dateProduct) {
+      return { message: "No se encontro un producto con ese id en nuestra base de datos" };
+    } else {
+      for (let producto of tallesYcantidades) {
+        const productInfo = {
+          id: dateProduct.dataValues.id,
+          title: dateProduct.dataValues.title,
+          price: dateProduct.dataValues.price,
+          size: producto[0],
+          quantity: producto[1],
+        };
 
-    let stock = newTalle.reduce((resultado, talle) => {
-      const unidades = Object.values(talle)[0];
-      return resultado + unidades;
-    }, 0);
-
-    await Cart_Product.update(
-      {
-        cantidad: stock,
-        subtotal: newTotal * stock,
-      },
-      {
-        where: {
-          [Op.and]: [
-            { ShoppingCartId: cartUser.id },
-            { ProductId: productId },
-          ],
-        },
+        listProducts.push(productInfo);
       }
-    );
-
-    return { message: "Producto actualizado en el carrito" };
+      return listProducts;
+    }
   } catch (error) {
-    return { message: error.message };
+    return { message: error };
   }
-};
+}
+function verificarExistencia(talla, cantidad, tallasEnCarrito) {
+  const existeTalla = tallasEnCarrito.find((item) => {
+    return item[0] === talla;
+  });
 
-module.exports = updateProduct;
+  if (existeTalla) {
+    // Talla encontrada, actualiza la cantidad
+    existeTalla[1] = cantidad;
+  } else {
+    // Talla no encontrada, agrega una nueva entrada
+    tallasEnCarrito.push([talla, cantidad]);
+  }
+  return tallasEnCarrito;
+}
+
+module.exports = {
+  moldeRespuesta,
+  stringArray,
+  verificarExistencia,
+};

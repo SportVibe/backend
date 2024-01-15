@@ -1,5 +1,6 @@
 const { ShoppingCart, Cart_Product } = require("../../db");
 const { Op } = require("sequelize");
+const { verificarExistencia, stringArray, moldeRespuesta } = require("../../handlers/Carrito/PutProduct");
 
 const putShopping = async (req, res) => {
   try {
@@ -21,93 +22,56 @@ const putShopping = async (req, res) => {
     if (cartUser === null) {
       return res.status(401).json({ error: "no se encontró carrito con ese UserId" });
     }
-
-    const sumasPorId = {};
-
-    // Iterar sobre cada producto y sumar la quantity correspondiente al id
-    products.forEach((producto) => {
-      const { id, quantity } = producto;
-      sumasPorId[id] = (sumasPorId[id] || 0) + quantity;
+    const productInCart = await Cart_Product.findOne({
+      where: {
+        [Op.and]: [{ ShoppingCartId: cartUser.id }, { ProductId: products[0].id }],
+      },
     });
 
-    // Crear un array con objetos que contienen id y totalQuantity
-    const cantidadPorId = Object.keys(sumasPorId).map((id) => ({
-      id: parseInt(id),
-      totalQuantity: sumasPorId[id],
-    }));
+    const modificacionDetalle = stringArray(productInCart.dataValues.detalle);
 
-    const mapeoInicial = products.map((producto) => {
-      const cantidadTotal = cantidadPorId.find((item) => item.id === producto.id)?.totalQuantity || 0;
+    verificarExistencia(products[0].size, products[0].quantity, modificacionDetalle);
 
-      return {
-        id: producto.id,
-        size: producto.size,
-        price: producto.price,
-        quantity: cantidadTotal,
-        tallas: `Talle: ${producto.size}, Cantidad: ${producto.quantity}.`,
-      };
-    });
-    const carrito = mapeoInicial.reduce((acc, producto) => {
-      const existingProduct = acc.find((p) => p.id === producto.id);
+    const cantidad = modificacionDetalle.reduce((acc, [_, cantidad]) => acc + cantidad, 0);
 
-      if (existingProduct) {
-        // Si ya existe un producto con el mismo id, actualizar sus tallas
-        existingProduct.tallas += producto.tallas;
-      } else {
-        // Si no existe, agregar el producto al array
-        acc.push(producto);
-      }
+    const resultadoString = modificacionDetalle
+      .map(([talle, cantidad]) => `Talle: ${talle}, Cantidad: ${cantidad}.`)
+      .join(" ");
 
-      return acc;
-    }, []);
-
-    // Se crea un array donde van a estar los datos de cada producto
-    const productsInShop = [];
-
-    //En este bucle se recorre el carrito para calcular el subtotal de cada producto
-    for (let producto of carrito) {
-      await Cart_Product.update(
-        {
-          cantidad: producto.quantity,
-          subtotal: producto.price * producto.quantity,
-          detalle: producto.tallas,
-        },
-        {
-          where: {
-            [Op.and]: [{ ShoppingCartId: cartUser.id }, { ProductId: producto.id }],
-          },
-        }
-      );
-      //Se crea o se actualiza la relación entre Productos y el carrito
-      const [newItem, created] = await Cart_Product.findOrCreate({
+    await Cart_Product.update(
+      {
+        cantidad: cantidad,
+        subtotal: products[0].price * cantidad,
+        detalle: resultadoString,
+      },
+      {
         where: {
-          [Op.and]: [{ ShoppingCartId: cartUser.id }, { ProductId: producto.id }],
+          [Op.and]: [{ ShoppingCartId: cartUser.id }, { ProductId: products[0].id }],
         },
-        defaults: {
-          ShoppingCartId: cartUser.id,
-          ProductId: producto.id,
-          cantidad: producto.quantity,
-          subtotal: producto.price * producto.quantity,
-          detalle: producto.tallas,
-        },
-      });
-
-      //Se guarda en el array los datos del producto, juntos con los talles seleccionados
-      productsInShop.push(newItem);
-    }
-
-    const subTotales = productsInShop.map((producto) => {
+      }
+    );
+    const carrito = await Cart_Product.findAll({
+      where: {
+        ShoppingCartId: cartUser.id,
+      },
+    });
+    const totalBruto = carrito.map((producto) => {
       return {
         subtotal: producto.dataValues.subtotal,
       };
     });
-    const total = subTotales.reduce((acumulador, subtotal) => {
+
+    const total = totalBruto.reduce((acumulador, subtotal) => {
       const subtotalNumero = parseFloat(subtotal.subtotal);
       return acumulador + subtotalNumero;
     }, 0);
 
-    //Se actualiza el total del carrito con lo que se recibe desde el front
-    //(recordar que los descuentos se manejan desde el front)
+    await ShoppingCart.update(
+      { total: total },
+      {
+        where: { UserId: idUser },
+      }
+    );
     await ShoppingCart.update(
       { total: total },
       {
@@ -116,10 +80,14 @@ const putShopping = async (req, res) => {
         },
       }
     );
+    const productos = await Promise.all(carrito.map(({ ProductId, detalle }) => moldeRespuesta(ProductId, detalle)));
+
+    const currentCart = productos.flat(Infinity);
+
     res.status(200).json({
       message: "Carrito actualizado",
-      ShoppingCart: productsInShop,
-      total,
+      products: currentCart,
+      total: total,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
