@@ -1,6 +1,6 @@
 const { User, Product, user_like } = require("../../db");
 
-const postFavorite = async (req, res) => {
+const getOneFavByUser = async (req, res) => {
     try {
         let { userId, productId } = req.query;
         userId = parseInt(userId);
@@ -25,33 +25,18 @@ const postFavorite = async (req, res) => {
                 ProductId: productId,
             },
         });
-
         if (existingLike) {
-            return res.status(304).json('El usuario ya dio like a este producto');
+            return res.status(201).json({
+                message: 'Este producto está en tu colección',
+            })
         }
-
-        // Crear la relación en la tabla intermedia
-        await user_like.create({
-            UserId: userId,
-            ProductId: productId,
-        });
-
-        // recupera los likes de productos de un usuario
-        const favorites = await user_like.findAll({
-            where: {
-                UserId: userId,
-            }
-        });
-
-
-        return res.status(201).json({
-            message: 'Like registrado correctamente',
-            favorites
-        })
+        else {
+            return res.status(304).json('No tienes este producto en tu colección');
+        }
     } catch (error) {
         console.error("Error en el handler postLike:", error.message);
         return res.status(500).json('Error interno del servidor');
     }
 };
 
-module.exports = postFavorite;
+module.exports = getOneFavByUser;

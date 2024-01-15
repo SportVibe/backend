@@ -29,6 +29,7 @@ const deleteFavorite = require("../controllers/User/deleteFavorite");
 const getAllFavorites = require("../controllers/User/getAllFavorites");
 const getFavsByProduct = require("../controllers/User/getAllFavsByProduct");
 const setFavoritesByUser = require("../controllers/User/getFavoritesByUser");
+const getOneFavByUser = require("../controllers/User/getOneFavByUser");
 
 const putPassword = require("../controllers/User/putPassword");
 const captureOrder = require("../controllers/paypal/captureOrder");
@@ -84,11 +85,13 @@ router.get("/user", getUserByEmail);
 router.get("/users", getAllUsers);
 router.get("/purchases/:id", getAllPurchases);
 
+// Rutas de Favoritos
 router.post("/postFavorite", postFavorite);
 router.delete("/deleteFavorite", deleteFavorite);
 router.get("/getAllFavorites", getAllFavorites);
 router.get("/getFavsByProduct", getFavsByProduct);
 router.get("/setFavoritesByUser", setFavoritesByUser);
+router.get("/getOneFavByUser", getOneFavByUser);
 
 // Rutas de Carrito
 router.post("/shoppingCart", postShopping);
