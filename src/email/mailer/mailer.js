@@ -113,6 +113,12 @@ async function sendMailChangeOfPassword(mail) {
       status: 401,
     };
   }
+  if (user.externalSignIn) {
+    return {
+      error: "El usuario externo no puede modificar su password.",
+      status: 401,
+    };
+  }
 
   const token = jwt.sign(
     {
