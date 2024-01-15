@@ -40,6 +40,7 @@ const {
   Purchase,
   Cart_Product,
   Reviews,
+  Favorite
 } = sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:

@@ -1,4 +1,5 @@
-const { User, ShoppingCart } = require("../../db");
+const { User, ShoppingCart, user_like } = require("../../db");
+const { Sequelize } = require("sequelize");
 const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
@@ -71,6 +72,21 @@ const createUser = async (req, res) => {
         const cartTokenCookie = serialize("cartToken", cartToken, cartTokenCookieOptions);
         res.setHeader("Set-CartCookie", cartTokenCookie);
       }
+      // Obtener los productos que el usuario ha agregado a sus favoritos
+      const userLikes = await user_like.findAll({
+        attributes: ['UserId', [Sequelize.fn('array_agg', Sequelize.col('ProductId')), 'productIds']],
+        where: {
+          UserId: newUser.id,
+        },
+        group: ['UserId'],
+        raw: true,
+      });
+
+      // Extraer solo el resultado deseado
+      const favorites = {
+        userId: userLikes[0]?.UserId,
+        productIds: userLikes[0]?.productIds || [],
+      };
       newUser = {
         message: `Login exitoso, bienvenido ${newUser.firstName}!`,
         token: null,
@@ -90,6 +106,7 @@ const createUser = async (req, res) => {
           sendMailsActive: newUser.sendMailsActive,
           rol: newUser.rol,
           externalSignIn: newUser.externalSignIn,
+          favorites: favorites.productIds
         },
       };
       return newUser;
@@ -119,6 +136,21 @@ const createUser = async (req, res) => {
             image: userImage,
             externalSignIn: externalSignIn,
           });
+          // Obtener los productos que el usuario ha agregado a sus favoritos
+          const userLikes = await user_like.findAll({
+            attributes: ['UserId', [Sequelize.fn('array_agg', Sequelize.col('ProductId')), 'productIds']],
+            where: {
+              UserId: newUser.id,
+            },
+            group: ['UserId'],
+            raw: true,
+          });
+
+          // Extraer solo el resultado deseado
+          const favorites = {
+            userId: userLikes[0]?.UserId,
+            productIds: userLikes[0]?.productIds || [],
+          };
           newUser = {
             message: `Login exitoso, bienvenido ${newUser.firstName}!`,
             token: null,
@@ -138,6 +170,7 @@ const createUser = async (req, res) => {
               sendMailsActive: newUser.sendMailsActive,
               rol: newUser.rol,
               externalSignIn: newUser.externalSignIn,
+              favorites: favorites.productIds
             },
           };
           sendWelcomeEmail(newUser); //----------> se envía mail cuando se registra un nuevo usuario

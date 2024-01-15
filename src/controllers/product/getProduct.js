@@ -1,4 +1,4 @@
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 const { Product, Image, Stock, Size, Color, Reviews } = require("../../db");
 const Paginado = require("../../utilities/Paginado");
@@ -6,7 +6,7 @@ const { quitarTildes } = require("../../utilities/removeSigns");
 
 const getProduct = async (req, res) => {
   try {
-    let { gender, discount, subCategory, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
+    let { gender, discount, subCategory, brand, sport, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
     let { page, limit } = req.query;
     search = search ? quitarTildes(search) : "";
 
@@ -62,11 +62,16 @@ const getProduct = async (req, res) => {
     filterCriteria.id = id || { [Op.not]: null };
     //filterCriteria.Sizes = Sizes || { [Op.not]: null };
 
+    //filtros de deporte y marca
+    filterCriteria.brand = brand ? { [Op.iLike]: brand } : { [Op.not]: null };
+    filterCriteria.sport = sport ? { [Op.iLike]: sport } : { [Op.not]: null };
+
     if (minPrice && maxPrice && !isNaN(minPrice) && !isNaN(maxPrice)) {
       filterCriteria.price = {
         [Op.between]: [parseFloat(minPrice), parseFloat(maxPrice)],
       };
     }
+    console.log(discount);
 
     if (discount && !isNaN(discount)) {
       filterCriteria.discount = {
@@ -129,6 +134,39 @@ const getProduct = async (req, res) => {
       return modifiedProduct;
     });
 
+
+    // ESTADÍSTICAS PARA EL FILTRADO DINÁMICO:
+
+    // Consulta para obtener la estadística de las marcas
+    let brandStatistics = await Product.findAll({
+      attributes: ["brand", [Sequelize.fn("COUNT", Sequelize.col("brand")), "productCount"]],
+      where: { ...filterCriteria, available: true },
+      group: ["brand"],
+    });
+
+    // Consulta para obtener la estadística de los sports
+    let sportStatistics = await Product.findAll({
+      attributes: ["sport", [Sequelize.fn("COUNT", Sequelize.col("sport")), "productCount"]],
+      where: { ...filterCriteria, available: true },
+      group: ["sport"],
+    });
+
+    // Consulta para obtener la estadística de los genders
+    let genderStatistics = await Product.findAll({
+      attributes: ["gender", [Sequelize.fn("COUNT", Sequelize.col("gender")), "productCount"]],
+      where: { ...filterCriteria, available: true },
+      group: ["gender"],
+    });
+
+    let filterStatics = {}
+    if (brandStatistics && sportStatistics && genderStatistics) {
+      filterStatics = {
+        brandStatistics,
+        sportStatistics,
+        genderStatistics
+      }
+    }
+
     return res.status(200).json({
       totalCount: countProducts,
       totalFilteredCount: countFilterCriteria,
@@ -136,6 +174,7 @@ const getProduct = async (req, res) => {
       limitPage,
       previousPage,
       nextPage,
+      filterStatics,
       data: modifiedProducts,
     });
   } catch (error) {
