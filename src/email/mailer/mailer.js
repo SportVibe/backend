@@ -115,7 +115,7 @@ async function sendMailChangeOfPassword(mail) {
   }
   if (user.externalSignIn) {
     return {
-      error: "El usuario externo no puede modificar su password.",
+      error: "este usuario fue registrado con su cuenta de google. No poseemos su contraseña en nuestro sitio web",
       status: 401,
     };
   }
