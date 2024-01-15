@@ -1,8 +1,10 @@
-const { User, ShoppingCart } = require("../../db");
+const { User, ShoppingCart, user_like } = require("../../db");
+const { Sequelize } = require("sequelize");
 const { serialize } = require("cookie");
 const jwt = require("jsonwebtoken");
 const { SECRETKEY } = require("../../../config");
 const bcrypt = require("bcrypt");
+const { sendWelcomeEmail, sendWelcomeEmailExternal } = require("../../email/mailer/mailer");
 
 const createUser = async (req, res) => {
   try {
@@ -35,11 +37,22 @@ const createUser = async (req, res) => {
           image: userImage,
         },
       });
+      if (created) {
+        sendWelcomeEmailExternal(newUser); //-------> se envía el mail solo si el usuario fue creado
+      }
       // Vemos si el usuario tiene carrito de compras.
-      const userCart = await ShoppingCart.findOne({
+      let userCart = await ShoppingCart.findOne({
         where: { UserId: newUser.id, available: true },
       });
       let cartToken = null;
+      if (!userCart) {
+        userCart = await ShoppingCart.create({
+          where: { UserId: newUser.id, available: true },
+          defaults: {
+            type: "member",
+          },
+        });
+      }
       if (userCart) {
         cartToken = jwt.sign(
           {
@@ -47,7 +60,7 @@ const createUser = async (req, res) => {
             total: userCart.total,
             available: userCart.available,
             UserId: newUser.id,
-            type: userCart.type
+            type: userCart.type,
           },
           SECRETKEY,
           { expiresIn: "1h" }
@@ -59,6 +72,21 @@ const createUser = async (req, res) => {
         const cartTokenCookie = serialize("cartToken", cartToken, cartTokenCookieOptions);
         res.setHeader("Set-CartCookie", cartTokenCookie);
       }
+      // Obtener los productos que el usuario ha agregado a sus favoritos
+      const userLikes = await user_like.findAll({
+        attributes: ['UserId', [Sequelize.fn('array_agg', Sequelize.col('ProductId')), 'productIds']],
+        where: {
+          UserId: newUser.id,
+        },
+        group: ['UserId'],
+        raw: true,
+      });
+
+      // Extraer solo el resultado deseado
+      const favorites = {
+        userId: userLikes[0]?.UserId,
+        productIds: userLikes[0]?.productIds || [],
+      };
       newUser = {
         message: `Login exitoso, bienvenido ${newUser.firstName}!`,
         token: null,
@@ -77,9 +105,10 @@ const createUser = async (req, res) => {
           phoneNumber: newUser.phoneNumber,
           sendMailsActive: newUser.sendMailsActive,
           rol: newUser.rol,
-          externalSignIn: newUser.externalSignIn
-        }
-      }
+          externalSignIn: newUser.externalSignIn,
+          favorites: favorites.productIds
+        },
+      };
       return newUser;
     } else {
       if (!firstName || !email || !password) {
@@ -107,6 +136,21 @@ const createUser = async (req, res) => {
             image: userImage,
             externalSignIn: externalSignIn,
           });
+          // Obtener los productos que el usuario ha agregado a sus favoritos
+          const userLikes = await user_like.findAll({
+            attributes: ['UserId', [Sequelize.fn('array_agg', Sequelize.col('ProductId')), 'productIds']],
+            where: {
+              UserId: newUser.id,
+            },
+            group: ['UserId'],
+            raw: true,
+          });
+
+          // Extraer solo el resultado deseado
+          const favorites = {
+            userId: userLikes[0]?.UserId,
+            productIds: userLikes[0]?.productIds || [],
+          };
           newUser = {
             message: `Login exitoso, bienvenido ${newUser.firstName}!`,
             token: null,
@@ -125,9 +169,11 @@ const createUser = async (req, res) => {
               phoneNumber: newUser.phoneNumber,
               sendMailsActive: newUser.sendMailsActive,
               rol: newUser.rol,
-              externalSignIn: newUser.externalSignIn
-            }
-          }
+              externalSignIn: newUser.externalSignIn,
+              favorites: favorites.productIds
+            },
+          };
+          sendWelcomeEmail(newUser); //----------> se envía mail cuando se registra un nuevo usuario
           return newUser;
         }
       }

@@ -40,6 +40,7 @@ const {
   Purchase,
   Cart_Product,
   Reviews,
+  Favorite
 } = sequelize.models;
 
 // RELACIÓN DE LAS TABLAS:
@@ -54,23 +55,11 @@ Transaction.belongsTo(Order, {
   targetKey: "id",
 });
 //relaciono la tabla size con la tabla stock
-Size.hasMany(Stock, {
-  foreignKey: "size_id",
-  sourceKey: "id",
-});
-Stock.belongsTo(Size, {
-  foreignKey: "size_id",
-  targetKey: "id",
-});
+
+Size.belongsToMany(Product, { through: Stock });
+Product.belongsToMany(Size, { through: Stock });
+
 // relaciono la tabla product con la tabla stock
-Product.hasMany(Stock, {
-  foreignKey: "product_id",
-  sourceKey: "id",
-});
-Stock.belongsTo(Product, {
-  foreignKey: "product_id",
-  targetKey: "id",
-});
 
 // tabla intermedia de las imágenes de cada producto.
 Product.belongsToMany(Image, {
@@ -112,8 +101,8 @@ ShoppingCart.belongsToMany(Product, { through: Cart_Product });
 Product.belongsToMany(ShoppingCart, { through: Cart_Product });
 
 // tabla intermedia de las compras recibidas por cada usuario.
-Size.belongsToMany(Product, { through: "Product_size" });
-Product.belongsToMany(Size, { through: "Product_size" });
+Stock.belongsTo(Product, { foreignKey: "ProductId" });
+Stock.belongsTo(Size, { foreignKey: "SizeId" });
 
 const { Color, Gender } = sequelize.models;
 

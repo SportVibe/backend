@@ -1,13 +1,24 @@
 const { DataTypes } = require("sequelize");
+const Size = require("./Size");
+const Product = require("./Product");
 
 module.exports = (sequelize) => {
   sequelize.define(
     "Stock",
     {
-      id: {
+      ProductId: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+        references: {
+          model: Product,
+          key: "id",
+        },
+      },
+      SizeId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: Size,
+          key: "id",
+        },
       },
       quantity: {
         type: DataTypes.INTEGER,

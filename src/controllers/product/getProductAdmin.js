@@ -4,10 +4,7 @@ const getProductAdmin = async (req, res) => {
   try {
     const products = await Product.findAll({
       include: [
-        {
-          model: Stock,
-          include: [{ model: Size, attributes: ["name"] }],
-        },
+        { model: Size, attributes: ["name"], through: { model: Stock } },
         { model: Image, attributes: ["url"], through: { attributes: [] } },
         { model: Color, attributes: ["name"], through: { attributes: [] } },
       ],
@@ -30,8 +27,8 @@ const getProductAdmin = async (req, res) => {
       }
 
       // Modificar el array de tallas y cantidades (stock)
-      modifiedProduct.Stocks = modifiedProduct.Stocks?.map((stock) => ({
-        [stock.Size?.name]: stock.quantity,
+      modifiedProduct.Stocks = modifiedProduct.Sizes.map((size) => ({
+        [size.name]: size.Stock.quantity, // Acceder a la cantidad de stock desde la relación con Size
       }));
 
       // Eliminar la propiedad 'Size' si no es necesaria en este punto

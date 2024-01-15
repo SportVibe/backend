@@ -1,15 +1,48 @@
-const { Reviews } = require("../../db");
+const { Reviews, Product, product_images, Image } = require("../../db");
 
 const getReview = async (req, res) => {
   try {
     const { status, productId, reviewId, userId } = req.query;
 
+    const includeOptions = [
+      {
+        model: Product,
+        attributes: ["title"],
+        include: [
+          {
+            model: Image,
+            attributes: ["url"],
+            through: { attributes: [] },
+          },
+        ],
+      },
+    ];
+
     if (!status && !productId && !reviewId && !userId) {
-      const reviews = await Reviews.findAll();
+      const reviews = await Reviews.findAll({
+        include: includeOptions,
+      });
+
+      const mappedReviews = reviews.map((review) => {
+        const imageUrls = review.Product.Images.map((image) => image.url);
+
+        return {
+          id: review.id,
+          score: review.score,
+          description: review.description,
+          status: review.status,
+          UserId: review.UserId,
+          ProductId: review.ProductId,
+          Product: {
+            title: review.Product.title,
+            Images: imageUrls,
+          },
+        };
+      });
 
       return res.status(200).json({
         message: "OK",
-        data: reviews,
+        data: mappedReviews,
       });
     }
 
@@ -18,14 +51,32 @@ const getReview = async (req, res) => {
         where: {
           status: status,
         },
+        include: includeOptions,
       });
 
       if (!reviews.length) {
         return res.status(400).json({ message: `No se encuentran reseñas con status: ${status}.` });
       }
+
+      const mappedReviews = reviews.map((review) => {
+        const imageUrls = review.Product.Images.map((image) => image.url);
+
+        return {
+          id: review.id,
+          score: review.score,
+          description: review.description,
+          status: review.status,
+          UserId: review.UserId,
+          ProductId: review.ProductId,
+          Product: {
+            title: review.Product.title,
+            Images: imageUrls,
+          },
+        };
+      });
       return res.status(200).json({
         message: "OK",
-        data: reviews,
+        data: mappedReviews,
       });
     }
 
@@ -34,14 +85,31 @@ const getReview = async (req, res) => {
         where: {
           ProductId: productId,
         },
+        include: includeOptions,
       });
 
       if (!reviews.length) {
         return res.status(400).json({ message: `No se encuentran reseñas con productId: ${productId}.` });
       }
+      const mappedReviews = reviews.map((review) => {
+        const imageUrls = review.Product.Images.map((image) => image.url);
+
+        return {
+          id: review.id,
+          score: review.score,
+          description: review.description,
+          status: review.status,
+          UserId: review.UserId,
+          ProductId: review.ProductId,
+          Product: {
+            title: review.Product.title,
+            Images: imageUrls,
+          },
+        };
+      });
       return res.status(200).json({
         message: "OK",
-        data: reviews,
+        data: mappedReviews,
       });
     }
     if (reviewId && !productId && !status && !userId) {
@@ -49,14 +117,31 @@ const getReview = async (req, res) => {
         where: {
           id: reviewId,
         },
+        include: includeOptions,
       });
 
       if (!reviews.length) {
         return res.status(400).json({ message: `No se encuentran reseñas con ID: ${reviewId}.` });
       }
+      const mappedReviews = reviews.map((review) => {
+        const imageUrls = review.Product.Images.map((image) => image.url);
+
+        return {
+          id: review.id,
+          score: review.score,
+          description: review.description,
+          status: review.status,
+          UserId: review.UserId,
+          ProductId: review.ProductId,
+          Product: {
+            title: review.Product.title,
+            Images: imageUrls,
+          },
+        };
+      });
       return res.status(200).json({
         message: "OK",
-        data: reviews,
+        data: mappedReviews,
       });
     }
     if (!reviewId && productId && !status && userId) {
@@ -65,6 +150,7 @@ const getReview = async (req, res) => {
           ProductId: productId,
           UserId: userId,
         },
+        include: includeOptions,
       });
 
       if (!reviews.length) {
@@ -72,9 +158,25 @@ const getReview = async (req, res) => {
           message: `No se encuentran reseñas del UserID: ${userId}, que coincidan con el productID: ${productId}`,
         });
       }
+      const mappedReviews = reviews.map((review) => {
+        const imageUrls = review.Product.Images.map((image) => image.url);
+
+        return {
+          id: review.id,
+          score: review.score,
+          description: review.description,
+          status: review.status,
+          UserId: review.UserId,
+          ProductId: review.ProductId,
+          Product: {
+            title: review.Product.title,
+            Images: imageUrls,
+          },
+        };
+      });
       return res.status(200).json({
         message: "OK",
-        data: reviews,
+        data: mappedReviews,
       });
     }
   } catch (error) {

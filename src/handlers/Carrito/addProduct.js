@@ -25,8 +25,9 @@ const addProduct = async (idUser, products) => {
       const existingProduct = acc.find((p) => p.id === producto.id);
 
       if (existingProduct) {
-        // Si ya existe un producto con el mismo id, actualizar sus tallas
-        existingProduct.tallas += producto.tallas;
+        // Si ya existe un producto con el mismo id, actualizar la cantidad y el detalle
+        existingProduct.quantity += producto.quantity;
+        existingProduct.tallas += `, Talle: ${producto.size}, Cantidad: ${producto.quantity}`;
       } else {
         // Si no existe, agregar el producto al array
         acc.push(producto);

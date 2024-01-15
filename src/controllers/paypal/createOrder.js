@@ -19,7 +19,7 @@ const createOrder = async (req, res) => {
         brand_name: "SportVibe",
         landing_page: "NO_PREFERENCE",
         user_action: "PAY_NOW",
-        return_url: `${HOST}/capture-order`,
+        return_url: `${HOST}/capture-order?ShoppingCartId=${ShoppingCartId}`,
         cancel_url: `${HOST}/cancel-order`,
       },
     };
