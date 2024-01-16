@@ -50,7 +50,7 @@ const postOrder = async (req, res) => {
 
     const {
       data: { access_token },
-    } = await axios.post(`${PAYPAL_URL}v1/oauth2/token`, params, {
+    } = await axios.post(`${PAYPAL_URL}/v1/oauth2/token`, params, {
       auth: {
         username: PAYPAL_CLIENT,
         password: PAYPAL_SECRET_KEY,
