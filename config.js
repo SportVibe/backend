@@ -4,12 +4,12 @@ config();
 // const LOCALHOST = process.env.LOCALHOST;
 
 // Host local
-// const HOST = "http://localhost:3005";
-// const HOST_FRONT = "http://localhost:5173";
+const HOST = "http://localhost:3005";
+const HOST_FRONT = "http://localhost:5173";
 
 // Host Railway
-const HOST = "https://back-sportvibe.up.railway.app";
-const HOST_FRONT = "https://sportvibe.up.railway.app";
+// const HOST = "https://back-sportvibe.up.railway.app";
+// const HOST_FRONT = "https://sportvibe.up.railway.app";
 
 const URL_FONT = "";
 const SECRETKEY = "sportvibe";

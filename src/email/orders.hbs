@@ -54,10 +54,10 @@
             <table class="order-details" style="margin: 0 auto; text-align: left;">
               <tr>
                 <th>Descripción</th>
-                <th>Detalle</th>
+                <th>Talle</th>
                 <th>Cant.</th>
                 <th>Precio Unit.</th>
-                <th>Total</th>
+                <th>SubTotal</th>
               </tr>
               {{#each products}}
                 <tr>
@@ -65,7 +65,7 @@
                   <td>{{this.detalle}}</td>
                   <td>{{this.quantity}}</td>
                   <td>${{this.price}}</td>
-                  <td>${{this.total}}</td>
+                  <td>${{this.subTotal}}</td>
                 </tr>
               {{/each}}
             </table>
@@ -77,7 +77,7 @@
             {{!-- <p class="content">Subtotal: ${{total}}</p>
             <p class="content">Descuento: $10.00</p>
             <p class="content">Precio de Envío: $5.00</p> --}}
-            <p class="content">Pagaste en Total: {{total}}</p>
+            <p class="content">Pagaste en Total: {{totalOrder}}</p>
           </td>
         </tr>
       </table>
