@@ -71,6 +71,7 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
   const idUser = totalDeCarrito.dataValues.UserId;
 
   const user = await User.findByPk(idUser);
+  console.log(user);
 
   const userEmail = user.dataValues.email;
 

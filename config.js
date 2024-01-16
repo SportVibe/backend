@@ -9,7 +9,7 @@ config();
 
 // Host Railway
 const HOST = "https://back-sportvibe.up.railway.app";
-const HOST_FRONT = "https://frontend-black-eta-64.vercel.app/";
+const HOST_FRONT = "https://sportvibe.up.railway.app/";
 
 const URL_FONT = "";
 const SECRETKEY = "sportvibe";
