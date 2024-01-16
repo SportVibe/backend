@@ -57,7 +57,7 @@ const postOrder = async (req, res) => {
       },
     });
 
-    const { data: capturedOrder } = await axios.post(`${PAYPAL_URL}v2/checkout/orders`, order, {
+    const { data: capturedOrder } = await axios.post(`${PAYPAL_URL}/v2/checkout/orders`, order, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
