@@ -8,7 +8,6 @@ const captureUserOrder = async (req, res) => {
     let { token, ShoppingCartId, userId } = req.query;
     userId = parseInt(userId);
     let orderIdPaypal = token;
-    console.log({ token: token, userid: userId });
     const response = await axios.post(
       `${PAYPAL_URL}/v2/checkout/orders/${token}/capture`,
       {},
@@ -45,6 +44,37 @@ const captureUserOrder = async (req, res) => {
           userId: userId,
         },
       });
+      const descuentoStock = userShoppingProducts.map(async (producto) => {
+        const todoString = producto.dataValues.size.toString();
+        const sizeId = await Size.findOne({
+          where: { name: todoString },
+        });
+        const idSize = sizeId.dataValues.id;
+        if (idSize) {
+          const stockRecord = await Stock.findOne({
+            where: {
+              ProductId: producto.dataValues.productId,
+              SizeId: idSize,
+            },
+          });
+          if (stockRecord) {
+            const stockQuantity = stockRecord.quantity;
+            const updatedStockQuantity = stockQuantity - parseInt(producto.dataValues.quantity);
+
+            // Actualizar el stock en la base de datos
+            await Stock.update(
+              { quantity: updatedStockQuantity },
+              {
+                where: {
+                  ProductId: producto.dataValues.productId,
+                  SizeId: idSize,
+                },
+              }
+            );
+          }
+        }
+      });
+      await Promise.all(descuentoStock);
       const deletedUserShoppingProducts = userShoppingProducts.map(async (userShoppingProduct) => {
         // Borrar cada registro
         await userShoppingProduct.destroy();
@@ -52,16 +82,6 @@ const captureUserOrder = async (req, res) => {
       // Esperar a que todas las eliminaciones se completen
       await Promise.all(deletedUserShoppingProducts);
 
-      // Actualizar el stock en la base de datos
-      /* await Stock.update(
-                { quantity: updatedStockQuantity },
-                {
-                    where: {
-                        ProductId: productId,
-                        SizeId: sizeId,
-                    },
-                }
-            ); */
       sendOrderConfirmationEmail(userId, orderIdPaypal);
 
       const redirectUrl = `${HOST_FRONT}/payment-status?orderId=${id}&status=${status}`;
