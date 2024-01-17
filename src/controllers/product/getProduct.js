@@ -9,6 +9,8 @@ const getProduct = async (req, res) => {
     let { gender, discount, subCategory, brand, sport, category, minPrice, maxPrice, sort, typeSort, Sizes, id, search } = req.query;
     let { page, limit } = req.query;
     search = search ? quitarTildes(search) : "";
+    brand = brand ? quitarTildes(brand) : "";
+    sport = sport ? quitarTildes(sport) : "";
 
     // nos aseguramos de que el page y limit sean números
     if (isNaN(page) || !page) {
