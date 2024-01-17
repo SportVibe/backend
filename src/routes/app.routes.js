@@ -51,6 +51,25 @@ const getSubCategory = require("../controllers/product/getSubCategory");
 const PostRecoverPassword = require("../controllers/User/postRecoverPassword");
 const PostUpdatePassword = require("../controllers/User/postUpdatePassword");
 
+const postShoppingProduct = require("../controllers/Cart/postShoppingProduct");
+const putShoppingProduct = require("../controllers/Cart/putShoppingProduct");
+const deleteShoppingProduct = require("../controllers/Cart/deleteShoppingProduct");
+
+const postOrder = require("../controllers/Order/postOrder");
+const captureUserOrder = require("../controllers/Order/captureUserOrder");
+
+
+
+
+// Nuevo carrito rutas
+router.post("/postShoppingProduct", postShoppingProduct);
+router.put("/putShoppingProduct", putShoppingProduct);
+router.delete("/deleteShoppingProduct", deleteShoppingProduct);
+
+// Nuevas órdenes
+router.post("/postOrder", postOrder);
+router.get("/captureUserOrder", captureUserOrder);
+
 // Rutas de Productos
 router.get("/product", getProduct);
 router.get("/search/:product", searchProduct);

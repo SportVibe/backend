@@ -1,4 +1,4 @@
-const { Cart_Product, ShoppingCart, User, Product } = require("../../db");
+const { Cart_Product, ShoppingCart, User, Product, User_order } = require("../../db");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
@@ -45,44 +45,45 @@ function sendWelcomeEmailExternal(newUser) {
   });
 }
 
-async function sendOrderConfirmationEmail(ShoppingCartId) {
-  const carrito = await Cart_Product.findAll({
-    where: { ShoppingCartId: ShoppingCartId },
+async function sendOrderConfirmationEmail(userId, orderIdPaypal) {
+  const orderProducts = await User_order.findAll({
+    where: { userId, orderIdPaypal },
   });
-  const productos = carrito.map(({ ProductId, cantidad, detalle }) => ({ ProductId, cantidad, detalle }));
+  const productos = orderProducts.map(({ orderIdPaypal, title, productId, quantity, size, subTotal, totalOrder }) => ({ orderIdPaypal, title, productId, quantity, size, subTotal, totalOrder }));
 
   const detalleProducto = [];
 
   for (let producto of productos) {
     const nombreProducto = await Product.findOne({
-      where: { id: producto.ProductId },
+      where: { id: producto.productId },
     });
 
     detalleProducto.push({
       product: nombreProducto.dataValues.title,
-      quantity: producto.cantidad,
-      detalle: producto.detalle,
+      quantity: producto.quantity,
+      detalle: producto.size,
       price: nombreProducto.dataValues.price,
-      total: nombreProducto.dataValues.price * producto.cantidad,
+      subTotal: nombreProducto.dataValues.price * producto.quantity,
     });
   }
-  const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
+  // const totalDeCarrito = await ShoppingCart.findByPk(ShoppingCartId);
 
-  const idUser = totalDeCarrito.dataValues.UserId;
+  // const idUser = totalDeCarrito.dataValues.UserId;
 
-  const user = await User.findByPk(idUser);
+  const user = await User.findByPk(userId);
 
   const userEmail = user.dataValues.email;
 
   const userName = user.dataValues.firstName;
-
+  // console.log(detalleProducto);
   const emailTemplatePath = path.resolve(__dirname, "../orders.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
   const emailContent = {
-    orderId: totalDeCarrito.dataValues.orderIdPaypal,
+    orderId: productos.orderIdPaypal,
     Name: userName,
-    total: totalDeCarrito.dataValues.total,
     products: detalleProducto,
+    totalOrder: productos[0].totalOrder,
+    orderId: orderIdPaypal
   };
 
   /*  handlebars.registerHelper("multiply", function (a, b) {
@@ -98,12 +99,14 @@ async function sendOrderConfirmationEmail(ShoppingCartId) {
     html: renderedContent,
   });
 }
+
 async function sendMailChangeOfPassword(mail) {
   const emailTemplatePath = path.resolve(__dirname, "../changeOfPassword.hbs");
   const emailHTML = fs.readFileSync(emailTemplatePath, "utf8");
   const user = await User.findOne({
     where: {
       email: mail,
+      externalSignIn: false
     },
   });
 
@@ -113,12 +116,12 @@ async function sendMailChangeOfPassword(mail) {
       status: 401,
     };
   }
-  if (user.externalSignIn) {
-    return {
-      error: "este usuario fue registrado con su cuenta de google. No poseemos su contraseña en nuestro sitio web",
-      status: 401,
-    };
-  }
+  // if (user.externalSignIn) {
+  //   return {
+  //     error: "este usuario fue registrado con su cuenta de google. No poseemos su contraseña en nuestro sitio web",
+  //     status: 401,
+  //   };
+  // }
 
   const token = jwt.sign(
     {
