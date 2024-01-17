@@ -1,60 +1,49 @@
-const { ShoppingCart, Order, Cart_Product, Product } = require("../../db");
+const { User_order } = require("../../db");
 
 const getAllPurchases = async (req, res) => {
   let { id } = req.params;
   id = parseInt(id);
   try {
-    const shoppingCart = await Order.findAll({
-      where: { userId: id, status: "accepted" },
+    const purchases = await User_order.findAll({
+      where: { userId: id },
     });
-    // console.log(shoppingCart);
-    if (!shoppingCart) {
-      return res.status(404).json({ message: "Carrito no encontrado para el usuario proporcionado" });
+    if (purchases.length === 0) {
+      return res.status(404).json({ message: "No se encontraron órdenes para el usuario proporcionado" });
     }
-    const allOrders = await Promise.all(shoppingCart.map(async (order) => {
-      const { ShoppingCartId } = order;
+    const groupedPurchases = purchases.reduce((acc, purchase) => {
+      const existingPurchase = acc.find((group) => group.orderIdPaypal === purchase.orderIdPaypal);
 
-      if (!ShoppingCartId) {
-        return res.status(404).json({ message: "Id de Carrito no encontrado" });
+      if (existingPurchase) {
+        existingPurchase.userProducts.push({
+          productId: purchase.productId,
+          userId: purchase.userId,
+          quantity: purchase.quantity,
+          title: purchase.title,
+          price: purchase.price,
+          subtotal: purchase.subTotal,
+        });
+      } else {
+        acc.push({
+          id: purchase.id,
+          orderIdPaypal: purchase.orderIdPaypal,
+          totalOrder: purchase.totalOrder,
+          userProducts: [
+            {
+              productId: purchase.productId,
+              userId: purchase.userId,
+              quantity: purchase.quantity,
+              title: purchase.title,
+              price: purchase.price,
+              subtotal: purchase.subTotal,
+            },
+          ],
+        });
       }
 
-      const carrito = await Cart_Product.findAll({
-        where: { ShoppingCartId: ShoppingCartId },
-      });
+      return acc;
+    }, []);
 
-      const productos = carrito.map(({ ProductId, cantidad }) => ({ ProductId, cantidad }));
-
-      const detalleProducto = await Promise.all(
-        productos.map(async (producto) => {
-          const nombreProducto = await Product.findOne({
-            where: { id: producto.ProductId },
-          });
-
-          return {
-            productId: nombreProducto.dataValues.id,
-            product: nombreProducto.dataValues.title,
-            quantity: producto.cantidad,
-            price: nombreProducto.dataValues.price,
-            total: nombreProducto.dataValues.price * producto.cantidad,
-          };
-        })
-      );
-
-      const fecha = new Date(order.createdAt);
-      fecha.setHours(fecha.getHours() - 3);
-      const fechaFormateada = fecha.toISOString().split("T")[0];
-      const horaFormateada = fecha.toISOString().split("T")[1].split(".")[0];
-
-      return {
-        purchases: detalleProducto,
-        totalPaid: order.total,
-        date: fechaFormateada,
-        time: horaFormateada,
-        orderId: order.orderIdPaypal,
-      };
-    }));
-    // console.log(allOrders);
-    res.json(allOrders);
+    res.status(200).json(groupedPurchases);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error interno del servidor" });
