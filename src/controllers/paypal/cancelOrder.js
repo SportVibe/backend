@@ -1,11 +1,11 @@
-const { Order } = require("../../db");
+const { User_order } = require("../../db");
 const { HOST_FRONT } = require("../../../config");
 
 const cancelOrder = async (req, res) => {
   try {
     const orderId = req.query.token;
 
-    const updatedOrder = await Order.update(
+    const updatedOrder = await User_order.update(
       { status: "cancelled" },
       {
         where: {
