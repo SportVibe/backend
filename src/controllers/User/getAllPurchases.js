@@ -7,8 +7,9 @@ const getAllPurchases = async (req, res) => {
     const purchases = await User_order.findAll({
       where: { userId: id },
     });
-    if (purchases.length === 0) {
-      return res.status(404).json({ message: "No se encontraron órdenes para el usuario proporcionado" });
+    if (!purchases || !purchases.length) {
+      return res.json([]);
+      // return res.status(404).json({ message: "No se encontraron órdenes para el usuario proporcionado" });
     }
     const groupedPurchases = purchases.reduce((acc, purchase) => {
       const existingPurchase = acc.find((group) => group.orderIdPaypal === purchase.orderIdPaypal);
