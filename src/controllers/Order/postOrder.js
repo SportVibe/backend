@@ -5,7 +5,6 @@ const { HOST, PAYPAL_URL, PAYPAL_CLIENT, PAYPAL_SECRET_KEY } = require("../../..
 const postOrder = async (req, res) => {
   try {
     let { userId } = req.body;
-    console.log({ userId });
     userId = parseInt(userId);
     // Verificamos si el usuario existe
     const user = await User.findOne({ where: { id: userId } });
@@ -18,7 +17,6 @@ const postOrder = async (req, res) => {
         userId,
       },
     });
-    console.log({ userCart });
     if (!userCart) {
       return res.status(404).json({ message: "El usuario no cuenta con productos en su carrito" });
     }
@@ -26,7 +24,6 @@ const postOrder = async (req, res) => {
     const newTotal = await ShoppingProduct.sum("subTotal", {
       where: { userId },
     });
-    console.log({ newTotal });
     const order = {
       intent: "CAPTURE",
       purchase_units: [
