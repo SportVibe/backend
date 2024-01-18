@@ -54,6 +54,8 @@ const PostUpdatePassword = require("../controllers/User/postUpdatePassword");
 const postShoppingProduct = require("../controllers/Cart/postShoppingProduct");
 const putShoppingProduct = require("../controllers/Cart/putShoppingProduct");
 const deleteShoppingProduct = require("../controllers/Cart/deleteShoppingProduct");
+const putAllCart = require("../controllers/Cart/putAllCart");
+const getUserCart = require("../controllers/Cart/getUserCart");
 
 const postOrder = require("../controllers/Order/postOrder");
 const captureUserOrder = require("../controllers/Order/captureUserOrder");
@@ -64,7 +66,9 @@ const captureUserOrder = require("../controllers/Order/captureUserOrder");
 // Nuevo carrito rutas
 router.post("/postShoppingProduct", postShoppingProduct);
 router.put("/putShoppingProduct", putShoppingProduct);
+router.put("/putAllCart", putAllCart);
 router.delete("/deleteShoppingProduct", deleteShoppingProduct);
+router.get("/getUserCart", getUserCart);
 
 // Nuevas órdenes
 router.post("/postOrder", postOrder);
