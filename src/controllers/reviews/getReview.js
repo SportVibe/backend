@@ -89,7 +89,7 @@ const getReview = async (req, res) => {
       });
 
       if (!reviews.length) {
-        return res.status(400).json({ message: `No se encuentran reseñas con productId: ${productId}.` });
+        return res.status(200).json({ message: "Este producto aun no tiene comentarios" });
       }
       const mappedReviews = reviews.map((review) => {
         const imageUrls = review.Product.Images.map((image) => image.url);
