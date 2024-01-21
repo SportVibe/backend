@@ -24,6 +24,7 @@ const postOrder = async (req, res) => {
     const newTotal = await ShoppingProduct.sum("subTotal", {
       where: { userId },
     });
+    console.log(newTotal);
     const order = {
       intent: "CAPTURE",
       purchase_units: [
