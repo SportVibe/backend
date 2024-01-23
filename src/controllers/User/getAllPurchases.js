@@ -32,6 +32,7 @@ const getAllPurchases = async (req, res) => {
           id: purchase.id,
           orderIdPaypal: purchase.orderIdPaypal,
           totalOrder: purchase.totalOrder,
+          status: purchase.status,
           date,
           time,
           userProducts: [
