@@ -32,7 +32,19 @@ const putAllCart = async (req, res) => {
                 userId,
             },
         });
-        return res.status(201).json({ userId, cart: userCart });
+
+        let newFormat = [];
+        userCart.map(product => {
+            newFormat.push({
+                id: product.productId,
+                title: product.title,
+                size: product.size,
+                price: product.price,
+                quantity: product.quantity,
+            })
+        });
+
+        return res.status(201).json({ userId, cart: newFormat });
     } catch (error) {
         return res.status(401).json({ error: error.message });
     }
