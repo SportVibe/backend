@@ -14,6 +14,10 @@ const getAllPurchases = async (req, res) => {
     const groupedPurchases = purchases.reduce((acc, purchase) => {
       const existingPurchase = acc.find((group) => group.orderIdPaypal === purchase.orderIdPaypal);
 
+      const { createdAt } = purchase;
+      const date = createdAt.toISOString().split("T")[0];
+      const time = createdAt.toISOString().split("T")[1].split(".")[0];
+
       if (existingPurchase) {
         existingPurchase.userProducts.push({
           productId: purchase.productId,
@@ -28,6 +32,8 @@ const getAllPurchases = async (req, res) => {
           id: purchase.id,
           orderIdPaypal: purchase.orderIdPaypal,
           totalOrder: purchase.totalOrder,
+          date,
+          time,
           userProducts: [
             {
               productId: purchase.productId,
